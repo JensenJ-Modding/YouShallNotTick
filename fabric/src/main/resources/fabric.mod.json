@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "youshallnottick",
+  "version": "${version}",
+  "name": "You Shall Not Tick",
+  "description": "Disables unnecessary ticking for entities outside a specified range of players.",
+  "authors": [
+    "JensenJ"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/JensenJ-Modding/YouShallNotTick"
+  },
+  "license": "MIT License",
+  "icon": "assets/youshallnottick/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.youshallnottick.fabric.YouShallNotTickModFabric"
+    ]
+  },
+  "mixins": [
+    "youshallnottick.mixins.json",
+    "youshallnottick-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18.2",
+    "architectury": ">=4.11.93"
+  }
+}

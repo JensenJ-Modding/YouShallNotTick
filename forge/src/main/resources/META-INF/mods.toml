@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[40,)"
+#issueTrackerURL = ""
+license = "MIT License"
+
+[[mods]]
+modId = "youshallnottick"
+version = "${version}"
+displayName = "You Shall Not Tick"
+authors = "JensenJ"
+description = '''
+Disables unnecessary ticking for entities outside a specified range of players.
+'''
+#logoFile = ""
+
+[[dependencies.youshallnottick]]
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.youshallnottick]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.youshallnottick]]
+modId = "architectury"
+mandatory = true
+versionRange = "[4.11.93,)"
+ordering = "AFTER"
+side = "BOTH"
