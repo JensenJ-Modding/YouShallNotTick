@@ -18,11 +18,6 @@ public class Utils {
 
     public static Object2BooleanMap<EntityType<?>> isIgnored = new Object2BooleanOpenHashMap<>();
 
-    @ExpectPlatform
-    public static void handleGuardEntityTick(Consumer<Entity> consumer, Entity entity){
-        throw new AssertionError("Override not found for handleGuardEntityTick in modloader.");
-    }
-
     public static boolean enoughPlayers(Level level) {
         if (level.isClientSide){
             return false;

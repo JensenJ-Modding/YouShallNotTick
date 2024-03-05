@@ -1,43 +1,39 @@
 package net.youshallnottick.mixin;
 
+import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.youshallnottick.Config;
 import net.youshallnottick.Utils;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.Random;
 import java.util.function.Consumer;
 
-@Mixin(Level.class)
+@Mixin(value = Level.class, priority = 1495)
 public abstract class EntityTickMixin {
 
-    @Overwrite
-    public void guardEntityTick(Consumer<Entity> consumer, Entity entity) {
+    @WrapWithCondition(
+            method = "guardEntityTick",
+            at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V")
+    )
+    private boolean youshallnottick$onlyTickIfAllowed(Consumer<Entity> consumer, Object obj){
         Level level = ((Level) (Object) this);
-        handleEntityTick(consumer, entity, level);
-    }
+        Entity entity = (Entity) obj;
 
-    private static void handleEntityTick(Consumer<Entity> consumer, Entity entity, Level level){
         if (!Utils.enoughPlayers(level)){
-            Utils.handleGuardEntityTick(consumer, entity);
-            return;
+            return true;
         }
 
         if(!(entity instanceof LivingEntity) || entity instanceof Player){
-            Utils.handleGuardEntityTick(consumer, entity);
-            return;
+            return true;
         }
 
         if (Utils.isIgnoredEntity(entity)) {
-            Utils.handleGuardEntityTick(consumer, entity);
-            return;
+            return true;
         }
 
         BlockPos entityPos = entity.blockPosition();
@@ -45,13 +41,14 @@ public abstract class EntityTickMixin {
         int maxDistanceSquare = Config.maxEntityTickDistanceHorizontal.get();
 
         if (Utils.isNearPlayer(level, entityPos, maxHeight, maxDistanceSquare)) {
-            Utils.handleGuardEntityTick(consumer, entity);
-            return;
+            return true;
         }
 
         boolean isInExemptChunk = Utils.isInExemptChunk(level, entityPos);
         if (isInExemptChunk || ((LivingEntity) entity).isDeadOrDying()) {
-            Utils.handleGuardEntityTick(consumer, entity);
+            return true;
         }
+
+        return false;
     }
 }
