@@ -6,6 +6,7 @@
   "client": [
   ],
   "mixins": [
+    "EntityTickMixin"
   ],
   "injectors": {
     "defaultRequire": 1

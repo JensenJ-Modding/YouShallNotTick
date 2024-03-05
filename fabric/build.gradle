@@ -7,6 +7,13 @@ architectury {
     fabric()
 }
 
+repositories {
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
+}
+
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
 }
@@ -22,8 +29,13 @@ configurations {
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
+    // Config Dependencies
+    implementation "com.electronwill.night-config:core:${night_config_version}"
+    implementation "com.electronwill.night-config:toml:${night_config_version}"
+    modApi "net.minecraftforge:forgeconfigapiport-fabric:${forge_config_api_port_version}"
+
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

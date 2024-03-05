@@ -26,6 +26,7 @@
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.18.2",
-    "architectury": ">=4.11.93"
+    "architectury": ">=4.11.93",
+    "forgeconfigapiport": ">=3.2.0"
   }
 }
