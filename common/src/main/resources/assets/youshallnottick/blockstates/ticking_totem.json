@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "youshallnottick:block/ticking_totem" },
+    "facing=east":  { "model": "youshallnottick:block/ticking_totem", "y":  90 },
+    "facing=south": { "model": "youshallnottick:block/ticking_totem", "y": 180 },
+    "facing=west":  { "model": "youshallnottick:block/ticking_totem", "y": 270 }
+  }
+}

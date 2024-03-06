@@ -5,5 +5,8 @@ public class YouShallNotTick {
 
     public static void init() {
         ServerConfig.updateMobLists();
+        YouShallNotTickRegistry.BLOCKS.register();
+        YouShallNotTickRegistry.ITEMS.register();
+        YouShallNotTickRegistry.BLOCK_ENTITIES.register();
     }
 }
