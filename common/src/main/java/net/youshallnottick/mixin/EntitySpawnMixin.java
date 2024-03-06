@@ -21,11 +21,8 @@ import java.util.Random;
 public class EntitySpawnMixin {
     @Inject(at = @At("HEAD"), method = "getRandomSpawnMobAt", cancellable = true)
     private static void youshallnottick$getRandomSpawnMobAt(ServerLevel level, StructureFeatureManager arg2, ChunkGenerator arg3, MobCategory arg4, Random arg5, BlockPos blockPos, CallbackInfoReturnable<Optional<MobSpawnSettings.SpawnerData>> cir) {
-        if (!Utils.isInExemptChunk(level, blockPos) && Utils.enoughPlayers(level) && ServerConfig.shouldEnableSpawnMixin.get()) {
-            int maxHorizontalDist = ServerConfig.maxEntitySpawnDistanceHorizontal.get();
-            int maxVerticalDist = ServerConfig.maxEntitySpawnDistanceVertical.get();
-
-            if (!Utils.isNearPlayer(level, blockPos, maxHorizontalDist, maxVerticalDist)) {
+        if (Utils.enoughPlayers(level) && ServerConfig.shouldEnableSpawnMixin.get()) {
+            if (!Utils.isNearPlayer(level, blockPos)) {
                 cir.setReturnValue(Optional.empty());
             }
         }

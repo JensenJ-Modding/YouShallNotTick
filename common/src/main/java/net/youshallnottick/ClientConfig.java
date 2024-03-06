@@ -8,13 +8,13 @@ public class ClientConfig {
 
     public static ForgeConfigSpec CLIENT_CONFIG;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableRenderingNonTickingEntities;
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldRenderFrozenEntities;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
         BUILDER.comment("Client Settings").push(CATEGORY_CLIENT);
-        shouldEnableRenderingNonTickingEntities = BUILDER.comment("Whether entities \"Frozen\" by the mod should be rendered. [Default: true]")
+        shouldRenderFrozenEntities = BUILDER.comment("Whether entities \"frozen\" by the mod should be rendered. [Default: true]")
                 .define("frozenEntityRendering", true);
         BUILDER.pop();
 

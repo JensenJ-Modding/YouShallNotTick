@@ -24,35 +24,33 @@ public abstract class EntityTickMixin {
         Level level = ((Level) (Object) this);
         Entity entity = (Entity) obj;
 
+        //If the tick mixin is disabled, allow ticking
         if(!ServerConfig.shouldEnableTickMixin.get()){
             return true;
         }
 
+        //If there are not enough players, allow ticking
         if (!Utils.enoughPlayers(level)){
             return true;
         }
 
+        //If this is not a living entity or is a player, allow ticking
         if(!(entity instanceof LivingEntity) || entity instanceof Player){
             return true;
         }
 
+        //If this is an ignored entity, allow ticking
         if (Utils.isIgnoredEntity(entity)) {
             return true;
         }
 
+        //If its near the player, allow ticking
         BlockPos entityPos = entity.blockPosition();
-        int maxHorizontalDist = ServerConfig.maxEntityTickDistanceHorizontal.get();
-        int maxVerticalDist = ServerConfig.maxEntityTickDistanceVertical.get();
-
-        if (Utils.isNearPlayer(level, entityPos, maxHorizontalDist, maxVerticalDist)) {
+        if (Utils.isNearPlayer(level, entityPos)) {
             return true;
         }
 
-        boolean isInExemptChunk = Utils.isInExemptChunk(level, entityPos);
-        if (isInExemptChunk || ((LivingEntity) entity).isDeadOrDying()) {
-            return true;
-        }
-
-        return false;
+        //If it is dead or dying, allow ticking
+        return ((LivingEntity) entity).isDeadOrDying();
     }
 }

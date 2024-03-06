@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -18,15 +17,7 @@ public class Utils {
     public static Object2BooleanMap<EntityType<?>> isIgnored = new Object2BooleanOpenHashMap<>();
 
     public static boolean enoughPlayers(Level level) {
-        if (level.isClientSide){
-            return false;
-        }
-        MinecraftServer server = level.getServer();
-        if (server != null) {
-            return server.getPlayerList().getPlayerCount() >= ServerConfig.minPlayers.get();
-        } else {
-            return false;
-        }
+        return level.players().size() >= ServerConfig.minPlayers.get();
     }
 
     @ExpectPlatform
@@ -63,15 +54,26 @@ public class Utils {
         });
     }
 
-    public static boolean isInExemptChunk(Level level, BlockPos entityPos) {
+    public static boolean isNearPlayer(Level level, BlockPos blockPos) {
+        return isNearPlayerInternal(level, blockPos.getX(), blockPos.getY(), blockPos.getZ());
+    }
+
+    public static boolean isEntityWithinDistance(Entity entity, double posX, double posY, double posZ){
+        int maxHorizontalDist = ServerConfig.maxEntitySpawnDistanceHorizontal.get();
+        int maxVerticalDist = ServerConfig.maxEntitySpawnDistanceVertical.get();
+        if (Math.abs(entity.getY() - posY) < maxVerticalDist) {
+            double x = entity.getX() - posX;
+            double z = entity.getZ() - posZ;
+
+            return x * x + z * z < maxHorizontalDist * maxHorizontalDist;
+        }
+
         return false;
     }
 
-    public static boolean isNearPlayer(Level level, BlockPos blockPos, int maxHorizontalDist, int maxVerticalDist) {
-        return isNearPlayerInternal(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), maxHorizontalDist, maxVerticalDist);
-    }
-
-    private static boolean isNearPlayerInternal(Level world, double posx, double posy, double posz, int maxHorizontalDist, int maxVerticalDist) {
+    private static boolean isNearPlayerInternal(Level world, double posx, double posy, double posz) {
+        int maxHorizontalDist = ServerConfig.maxEntitySpawnDistanceHorizontal.get();
+        int maxVerticalDist = ServerConfig.maxEntitySpawnDistanceVertical.get();
         List<? extends Player> players = world.players();
 
         for (Player player : players) {
