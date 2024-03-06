@@ -44,7 +44,7 @@ public abstract class EntityTickMixin {
             return true;
         }
 
-        //If its near the player, allow ticking
+        //If it's near the player, allow ticking
         BlockPos entityPos = entity.blockPosition();
         if (Utils.isNearPlayer(level, entityPos)) {
             return true;

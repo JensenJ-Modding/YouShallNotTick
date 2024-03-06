@@ -16,23 +16,27 @@ public class ServerConfig {
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_SPAWNING = "spawning";
     public static final String CATEGORY_TICKING = "ticking";
-
+    public static final String CATEGORY_TOTEM = "totem";
     public static ForgeConfigSpec SERVER_CONFIG;
-
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableSpawnMixin;
-    public static ForgeConfigSpec.ConfigValue<Integer> maxEntitySpawnDistanceHorizontal;
-    public static ForgeConfigSpec.ConfigValue<Integer> maxEntitySpawnDistanceVertical;
-
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTickMixin;
-    public static ForgeConfigSpec.ConfigValue<Integer> maxEntityTickDistanceHorizontal;
-    public static ForgeConfigSpec.ConfigValue<Integer> maxEntityTickDistanceVertical;
-
-    public static ForgeConfigSpec.ConfigValue<List<String>> entityIgnoreList;
     public static ForgeConfigSpec.ConfigValue<Integer> minPlayers;
 
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableSpawnMixin;
+    public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnHorizontalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnVerticalDist;
+
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTickMixin;
+    public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickHorizontalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickVerticalDist;
+    public static ForgeConfigSpec.ConfigValue<List<String>> entityIgnoreList;
     public static final Set<ResourceLocation> entityResources = new HashSet<>();
     public static final Set<TagKey<EntityType<?>>> entityTagKeys = new HashSet<>();
     public static final Set<String> entityWildcards = new HashSet<>();
+
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTotemOfTicking;
+    public static ForgeConfigSpec.ConfigValue<Integer> totemMaxEntitySpawnHorizontalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> totemMaxEntitySpawnVerticalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> totemMaxEntityTickHorizontalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> totemMaxEntityTickVerticalDist;
 
     public static void updateMobLists() {
         Utils.isIgnored.clear();
@@ -59,19 +63,19 @@ public class ServerConfig {
         BUILDER.comment("Spawning settings").push(CATEGORY_SPAWNING);
         shouldEnableSpawnMixin = BUILDER.comment("Whether the living entity spawning check should be enabled [Default: true]")
                 .define("enableEntitySpawnCheck", true);
-        maxEntitySpawnDistanceHorizontal = BUILDER.comment("Maximum distance from player (horizontally) for living entity spawning check [Default: 48]")
-                .define("maxEntitySpawnDistanceHorizontal", 48);
-        maxEntitySpawnDistanceVertical = BUILDER.comment("Maximum distance from player (vertically) for living entity spawning check [Default: 32]")
-                .define("maxEntitySpawnDistanceVertical", 32);
+        playerMaxEntitySpawnHorizontalDist = BUILDER.comment("Maximum distance from player (horizontally) for living entity spawning check [Default: 48]")
+                .define("playerMaxEntitySpawnDistanceHorizontal", 48);
+        playerMaxEntitySpawnVerticalDist = BUILDER.comment("Maximum distance from player (vertically) for living entity spawning check [Default: 32]")
+                .define("playerMaxEntitySpawnDistanceVertical", 32);
         BUILDER.pop();
 
         BUILDER.comment("Ticking settings").push(CATEGORY_TICKING);
         shouldEnableTickMixin = BUILDER.comment("Whether the living entity ticking check should be enabled [Default: true]")
                 .define("enableEntityTickCheck", true);
-        maxEntityTickDistanceHorizontal = BUILDER.comment("Maximum distance from player (horizontally) to allow living entity ticking [Default: 48]")
-                .define("maxEntityTickDistanceHorizontal", 48);
-        maxEntityTickDistanceVertical = BUILDER.comment("Maximum distance from player (vertically) to allow living entity ticking [Default: 32]")
-                .define("maxEntityTickDistanceVertical", 32);
+        playerMaxEntityTickHorizontalDist = BUILDER.comment("Maximum distance from player (horizontally) to allow living entity ticking [Default: 48]")
+                .define("playerMaxEntityTickDistanceHorizontal", 48);
+        playerMaxEntityTickVerticalDist = BUILDER.comment("Maximum distance from player (vertically) to allow living entity ticking [Default: 32]")
+                .define("playerMaxEntityTickDistanceVertical", 32);
 
         List<String> defaultIgnoreList = new ArrayList<>();
         defaultIgnoreList.add("minecraft:wither");
@@ -86,6 +90,19 @@ public class ServerConfig {
                         "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally"
                 )
                 .define("entityIgnoreList", defaultIgnoreList);
+        BUILDER.pop();
+
+        BUILDER.comment("Totem of Ticking Settings").push(CATEGORY_TOTEM);
+        shouldEnableTotemOfTicking = BUILDER.comment("Whether the totem of ticking should be enabled [Default: true]")
+                .define("enableTotemOfTicking", true);
+        totemMaxEntitySpawnHorizontalDist = BUILDER.comment("Maximum distance from a totem of ticking (horizontally) for living entity spawning check [Default: 24]")
+                .define("totemMaxEntitySpawnDistanceHorizontal", 24);
+        totemMaxEntitySpawnVerticalDist = BUILDER.comment("Maximum distance from a totem of ticking (vertically) for living entity spawning check [Default: 16]")
+                .define("totemMaxEntitySpawnDistanceVertical", 16);
+        totemMaxEntityTickHorizontalDist = BUILDER.comment("Maximum distance from a totem of ticking (horizontally) to allow living entity ticking [Default: 24]")
+                .define("totemMaxEntityTickDistanceHorizontal", 24);
+        totemMaxEntityTickVerticalDist = BUILDER.comment("Maximum distance from a totem of ticking (vertically) to allow living entity ticking [Default: 16]")
+                .define("totemMaxEntityTickDistanceVertical", 16);
         BUILDER.pop();
 
         SERVER_CONFIG = BUILDER.build();

@@ -1,6 +1,7 @@
 package net.jensenj.youshallnottick.forge;
 
 import dev.architectury.platform.forge.EventBuses;
+import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,17 +24,19 @@ public class YouShallNotTickModForge {
 
     @SubscribeEvent
     public static void onLevelUnload(WorldEvent.Unload e){
-        //Clear the ticking totem map for this level
+        if(e.getWorld().isClientSide())
+            return;
+        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.remove(e.getWorld().dimensionType());
     }
 
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load e){
-        //Find any ticking totem block entities in this level and add their locations to map
+        TickingTotemBlockEntity.handleChunkLoading(e.getWorld(), e.getChunk());
     }
 
     @SubscribeEvent
     public static void onChunkUnload(ChunkEvent.Unload e){
-        //Find any ticking totem block entities in this level and remove their locations from map
+        TickingTotemBlockEntity.handleChunkUnloading(e.getWorld(), e.getChunk());
     }
 
 }

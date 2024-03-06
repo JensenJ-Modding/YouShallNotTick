@@ -17,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class TickingTotemBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
     private static final VoxelShape SHAPE = Block.box(4,0,4,12,16,12);
 
     protected TickingTotemBlock(Properties properties) {
@@ -60,8 +59,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
     @Override
     public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean pIsMoving) {
         if(state.getBlock() != newState.getBlock()) {
-            System.out.println("Placed totem");
-            //TODO: Add this to ticking totem set for this level
+            TickingTotemBlockEntity.addTickingTotemPosition(level.dimensionType(), pos);
         }
         super.onRemove(state, level, pos, newState, pIsMoving);
     }
@@ -69,8 +67,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
     @Override
     public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean pIsMoving) {
         if(state.getBlock() != newState.getBlock()) {
-            System.out.println("Removed totem");
-            //TODO: Remove this from ticking totem set for this level
+            TickingTotemBlockEntity.removeTickingTotemPosition(level.dimensionType(), pos);
         }
         super.onRemove(state, level, pos, newState, pIsMoving);
     }
