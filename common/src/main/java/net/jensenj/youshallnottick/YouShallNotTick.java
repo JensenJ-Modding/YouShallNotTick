@@ -1,4 +1,7 @@
-package net.youshallnottick;
+package net.jensenj.youshallnottick;
+
+import net.jensenj.youshallnottick.config.ServerConfig;
+import net.jensenj.youshallnottick.registry.YouShallNotTickRegistry;
 
 public class YouShallNotTick {
     public static final String MOD_ID = "youshallnottick";

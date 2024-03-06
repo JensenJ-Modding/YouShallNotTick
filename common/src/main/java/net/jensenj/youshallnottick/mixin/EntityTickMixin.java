@@ -1,13 +1,13 @@
-package net.youshallnottick.mixin;
+package net.jensenj.youshallnottick.mixin;
 
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import net.jensenj.youshallnottick.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.youshallnottick.ServerConfig;
-import net.youshallnottick.Utils;
+import net.jensenj.youshallnottick.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

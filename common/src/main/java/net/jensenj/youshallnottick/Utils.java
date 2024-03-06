@@ -1,4 +1,4 @@
-package net.youshallnottick;
+package net.jensenj.youshallnottick;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.jensenj.youshallnottick.config.ServerConfig;
 
 import java.util.List;
 

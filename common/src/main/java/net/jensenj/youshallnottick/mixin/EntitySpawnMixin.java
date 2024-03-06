@@ -1,5 +1,6 @@
-package net.youshallnottick.mixin;
+package net.jensenj.youshallnottick.mixin;
 
+import net.jensenj.youshallnottick.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobCategory;
@@ -7,8 +8,7 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.youshallnottick.ServerConfig;
-import net.youshallnottick.Utils;
+import net.jensenj.youshallnottick.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

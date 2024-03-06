@@ -1,4 +1,4 @@
-package net.youshallnottick;
+package net.jensenj.youshallnottick.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

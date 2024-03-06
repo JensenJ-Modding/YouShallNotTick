@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.youshallnottick.fabric.YouShallNotTickModFabric"
+      "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabric"
     ]
   },
   "mixins": [

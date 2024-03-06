@@ -1,4 +1,4 @@
-package net.youshallnottick.forge;
+package net.jensenj.youshallnottick.forge;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;

@@ -1,4 +1,4 @@
-package net.youshallnottick;
+package net.jensenj.youshallnottick.registry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;

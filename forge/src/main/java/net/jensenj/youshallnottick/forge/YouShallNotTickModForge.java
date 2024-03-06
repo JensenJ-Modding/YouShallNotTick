@@ -1,4 +1,4 @@
-package net.youshallnottick.forge;
+package net.jensenj.youshallnottick.forge;
 
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.event.world.ChunkEvent;
@@ -8,9 +8,9 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.youshallnottick.ClientConfig;
-import net.youshallnottick.ServerConfig;
-import net.youshallnottick.YouShallNotTick;
+import net.jensenj.youshallnottick.config.ClientConfig;
+import net.jensenj.youshallnottick.config.ServerConfig;
+import net.jensenj.youshallnottick.YouShallNotTick;
 
 @Mod(YouShallNotTick.MOD_ID)
 public class YouShallNotTickModForge {

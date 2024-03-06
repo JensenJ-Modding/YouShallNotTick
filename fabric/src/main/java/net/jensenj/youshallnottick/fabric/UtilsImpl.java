@@ -1,4 +1,4 @@
-package net.youshallnottick.fabric;
+package net.jensenj.youshallnottick.fabric;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

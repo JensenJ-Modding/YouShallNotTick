@@ -1,10 +1,10 @@
-package net.youshallnottick.mixin;
+package net.jensenj.youshallnottick.mixin;
 
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
-import net.youshallnottick.ClientConfig;
-import net.youshallnottick.Utils;
+import net.jensenj.youshallnottick.config.ClientConfig;
+import net.jensenj.youshallnottick.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
