@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.function.Consumer;
 
-@Mixin(value = Level.class, priority = 1495)
+@Mixin(value = Level.class, priority = 1100)
 public abstract class EntityTickMixin {
 
     @WrapWithCondition(
@@ -37,10 +37,10 @@ public abstract class EntityTickMixin {
         }
 
         BlockPos entityPos = entity.blockPosition();
-        int maxHeight = Config.maxEntityTickDistanceVertical.get();
-        int maxDistanceSquare = Config.maxEntityTickDistanceHorizontal.get();
+        int maxHorizontalDist = Config.maxEntityTickDistanceHorizontal.get();
+        int maxVerticalDist = Config.maxEntityTickDistanceVertical.get();
 
-        if (Utils.isNearPlayer(level, entityPos, maxHeight, maxDistanceSquare)) {
+        if (Utils.isNearPlayer(level, entityPos, maxHorizontalDist, maxVerticalDist)) {
             return true;
         }
 

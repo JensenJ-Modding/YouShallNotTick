@@ -66,9 +66,11 @@ public class Config {
                 .define("maxEntityTickDistanceVertical", 32);
 
         entityIgnoreList = BUILDER.comment(
-                        "List of entities to ignore when checking if they are allowed to tick",
+                        "List of LIVING entities to ignore when checking if they are allowed to tick",
+                        "Only LIVING entities need to be added to this list, all other entities are ignored by the mod",
                         "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
-                        "You can also use a wildcard after modid (modid:*)"
+                        "You can also use a wildcard after modid (modid:*)",
+                        "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally"
                 )
                 .define("entityIgnoreList", defaultIgnoreList);
 

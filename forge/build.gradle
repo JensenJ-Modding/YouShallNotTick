@@ -15,7 +15,6 @@ loom {
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
         mixinConfig "youshallnottick-common.mixins.json"
-        mixinConfig "youshallnottick.mixins.json"
     }
 }
 

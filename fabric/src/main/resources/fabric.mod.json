@@ -20,7 +20,6 @@
     ]
   },
   "mixins": [
-    "youshallnottick.mixins.json",
     "youshallnottick-common.mixins.json"
   ],
   "depends": {

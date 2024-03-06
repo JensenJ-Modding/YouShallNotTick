@@ -6,7 +6,8 @@
   "client": [
   ],
   "mixins": [
-    "EntityTickMixin"
+    "EntityTickMixin",
+    "EntitySpawnMixin"
   ],
   "injectors": {
     "defaultRequire": 1

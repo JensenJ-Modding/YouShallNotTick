@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Utils {
 
@@ -68,25 +67,23 @@ public class Utils {
         return false;
     }
 
-    public static boolean isNearPlayer(Level level, BlockPos blockPos, int maxHeight, int maxDistance) {
-        return isNearPlayerInternal(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), maxHeight, maxDistance);
+    public static boolean isNearPlayer(Level level, BlockPos blockPos, int maxHorizontalDist, int maxVerticalDist) {
+        return isNearPlayerInternal(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), maxHorizontalDist, maxVerticalDist);
     }
 
-    private static boolean isNearPlayerInternal(Level world, double posx, double posy, double posz, int maxHeight, int maxDistance) {
+    private static boolean isNearPlayerInternal(Level world, double posx, double posy, double posz, int maxHorizontalDist, int maxVerticalDist) {
         List<? extends Player> players = world.players();
 
         for (Player player : players) {
             if (player == null) {
-                    continue;
+                continue;
             }
 
-            if (Math.abs(player.getY() - posy) < maxHeight) {
+            if (Math.abs(player.getY() - posy) < maxVerticalDist) {
                 double x = player.getX() - posx;
                 double z = player.getZ() - posz;
 
-                boolean nearPlayer = x * x + z * z < maxDistance * maxDistance;
-
-                if (nearPlayer) {
+                if (x * x + z * z < maxHorizontalDist * maxHorizontalDist) {
                     return true;
                 }
             }
