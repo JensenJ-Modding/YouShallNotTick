@@ -6,7 +6,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.youshallnottick.Config;
+import net.youshallnottick.ServerConfig;
 import net.youshallnottick.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,6 +24,10 @@ public abstract class EntityTickMixin {
         Level level = ((Level) (Object) this);
         Entity entity = (Entity) obj;
 
+        if(!ServerConfig.shouldEnableTickMixin.get()){
+            return true;
+        }
+
         if (!Utils.enoughPlayers(level)){
             return true;
         }
@@ -37,8 +41,8 @@ public abstract class EntityTickMixin {
         }
 
         BlockPos entityPos = entity.blockPosition();
-        int maxHorizontalDist = Config.maxEntityTickDistanceHorizontal.get();
-        int maxVerticalDist = Config.maxEntityTickDistanceVertical.get();
+        int maxHorizontalDist = ServerConfig.maxEntityTickDistanceHorizontal.get();
+        int maxVerticalDist = ServerConfig.maxEntityTickDistanceVertical.get();
 
         if (Utils.isNearPlayer(level, entityPos, maxHorizontalDist, maxVerticalDist)) {
             return true;

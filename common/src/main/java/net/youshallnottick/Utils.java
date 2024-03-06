@@ -23,7 +23,7 @@ public class Utils {
         }
         MinecraftServer server = level.getServer();
         if (server != null) {
-            return server.getPlayerList().getPlayerCount() >= Config.minPlayers.get();
+            return server.getPlayerList().getPlayerCount() >= ServerConfig.minPlayers.get();
         } else {
             return false;
         }
@@ -35,7 +35,7 @@ public class Utils {
     }
 
     public static boolean isIgnoredEntity(Entity entity) {
-        if (Config.entityIgnoreList.get().isEmpty()) {
+        if (ServerConfig.entityIgnoreList.get().isEmpty()) {
             return false;
         }
 
@@ -47,16 +47,16 @@ public class Utils {
             }
 
             var ignored = false;
-            if (!Config.entityResources.isEmpty()) {
-                ignored = Config.entityResources.contains(entityRegLoc);
+            if (!ServerConfig.entityResources.isEmpty()) {
+                ignored = ServerConfig.entityResources.contains(entityRegLoc);
             }
 
-            if (!Config.entityWildcards.isEmpty() && !ignored) {
-                ignored = Config.entityWildcards.stream().anyMatch(e -> entityRegLoc.toString().startsWith(e));
+            if (!ServerConfig.entityWildcards.isEmpty() && !ignored) {
+                ignored = ServerConfig.entityWildcards.stream().anyMatch(e -> entityRegLoc.toString().startsWith(e));
             }
 
-            if (!Config.entityTagKeys.isEmpty() && !ignored) {
-                ignored = Config.entityTagKeys.stream().anyMatch(entityType::is);
+            if (!ServerConfig.entityTagKeys.isEmpty() && !ignored) {
+                ignored = ServerConfig.entityTagKeys.stream().anyMatch(entityType::is);
             }
 
             return ignored;

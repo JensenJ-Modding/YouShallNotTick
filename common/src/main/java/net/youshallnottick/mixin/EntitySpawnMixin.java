@@ -7,7 +7,7 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.youshallnottick.Config;
+import net.youshallnottick.ServerConfig;
 import net.youshallnottick.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,10 +20,10 @@ import java.util.Random;
 @Mixin(value = NaturalSpawner.class, priority = 1100)
 public class EntitySpawnMixin {
     @Inject(at = @At("HEAD"), method = "getRandomSpawnMobAt", cancellable = true)
-    private static void getRandomSpawnMobAt(ServerLevel level, StructureFeatureManager arg2, ChunkGenerator arg3, MobCategory arg4, Random arg5, BlockPos blockPos, CallbackInfoReturnable<Optional<MobSpawnSettings.SpawnerData>> cir) {
-        if (!Utils.isInExemptChunk(level, blockPos) && Utils.enoughPlayers(level)) {
-            int maxHorizontalDist = Config.maxEntitySpawnDistanceHorizontal.get();
-            int maxVerticalDist = Config.maxEntitySpawnDistanceVertical.get();
+    private static void youshallnottick$getRandomSpawnMobAt(ServerLevel level, StructureFeatureManager arg2, ChunkGenerator arg3, MobCategory arg4, Random arg5, BlockPos blockPos, CallbackInfoReturnable<Optional<MobSpawnSettings.SpawnerData>> cir) {
+        if (!Utils.isInExemptChunk(level, blockPos) && Utils.enoughPlayers(level) && ServerConfig.shouldEnableSpawnMixin.get()) {
+            int maxHorizontalDist = ServerConfig.maxEntitySpawnDistanceHorizontal.get();
+            int maxVerticalDist = ServerConfig.maxEntitySpawnDistanceVertical.get();
 
             if (!Utils.isNearPlayer(level, blockPos, maxHorizontalDist, maxVerticalDist)) {
                 cir.setReturnValue(Optional.empty());
