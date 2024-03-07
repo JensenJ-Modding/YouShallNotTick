@@ -1,3 +1,8 @@
 {
-  "block.youshallnottick.ticking_totem": "Totem of Ticking"
+  "block.youshallnottick.ticking_totem": "Totem of Ticking",
+  "block.youshallnottick.ticking_totem.info.tooltip": "Enables living entity ticking within a radius",
+  "block.youshallnottick.ticking_totem.range_h.tooltip": "Horizontal Range: ",
+  "block.youshallnottick.ticking_totem.range_v.tooltip": "Vertical Range: ",
+  "block.youshallnottick.ticking_totem.redstone.tooltip": "Can be disabled with redstone.",
+  "block.youshallnottick.ticking_totem.disabled.tooltip": "Disabled by server configuration."
 }
