@@ -25,8 +25,9 @@ public class Utils {
     }
 
     @ExpectPlatform
+    @SuppressWarnings("unused")
     public static ResourceLocation getEntityRegistrationLocation(Entity entity){
-        throw new AssertionError("Override not found for getEntityRegistrationLocation in modloader.");
+        throw new AssertionError("Override not found for getEntityRegistrationLocation in mod loader.");
     }
 
     public static boolean isIgnoredEntity(Entity entity) {
@@ -67,25 +68,25 @@ public class Utils {
         });
     }
 
-    public static boolean isNearPlayer(Level level, double posx, double posy, double posz, int playerHorizontalDist, int playerVerticalDist, int totemHorizontalDist, int totemVerticalDist) {
-        boolean isNearPlayer = isNearPlayerInternal(level, posx, posy, posz, playerHorizontalDist, playerVerticalDist);
+    public static boolean isNearPlayer(Level level, double posX, double posY, double posZ, int playerHorizontalDist, int playerVerticalDist, int totemHorizontalDist, int totemVerticalDist) {
+        boolean isNearPlayer = isNearPlayerInternal(level, posX, posY, posZ, playerHorizontalDist, playerVerticalDist);
         if(isNearPlayer)
             return true;
         if(ServerConfig.shouldEnableTotemOfTicking.get())
-            return isNearTotemOfTickingInternal(level, posx, posy, posz, totemHorizontalDist, totemVerticalDist);
+            return isNearTotemOfTickingInternal(level, posX, posY, posZ, totemHorizontalDist, totemVerticalDist);
         return false;
     }
 
-    private static boolean isNearPlayerInternal(Level level, double posx, double posy, double posz, int horizontalDist, int verticalDist) {
+    private static boolean isNearPlayerInternal(Level level, double posX, double posY, double posZ, int horizontalDist, int verticalDist) {
         List<? extends Player> players = level.players();
         for (Player player : players) {
             if (player == null) {
                 continue;
             }
 
-            if (Math.abs(player.getY() - posy) < verticalDist) {
-                double x = player.getX() - posx;
-                double z = player.getZ() - posz;
+            if (Math.abs(player.getY() - posY) < verticalDist) {
+                double x = player.getX() - posX;
+                double z = player.getZ() - posZ;
 
                 if (x * x + z * z < horizontalDist * horizontalDist) {
                     return true;
@@ -95,14 +96,14 @@ public class Utils {
         return false;
     }
 
-    private static boolean isNearTotemOfTickingInternal(Level level, double posx, double posy, double posz, int horizontalDist, int verticalDist) {
+    private static boolean isNearTotemOfTickingInternal(Level level, double posX, double posY, double posZ, int horizontalDist, int verticalDist) {
         Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.get(level.dimensionType());
         if(totemsForThisLevel == null)
             return false;
         for(BlockPos totemPos : totemsForThisLevel){
-            if (Math.abs(totemPos.getY() - posy) < verticalDist) {
-                double x = totemPos.getX() - posx;
-                double z = totemPos.getZ() - posz;
+            if (Math.abs(totemPos.getY() - posY) < verticalDist) {
+                double x = totemPos.getX() - posX;
+                double z = totemPos.getZ() - posZ;
 
                 if (x * x + z * z < horizontalDist * horizontalDist) {
                     return true;

@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings({"unused", ""})
 @Mixin(value = Level.class, priority = 1100)
 public abstract class EntityTickMixin {
 
@@ -21,6 +22,7 @@ public abstract class EntityTickMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V")
     )
     private boolean youshallnottick$onlyTickIfAllowed(Consumer<Entity> consumer, Object obj){
+        @SuppressWarnings("all")
         Level level = ((Level) (Object) this);
         Entity entity = (Entity) obj;
 

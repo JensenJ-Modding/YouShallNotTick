@@ -64,8 +64,10 @@ public class ServerConfig {
         BUILDER.pop();
 
         BUILDER.comment("Spawning settings").push(CATEGORY_SPAWNING);
-        shouldEnableSpawnMixin = BUILDER.comment("Whether the living entity spawning check should be enabled [Default: true]")
-                .define("enableEntitySpawnCheck", true);
+        shouldEnableSpawnMixin = BUILDER.comment(
+                        "Whether the living entity spawning check should be enabled [Default: false]",
+                        "Warning: having this turned on can cause higher mob spawn rates near players, as there are less places for mobs to spawn")
+                .define("enableEntitySpawnCheck", false);
         playerMaxEntitySpawnHorizontalDist = BUILDER.comment("Maximum distance from player (horizontally) for living entity spawning check [Default: 48]")
                 .define("playerMaxEntitySpawnDistanceHorizontal", 48);
         playerMaxEntitySpawnVerticalDist = BUILDER.comment("Maximum distance from player (vertically) for living entity spawning check [Default: 32]")
@@ -89,6 +91,7 @@ public class ServerConfig {
                         "List of living entities to ignore when checking if they are allowed to tick",
                         "Only living entities need to be added to this list, all other entities are ignored by the mod",
                         "Living entities which have an owner, e.g. wolves are also ignored by the mod.",
+                        "This list is not taken into account with the spawning check.",
                         "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
                         "You can also use a wildcard after modid (modid:*)",
                         "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally"

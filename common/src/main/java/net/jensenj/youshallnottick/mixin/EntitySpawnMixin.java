@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 @Mixin(value = NaturalSpawner.class, priority = 1100)
 public class EntitySpawnMixin {
     @Inject(at = @At("HEAD"), method = "getRandomSpawnMobAt", cancellable = true)

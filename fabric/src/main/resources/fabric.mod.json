@@ -3,16 +3,17 @@
   "id": "youshallnottick",
   "version": "${version}",
   "name": "You Shall Not Tick",
-  "description": "Disables unnecessary ticking for entities outside a specified range of players.",
+  "description": "Disables unnecessary ticking for living entities.",
   "authors": [
-    "JensenJ"
+    "JensenJ - Developer",
+    "NoahS - Artist"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/JensenJ-Modding/YouShallNotTick"
+    "sources": "https://github.com/JensenJ-Modding/YouShallNotTick",
+    "issues": "https://github.com/JensenJ-Modding/YouShallNotTick/issues"
   },
   "license": "MIT License",
-  "icon": "assets/youshallnottick/icon.png",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [

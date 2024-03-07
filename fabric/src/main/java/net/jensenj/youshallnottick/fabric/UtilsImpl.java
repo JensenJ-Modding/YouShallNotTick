@@ -4,6 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
+@SuppressWarnings("unused")
 public class UtilsImpl {
 
     public static ResourceLocation getEntityRegistrationLocation(Entity entity){

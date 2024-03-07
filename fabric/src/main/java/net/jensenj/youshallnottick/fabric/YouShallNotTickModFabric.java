@@ -12,6 +12,7 @@ import net.jensenj.youshallnottick.config.ClientConfig;
 import net.jensenj.youshallnottick.config.ServerConfig;
 import net.jensenj.youshallnottick.YouShallNotTick;
 
+@SuppressWarnings("unused")
 public class YouShallNotTickModFabric implements ModInitializer {
     @Override
     public void onInitialize() {

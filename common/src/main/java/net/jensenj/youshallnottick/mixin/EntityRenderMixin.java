@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings("unused")
 @Mixin(value = EntityRenderDispatcher.class, priority = 1100)
 public class EntityRenderMixin {
     @Inject(at = @At("HEAD"), method = "shouldRender", cancellable = true)

@@ -14,6 +14,7 @@ import net.jensenj.youshallnottick.config.ServerConfig;
 import net.jensenj.youshallnottick.YouShallNotTick;
 
 @Mod(YouShallNotTick.MOD_ID)
+@SuppressWarnings("unused")
 public class YouShallNotTickModForge {
     public YouShallNotTickModForge() {
         EventBuses.registerModEventBus(YouShallNotTick.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
