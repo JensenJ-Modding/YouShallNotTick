@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabric"
+    ],
+    "client": [
+      "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabricClient"
     ]
   },
   "mixins": [

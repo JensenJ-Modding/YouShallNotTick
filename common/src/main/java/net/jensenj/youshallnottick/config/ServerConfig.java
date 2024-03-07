@@ -19,8 +19,6 @@ public class ServerConfig {
     public static final String CATEGORY_TOTEM = "totem";
     public static ForgeConfigSpec SERVER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Integer> minPlayers;
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldTamedMobsBeExempt;
-
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableSpawnMixin;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnHorizontalDist;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnVerticalDist;
@@ -28,6 +26,7 @@ public class ServerConfig {
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTickMixin;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickHorizontalDist;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickVerticalDist;
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldTamedMobsBeExempt;
     public static ForgeConfigSpec.ConfigValue<List<String>> entityIgnoreList;
     public static final Set<ResourceLocation> entityResources = new HashSet<>();
     public static final Set<TagKey<EntityType<?>>> entityTagKeys = new HashSet<>();
@@ -59,8 +58,6 @@ public class ServerConfig {
         BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         minPlayers = BUILDER.comment("Minimum number of players before mod is enabled. [Default: 1]")
                 .define("minPlayers", 1);
-        shouldTamedMobsBeExempt = BUILDER.comment("Whether tamed living entities such as wolves should be allowed to tick normally. [Default: true]")
-                .define("tamedNormalTicking", true);
         BUILDER.pop();
 
         BUILDER.comment("Spawning settings").push(CATEGORY_SPAWNING);
@@ -81,6 +78,8 @@ public class ServerConfig {
                 .define("playerMaxEntityTickDistanceHorizontal", 48);
         playerMaxEntityTickVerticalDist = BUILDER.comment("Maximum distance from player (vertically) to allow living entity ticking [Default: 32]")
                 .define("playerMaxEntityTickDistanceVertical", 32);
+        shouldTamedMobsBeExempt = BUILDER.comment("Whether tamed living entities such as wolves should be allowed to tick normally. [Default: true]")
+                .define("tamedNormalTicking", true);
 
         List<String> defaultIgnoreList = new ArrayList<>();
         defaultIgnoreList.add("minecraft:wither");

@@ -2,6 +2,7 @@ package net.jensenj.youshallnottick.forge;
 
 import dev.architectury.platform.forge.EventBuses;
 import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,8 +20,16 @@ public class YouShallNotTickModForge {
     public YouShallNotTickModForge() {
         EventBuses.registerModEventBus(YouShallNotTick.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         YouShallNotTick.init();
+
+        MinecraftForge.EVENT_BUS.register(YouShallNotTickModForge.class);
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_CONFIG);
+    }
+
+    @SubscribeEvent
+    public static void onLevelLoad(WorldEvent.Load e){
+        ServerConfig.updateMobLists();
     }
 
     @SubscribeEvent
