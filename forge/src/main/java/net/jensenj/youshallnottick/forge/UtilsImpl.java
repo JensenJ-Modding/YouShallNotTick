@@ -8,6 +8,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class UtilsImpl {
 
     public static ResourceLocation getEntityRegistrationLocation(Entity entity){
-        return ForgeRegistries.ENTITIES.getKey(entity.getType());
+        return ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
     }
 }

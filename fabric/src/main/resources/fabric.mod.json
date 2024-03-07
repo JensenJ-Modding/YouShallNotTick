@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabric"
+    ],
+    "client": [
+      "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabricClient"
     ]
   },
   "mixins": [
@@ -25,8 +28,8 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.18.2",
-    "architectury": ">=4.11.93",
+    "minecraft": ">=1.19.2",
+    "architectury": ">=6.5.85",
     "forgeconfigapiport": ">=3.2.0"
   }
 }

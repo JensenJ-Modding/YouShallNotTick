@@ -6,8 +6,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class TickingTotemBlock extends BaseEntityBlock {
@@ -70,22 +69,22 @@ public class TickingTotemBlock extends BaseEntityBlock {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag flag) {
         if(ServerConfig.shouldEnableTotemOfTicking.get() && (ServerConfig.shouldEnableTickMixin.get() || ServerConfig.shouldEnableSpawnMixin.get())) {
-            list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.info.tooltip").withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.info.tooltip").withStyle(ChatFormatting.GRAY));
             if(ServerConfig.shouldEnableTickMixin.get()) {
-                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_h.tooltip")
+                list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_h.tooltip")
                         .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get())).withStyle(ChatFormatting.YELLOW));
-                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_v.tooltip")
+                list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_v.tooltip")
                         .append(String.valueOf(ServerConfig.totemMaxEntityTickVerticalDist.get())).withStyle(ChatFormatting.YELLOW));
             }
             if(ServerConfig.shouldEnableSpawnMixin.get()) {
-                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_h.tooltip")
+                list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_h.tooltip")
                         .append(String.valueOf(ServerConfig.totemMaxEntitySpawnHorizontalDist.get())).withStyle(ChatFormatting.YELLOW));
-                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_v.tooltip")
+                list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_v.tooltip")
                         .append(String.valueOf(ServerConfig.totemMaxEntitySpawnVerticalDist.get())).withStyle(ChatFormatting.YELLOW));
             }
-            list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.redstone.tooltip").withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.redstone.tooltip").withStyle(ChatFormatting.GRAY));
         }else{
-            list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.disabled.tooltip").withStyle(ChatFormatting.DARK_RED));
+            list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.disabled.tooltip").withStyle(ChatFormatting.DARK_RED));
         }
     }
 
@@ -131,7 +130,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+    public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
         boolean previousPowered = blockState.getValue(POWERED);
         if (previousPowered && !serverLevel.hasNeighborSignal(blockPos)) { //if was previously powered and there is no signal
             //Enable totem
