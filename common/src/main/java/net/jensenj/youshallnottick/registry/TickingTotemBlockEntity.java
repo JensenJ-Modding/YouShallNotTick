@@ -20,13 +20,13 @@ public class TickingTotemBlockEntity extends BlockEntity {
         super(YouShallNotTickRegistry.TICKING_TOTEM_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
-    public static void addTickingTotemPosition(DimensionType dimension, BlockPos pos){
-        Set<BlockPos> blockPosSet = TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.computeIfAbsent(dimension, k -> new HashSet<>());
+    public static void addTickingTotemPosition(LevelAccessor level, BlockPos pos){
+        Set<BlockPos> blockPosSet = TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.computeIfAbsent(level.dimensionType(), k -> new HashSet<>());
         blockPosSet.add(pos);
     }
 
-    public static void removeTickingTotemPosition(DimensionType dimension, BlockPos pos){
-        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.computeIfPresent(dimension, (k, blockPosSet) -> {
+    public static void removeTickingTotemPosition(LevelAccessor level, BlockPos pos){
+        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.computeIfPresent(level.dimensionType(), (k, blockPosSet) -> {
             blockPosSet.remove(pos);
             return blockPosSet.isEmpty() ? null : blockPosSet;
         });
@@ -39,7 +39,11 @@ public class TickingTotemBlockEntity extends BlockEntity {
         for(BlockPos pos : chunk.getBlockEntitiesPos()){
             if(!(chunk.getBlockEntity(pos) instanceof TickingTotemBlockEntity))
                 continue;
-            addTickingTotemPosition(level.dimensionType(), pos);
+            if(chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)){ //Skip powered totems
+                continue;
+            }
+            addTickingTotemPosition(level, pos);
+            return;
         }
     }
 
@@ -49,7 +53,11 @@ public class TickingTotemBlockEntity extends BlockEntity {
         for(BlockPos pos : chunk.getBlockEntitiesPos()){
             if(!(chunk.getBlockEntity(pos) instanceof TickingTotemBlockEntity))
                 continue;
-            removeTickingTotemPosition(level.dimensionType(), pos);
+            if(!chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)){ //Skip unpowered totems
+                continue;
+            }
+            removeTickingTotemPosition(level, pos);
+            return;
         }
     }
 }

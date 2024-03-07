@@ -1,8 +1,12 @@
 {
   "variants": {
-    "facing=north": { "model": "youshallnottick:block/ticking_totem" },
-    "facing=east":  { "model": "youshallnottick:block/ticking_totem", "y":  90 },
-    "facing=south": { "model": "youshallnottick:block/ticking_totem", "y": 180 },
-    "facing=west":  { "model": "youshallnottick:block/ticking_totem", "y": 270 }
+    "facing=north,powered=false": { "model": "youshallnottick:block/ticking_totem" },
+    "facing=east,powered=false":  { "model": "youshallnottick:block/ticking_totem", "y":  90 },
+    "facing=south,powered=false": { "model": "youshallnottick:block/ticking_totem", "y": 180 },
+    "facing=west,powered=false":  { "model": "youshallnottick:block/ticking_totem", "y": 270 },
+    "facing=north,powered=true": { "model": "youshallnottick:block/ticking_totem_powered" },
+    "facing=east,powered=true":  { "model": "youshallnottick:block/ticking_totem_powered", "y":  90 },
+    "facing=south,powered=true": { "model": "youshallnottick:block/ticking_totem_powered", "y": 180 },
+    "facing=west,powered=true":  { "model": "youshallnottick:block/ticking_totem_powered", "y": 270 }
   }
 }
