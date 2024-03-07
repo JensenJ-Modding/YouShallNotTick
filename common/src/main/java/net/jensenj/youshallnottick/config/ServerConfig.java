@@ -93,7 +93,8 @@ public class ServerConfig {
                         "This list is not taken into account with the spawning check.",
                         "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
                         "You can also use a wildcard after modid (modid:*)",
-                        "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally"
+                        "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally",
+                        "[Default: [\"minecraft:wither\", \"minecraft:phantom\", \"minecraft:ender_dragon\", \"minecraft:elder_guardian\"]]"
                 )
                 .define("entityIgnoreList", defaultIgnoreList);
         BUILDER.pop();
