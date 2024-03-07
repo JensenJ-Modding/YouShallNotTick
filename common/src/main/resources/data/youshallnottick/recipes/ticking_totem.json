@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "minecraft:carved_pumpkin"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "H": {
+      "item": "minecraft:hay_block"
+    },
+    "L": {
+      "item": "minecraft:smooth_stone_slab"
+    }
+  },
+  "pattern": [
+    " P ",
+    "SHS",
+    "RLR"
+  ],
+  "result": {
+    "item": "youshallnottick:ticking_totem"
+  }
+}
