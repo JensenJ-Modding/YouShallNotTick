@@ -35,9 +35,9 @@ public class EntityRenderMixin {
             return false;
 
         int playerHorizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
-        int playerVerticalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int playerVerticalDist = ServerConfig.playerMaxEntityTickVerticalDist.get();
         int totemHorizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
-        int totemVerticalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        int totemVerticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
 
         //If the entity is not within distance we should cancel rendering
         return !Utils.isNearPlayer(entity.level, entity.getX(), entity.getY(), entity.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist);

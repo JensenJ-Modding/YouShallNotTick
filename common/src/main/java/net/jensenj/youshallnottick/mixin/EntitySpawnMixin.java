@@ -24,9 +24,9 @@ public class EntitySpawnMixin {
     private static void youshallnottick$getRandomSpawnMobAt(ServerLevel level, StructureFeatureManager arg2, ChunkGenerator arg3, MobCategory arg4, Random arg5, BlockPos blockPos, CallbackInfoReturnable<Optional<MobSpawnSettings.SpawnerData>> cir) {
         if (Utils.enoughPlayers(level) && ServerConfig.shouldEnableSpawnMixin.get()) {
             int playerHorizontalDist = ServerConfig.playerMaxEntitySpawnHorizontalDist.get();
-            int playerVerticalDist = ServerConfig.playerMaxEntitySpawnHorizontalDist.get();
+            int playerVerticalDist = ServerConfig.playerMaxEntitySpawnVerticalDist.get();
             int totemHorizontalDist = ServerConfig.totemMaxEntitySpawnHorizontalDist.get();
-            int totemVerticalDist = ServerConfig.totemMaxEntitySpawnHorizontalDist.get();
+            int totemVerticalDist = ServerConfig.totemMaxEntitySpawnVerticalDist.get();
             if (!Utils.isNearPlayer(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist)) {
                 cir.setReturnValue(Optional.empty());
             }

@@ -47,9 +47,9 @@ public abstract class EntityTickMixin {
         }
 
         int playerHorizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
-        int playerVerticalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int playerVerticalDist = ServerConfig.playerMaxEntityTickVerticalDist.get();
         int totemHorizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
-        int totemVerticalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        int totemVerticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
 
         //If it's near the player, allow ticking
         BlockPos entityPos = entity.blockPosition();

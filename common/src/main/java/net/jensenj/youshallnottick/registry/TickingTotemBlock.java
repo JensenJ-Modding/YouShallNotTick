@@ -69,12 +69,20 @@ public class TickingTotemBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag flag) {
-        if(ServerConfig.shouldEnableTotemOfTicking.get()) {
+        if(ServerConfig.shouldEnableTotemOfTicking.get() && (ServerConfig.shouldEnableTickMixin.get() || ServerConfig.shouldEnableSpawnMixin.get())) {
             list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.info.tooltip").withStyle(ChatFormatting.GRAY));
-            list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.range_h.tooltip")
-                    .append(String.valueOf(ServerConfig.totemMaxEntitySpawnHorizontalDist.get())).withStyle(ChatFormatting.YELLOW));
-            list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.range_v.tooltip")
-                    .append(String.valueOf(ServerConfig.totemMaxEntitySpawnVerticalDist.get())).withStyle(ChatFormatting.YELLOW));
+            if(ServerConfig.shouldEnableTickMixin.get()) {
+                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_h.tooltip")
+                        .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get())).withStyle(ChatFormatting.YELLOW));
+                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_v.tooltip")
+                        .append(String.valueOf(ServerConfig.totemMaxEntityTickVerticalDist.get())).withStyle(ChatFormatting.YELLOW));
+            }
+            if(ServerConfig.shouldEnableSpawnMixin.get()) {
+                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_h.tooltip")
+                        .append(String.valueOf(ServerConfig.totemMaxEntitySpawnHorizontalDist.get())).withStyle(ChatFormatting.YELLOW));
+                list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_v.tooltip")
+                        .append(String.valueOf(ServerConfig.totemMaxEntitySpawnVerticalDist.get())).withStyle(ChatFormatting.YELLOW));
+            }
             list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.redstone.tooltip").withStyle(ChatFormatting.GRAY));
         }else{
             list.add(new TranslatableComponent("block." + YouShallNotTick.MOD_ID + ".ticking_totem.disabled.tooltip").withStyle(ChatFormatting.DARK_RED));
