@@ -19,6 +19,7 @@ public class ServerConfig {
     public static final String CATEGORY_TOTEM = "totem";
     public static ForgeConfigSpec SERVER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Integer> minPlayers;
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldTamedMobsBeExempt;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableSpawnMixin;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnHorizontalDist;
@@ -58,6 +59,8 @@ public class ServerConfig {
         BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         minPlayers = BUILDER.comment("Minimum number of players before mod is enabled. [Default: 1]")
                 .define("minPlayers", 1);
+        shouldTamedMobsBeExempt = BUILDER.comment("Whether tamed living entities such as wolves should be allowed to tick normally. [Default: true]")
+                .define("tamedNormalTicking", true);
         BUILDER.pop();
 
         BUILDER.comment("Spawning settings").push(CATEGORY_SPAWNING);
@@ -83,8 +86,9 @@ public class ServerConfig {
         defaultIgnoreList.add("minecraft:ender_dragon");
         defaultIgnoreList.add("minecraft:elder_guardian");
         entityIgnoreList = BUILDER.comment(
-                        "List of LIVING entities to ignore when checking if they are allowed to tick",
-                        "Only LIVING entities need to be added to this list, all other entities are ignored by the mod",
+                        "List of living entities to ignore when checking if they are allowed to tick",
+                        "Only living entities need to be added to this list, all other entities are ignored by the mod",
+                        "Living entities which have an owner, e.g. wolves are also ignored by the mod.",
                         "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
                         "You can also use a wildcard after modid (modid:*)",
                         "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally"

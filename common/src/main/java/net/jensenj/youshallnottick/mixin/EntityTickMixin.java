@@ -44,9 +44,14 @@ public abstract class EntityTickMixin {
             return true;
         }
 
+        int playerHorizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int playerVerticalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int totemHorizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        int totemVerticalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+
         //If it's near the player, allow ticking
         BlockPos entityPos = entity.blockPosition();
-        if (Utils.isNearPlayer(level, entityPos)) {
+        if (Utils.isNearPlayer(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist)) {
             return true;
         }
 

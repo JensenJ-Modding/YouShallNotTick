@@ -1,5 +1,6 @@
 package net.jensenj.youshallnottick.mixin;
 
+import net.jensenj.youshallnottick.config.ServerConfig;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
@@ -32,8 +33,13 @@ public class EntityRenderMixin {
         if(Utils.isIgnoredEntity(entity))
             return false;
 
+        int playerHorizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int playerVerticalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int totemHorizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        int totemVerticalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+
         //If the entity is not within distance we should cancel rendering
-        return !Utils.isEntityWithinDistance(entity, cameraX, cameraY, cameraZ);
+        return !Utils.isNearPlayer(entity.level, entity.getX(), entity.getY(), entity.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist);
     }
 
 }
