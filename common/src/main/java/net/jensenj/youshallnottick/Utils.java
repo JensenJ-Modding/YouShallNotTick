@@ -89,7 +89,7 @@ public class Utils {
     }
 
     private static boolean isNearTotemOfTickingInternal(Level level, double posX, double posY, double posZ, int horizontalDist, int verticalDist) {
-        Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.get(level.dimensionTypeId().location());
+        Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.get(level.dimension().location());
         if(totemsForThisLevel == null)
             return false;
         for(BlockPos totemPos : totemsForThisLevel){
