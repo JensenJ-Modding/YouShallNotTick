@@ -44,7 +44,7 @@ dependencies {
     // Config Dependencies
     implementation "com.electronwill.night-config:core:${night_config_version}"
     implementation "com.electronwill.night-config:toml:${night_config_version}"
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:${forge_config_api_port_version}"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
 
     modLocalRuntime "maven.modrinth:modmenu:${mod_menu_version}"
 

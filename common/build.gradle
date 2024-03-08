@@ -19,7 +19,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     annotationProcessor(implementation("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:${forge_config_api_port_version}"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
+
 }
 
 allprojects {

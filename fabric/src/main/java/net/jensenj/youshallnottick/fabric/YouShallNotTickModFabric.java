@@ -1,5 +1,6 @@
 package net.jensenj.youshallnottick.fabric;
 
+import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
@@ -9,7 +10,6 @@ import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.minecraftforge.api.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.jensenj.youshallnottick.config.ServerConfig;
 import net.jensenj.youshallnottick.YouShallNotTick;
@@ -19,7 +19,7 @@ public class YouShallNotTickModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         YouShallNotTick.init();
-        ModLoadingContext.registerConfig(YouShallNotTick.MOD_ID, ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
+        ForgeConfigRegistry.INSTANCE.register(YouShallNotTick.MOD_ID, ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
 
         ServerPlayConnectionEvents.JOIN.register((ServerGamePacketListenerImpl handler, PacketSender sender, MinecraftServer server) -> TickingTotemBlockEntity.sendFullTotemMapToPlayer(handler.getPlayer()));
         ServerWorldEvents.LOAD.register((MinecraftServer server, ServerLevel level) -> ServerConfig.updateMobLists());

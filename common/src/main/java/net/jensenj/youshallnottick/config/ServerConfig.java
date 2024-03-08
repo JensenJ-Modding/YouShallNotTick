@@ -2,6 +2,7 @@ package net.jensenj.youshallnottick.config;
 
 import net.jensenj.youshallnottick.Utils;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -44,7 +45,7 @@ public class ServerConfig {
 
         for (String key : entityIgnoreList.get()) {
             if (key.contains("#")) {
-                entityTagKeys.add(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(key.replace("#", ""))));
+                entityTagKeys.add(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(key.replace("#", ""))));
             } else if (key.contains("*")) {
                 entityWildcards.add(key.split(":")[0]);
             } else {
