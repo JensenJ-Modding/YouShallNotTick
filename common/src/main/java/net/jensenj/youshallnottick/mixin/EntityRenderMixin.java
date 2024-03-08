@@ -27,7 +27,7 @@ public class EntityRenderMixin {
             return false;
 
         //If there is not enough players for the mod to activate, then we should not cancel rendering
-        if(!Utils.enoughPlayers(entity.level))
+        if(!Utils.enoughPlayers(entity.level()))
             return false;
 
         //If the entity is ignored, we should not cancel rendering
@@ -40,7 +40,7 @@ public class EntityRenderMixin {
         int totemVerticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
 
         //If the entity is not within distance we should cancel rendering
-        return !Utils.isNearPlayer(entity.level, entity.getX(), entity.getY(), entity.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist);
+        return !Utils.isNearPlayer(entity.level(), entity.getX(), entity.getY(), entity.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist);
     }
 
 }

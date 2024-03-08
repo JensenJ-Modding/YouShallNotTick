@@ -1,6 +1,6 @@
 package net.jensenj.youshallnottick.mixin;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.jensenj.youshallnottick.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
