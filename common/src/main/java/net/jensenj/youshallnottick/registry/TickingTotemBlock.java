@@ -98,18 +98,22 @@ public class TickingTotemBlock extends BaseEntityBlock {
 
     @Override
     public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState state2, boolean pIsMoving) {
+        if(level.isClientSide())
+            return;
         if(state.getBlock() != state2.getBlock()) {
             if(!state.getValue(POWERED)) //If unpowered, add to positions
-                TickingTotemBlockEntity.addTickingTotemPosition(level, pos);
+                TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(level, pos, true);
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
     }
 
     @Override
     public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState state2, boolean pIsMoving) {
+        if(level.isClientSide())
+            return;
         if(state.getBlock() != state2.getBlock()) {
             if(!state.getValue(POWERED)) //If unpowered, remove from positions
-                TickingTotemBlockEntity.removeTickingTotemPosition(level, pos);
+                TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(level, pos, false);
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
     }
@@ -122,25 +126,27 @@ public class TickingTotemBlock extends BaseEntityBlock {
 
     @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
-        if (!level.isClientSide) {
-            boolean powered = blockState.getValue(POWERED);
-            if (powered != level.hasNeighborSignal(blockPos)) {
-                level.scheduleTick(blockPos, this, 4);
-            }
+        if (level.isClientSide)
+            return;
+        boolean powered = blockState.getValue(POWERED);
+        if (powered != level.hasNeighborSignal(blockPos)) {
+            level.scheduleTick(blockPos, this, 4);
         }
     }
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, Random random) {
+        if(serverLevel.isClientSide())
+            return;
         boolean previousPowered = blockState.getValue(POWERED);
         if (previousPowered && !serverLevel.hasNeighborSignal(blockPos)) { //if was previously powered and there is no signal
             //Enable totem
             serverLevel.setBlock(blockPos, blockState.setValue(POWERED, false), 2);
-            TickingTotemBlockEntity.addTickingTotemPosition(serverLevel, blockPos);
+            TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(serverLevel, blockPos, true);
         }else if(!previousPowered && serverLevel.hasNeighborSignal(blockPos)){ //If was previously unpowered and there is a signal
             //Disable totem
             serverLevel.setBlock(blockPos, blockState.setValue(POWERED, true), 2);
-            TickingTotemBlockEntity.removeTickingTotemPosition(serverLevel, blockPos);
+            TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(serverLevel, blockPos, false);
         }
     }
 }
