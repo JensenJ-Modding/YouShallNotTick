@@ -17,18 +17,17 @@ import java.util.function.Supplier;
 
 public class YouShallNotTickRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(YouShallNotTick.MOD_ID, Registry.ITEM_REGISTRY);
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(YouShallNotTick.MOD_ID, net.minecraft.core.Registry.BLOCK_REGISTRY);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(YouShallNotTick.MOD_ID, net.minecraft.core.Registry.BLOCK_ENTITY_TYPE_REGISTRY);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(YouShallNotTick.MOD_ID, Registry.BLOCK_REGISTRY);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(YouShallNotTick.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
     public static final RegistrySupplier<Block> TICKING_TOTEM_BLOCK = registerTotemBlock(
             () -> new TickingTotemBlock(BlockBehaviour.Properties.copy(Blocks.CHEST)
                     .strength(0.5f, 5.0f)
                     .sound(SoundType.WOOD)
                     .noOcclusion())
     );
+
     public static final RegistrySupplier<BlockEntityType<TickingTotemBlockEntity>> TICKING_TOTEM_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("ticking_totem", () -> BlockEntityType.Builder.of(TickingTotemBlockEntity::new, TICKING_TOTEM_BLOCK.get()).build(null));
-
-
 
     private static <T extends Block> RegistrySupplier<T> registerTotemBlock(Supplier<T> block){
         RegistrySupplier<T> toReturn = BLOCKS.register("ticking_totem", block);
