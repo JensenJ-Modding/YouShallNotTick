@@ -2,13 +2,13 @@ package net.jensenj.youshallnottick.registry;
 
 import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
-import net.jensenj.youshallnottick.Utils;
 import net.jensenj.youshallnottick.network.UpdateTotemPositionS2CMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,12 +28,11 @@ public class TickingTotemBlockEntity extends BlockEntity {
         super(YouShallNotTickRegistry.TICKING_TOTEM_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
-    public static void ServerSendTickingTotemUpdateToClients(LevelAccessor level, BlockPos pos, boolean shouldAdd){
-        ResourceLocation dimension = Utils.getDimensionLocation(level);
-        if(dimension == null)
+    public static void ServerSendTickingTotemUpdateToClients(LevelAccessor levelAccessor, BlockPos pos, boolean shouldAdd){
+        if(levelAccessor.isClientSide())
             return;
-        if(level.isClientSide())
-            return;
+        Level level = (Level) levelAccessor;
+        ResourceLocation dimension = level.dimensionTypeId().location();
 
         if(shouldAdd) //Server side updating totems
             addTickingTotemPosition(dimension, pos);
