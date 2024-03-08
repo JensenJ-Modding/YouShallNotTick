@@ -1,8 +1,8 @@
 package net.jensenj.youshallnottick.forge;
 
 import dev.architectury.platform.forge.EventBuses;
-import net.jensenj.youshallnottick.Utils;
 import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -44,7 +44,7 @@ public class YouShallNotTickModForge {
     public static void onLevelUnload(LevelEvent.Unload e){
         if(e.getLevel().isClientSide())
             return;
-        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.remove(Utils.getDimensionLocation(e.getLevel()));
+        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.remove(((Level) e.getLevel()).dimension().location());
     }
 
     @SubscribeEvent
