@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[49,)"
+loaderVersion = "[2,)"
 issueTrackerURL = "https://github.com/JensenJ-Modding/YouShallNotTick/issues"
 license = "MIT License"
 
@@ -13,23 +13,19 @@ Disables unnecessary ticking for living entities.
 '''
 logoFile = "logo.png"
 
-[[dependencies.youshallnottick]]
-modId = "forge"
-mandatory = true
-versionRange = "[49,)"
-ordering = "NONE"
-side = "BOTH"
+[[mixins]]
+config="youshallnottick-common.mixins.json"
 
 [[dependencies.youshallnottick]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.4,)"
+modId = "neoforge"
+type="required"
+versionRange = "[2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.youshallnottick]]
 modId = "architectury"
-mandatory = true
+type="required"
 versionRange = "[11.1.13,)"
 ordering = "AFTER"
 side = "BOTH"

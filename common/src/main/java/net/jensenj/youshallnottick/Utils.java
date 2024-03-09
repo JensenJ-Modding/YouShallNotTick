@@ -1,10 +1,10 @@
 package net.jensenj.youshallnottick;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,12 +24,6 @@ public class Utils {
         return level.players().size() >= ServerConfig.minPlayers.get();
     }
 
-    @ExpectPlatform
-    @SuppressWarnings("unused")
-    public static ResourceLocation getEntityRegistrationLocation(Entity entity){
-        throw new AssertionError("Override not found for getEntityRegistrationLocation in mod loader.");
-    }
-
     public static boolean isIgnoredEntity(Entity entity) {
         if (ServerConfig.entityIgnoreList.get().isEmpty())
             return false;
@@ -44,10 +38,7 @@ public class Utils {
 
         EntityType<?> entityType = entity.getType();
         return isIgnored.computeIfAbsent(entityType, (et) -> {
-            ResourceLocation entityRegLoc = getEntityRegistrationLocation(entity);
-            if (entityRegLoc == null)
-                return false;
-
+            ResourceLocation entityRegLoc = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
             var ignored = false;
             if (!ServerConfig.entityResources.isEmpty())
                 ignored = ServerConfig.entityResources.contains(entityRegLoc);

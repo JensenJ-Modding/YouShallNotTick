@@ -1,5 +1,6 @@
 package net.jensenj.youshallnottick.registry;
 
+import com.mojang.serialization.MapCodec;
 import net.jensenj.youshallnottick.YouShallNotTick;
 import net.jensenj.youshallnottick.config.ServerConfig;
 import net.minecraft.ChatFormatting;
@@ -31,11 +32,17 @@ import java.util.List;
 public class TickingTotemBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final MapCodec<TickingTotemBlock> CODEC = simpleCodec(TickingTotemBlock::new);
     private static final VoxelShape SHAPE = Block.box(4,0,4,12,16,12);
 
     protected TickingTotemBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(POWERED, false).setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override

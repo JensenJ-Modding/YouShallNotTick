@@ -20,7 +20,7 @@ public class YouShallNotTickRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.BLOCK);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
     public static final RegistrySupplier<Block> TICKING_TOTEM_BLOCK = registerTotemBlock(
-            () -> new TickingTotemBlock(BlockBehaviour.Properties.copy(Blocks.CHEST)
+            () -> new TickingTotemBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHEST)
                     .strength(0.5f, 5.0f)
                     .sound(SoundType.WOOD)
                     .noOcclusion())
