@@ -32,7 +32,6 @@ public abstract class AIEntityTickMixin {
 
         //If this is an ignored entity, allow ticking
         if (Utils.isIgnoredEntity(entity)) {
-            System.out.println("Allowing AI step");
             return true;
         }
 
