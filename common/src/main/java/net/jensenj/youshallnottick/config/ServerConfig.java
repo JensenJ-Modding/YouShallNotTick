@@ -19,15 +19,13 @@ public class ServerConfig {
     public static final String CATEGORY_TOTEM = "totem";
     public static ForgeConfigSpec SERVER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Integer> minPlayers;
-
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableSpawnMixin;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnHorizontalDist;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnVerticalDist;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTickMixin;
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableAITickMixin;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickHorizontalDist;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickVerticalDist;
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldTamedMobsBeExempt;
     public static ForgeConfigSpec.ConfigValue<List<String>> entityIgnoreList;
     public static final Set<ResourceLocation> entityResources = new HashSet<>();
     public static final Set<TagKey<EntityType<?>>> entityTagKeys = new HashSet<>();
@@ -73,18 +71,20 @@ public class ServerConfig {
         BUILDER.pop();
 
         BUILDER.comment("Ticking settings").push(CATEGORY_TICKING);
-        shouldEnableTickMixin = BUILDER.comment("Whether the living entity ticking check should be enabled [Default: true]")
-                .define("enableEntityTickCheck", true);
+        shouldEnableAITickMixin = BUILDER.comment(
+                        "Whether the living entity AI ticking check should be enabled. This disables AI for entities outside of tick distance. [Default: true]")
+                .define("enableAIEntityTickCheck", true);
         playerMaxEntityTickHorizontalDist = BUILDER.comment("Maximum distance from player (horizontally) to allow living entity ticking [Default: 48]")
                 .define("playerMaxEntityTickDistanceHorizontal", 48);
         playerMaxEntityTickVerticalDist = BUILDER.comment("Maximum distance from player (vertically) to allow living entity ticking [Default: 32]")
                 .define("playerMaxEntityTickDistanceVertical", 32);
-        shouldTamedMobsBeExempt = BUILDER.comment("Whether tamed living entities such as wolves should be allowed to tick normally. [Default: true]")
-                .define("tamedNormalTicking", true);
 
         List<String> defaultIgnoreList = new ArrayList<>();
         defaultIgnoreList.add("minecraft:wither");
         defaultIgnoreList.add("minecraft:phantom");
+        defaultIgnoreList.add("minecraft:blaze");
+        defaultIgnoreList.add("minecraft:ghast");
+        defaultIgnoreList.add("minecraft:enderman");
         defaultIgnoreList.add("minecraft:ender_dragon");
         defaultIgnoreList.add("minecraft:elder_guardian");
         defaultIgnoreList.add("minecraft:warden");
@@ -96,7 +96,7 @@ public class ServerConfig {
                         "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
                         "You can also use a wildcard after modid (modid:*)",
                         "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally",
-                        "[Default: [\"minecraft:wither\", \"minecraft:phantom\", \"minecraft:ender_dragon\", \"minecraft:elder_guardian\", \"minecraft:warden\"]]"
+                        "[Default: [\"minecraft:wither\", \"minecraft:phantom\", \"minecraft:blaze\", \"minecraft:ghast\", \"minecraft:enderman\", \"minecraft:ender_dragon\", \"minecraft:elder_guardian\", \"minecraft:warden\"]]"
                 )
                 .define("entityIgnoreList", defaultIgnoreList);
         BUILDER.pop();

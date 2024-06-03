@@ -2,47 +2,37 @@ package net.jensenj.youshallnottick.mixin;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.jensenj.youshallnottick.Utils;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.jensenj.youshallnottick.config.ServerConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.function.Consumer;
-
 @SuppressWarnings({"unused", ""})
-@Mixin(value = Level.class, priority = 1100)
-public abstract class EntityTickMixin {
+@Mixin(value = LivingEntity.class, priority = 1100)
+public abstract class AIEntityTickMixin {
 
     @WrapWithCondition(
-            method = "guardEntityTick",
-            at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V")
+            method = "tick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;aiStep()V")
     )
-    private boolean youshallnottick$onlyTickIfAllowed(Consumer<Entity> consumer, Object obj){
-        @SuppressWarnings("all")
-        Level level = ((Level) (Object) this);
-        Entity entity = (Entity) obj;
+    private boolean youshallnottick$CheckAIStep(LivingEntity entity){
+        Level level = entity.level();
 
         //If the tick mixin is disabled, allow ticking
-        if(!ServerConfig.shouldEnableTickMixin.get()){
+        if(!ServerConfig.shouldEnableAITickMixin.get()){
             return true;
         }
 
-        //If there are not enough players, allow ticking
+        //If there are enough players, allow ticking
         if (!Utils.enoughPlayers(level)){
-            return true;
-        }
-
-        //If this is not a living entity or is a player, allow ticking
-        if(!(entity instanceof LivingEntity) || entity instanceof Player){
             return true;
         }
 
         //If this is an ignored entity, allow ticking
         if (Utils.isIgnoredEntity(entity)) {
+            System.out.println("Allowing AI step");
             return true;
         }
 
@@ -58,6 +48,6 @@ public abstract class EntityTickMixin {
         }
 
         //If it is dead or dying, allow ticking
-        return ((LivingEntity) entity).isDeadOrDying();
+        return entity.isDeadOrDying();
     }
 }

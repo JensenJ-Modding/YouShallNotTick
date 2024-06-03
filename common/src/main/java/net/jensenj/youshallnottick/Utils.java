@@ -6,10 +6,14 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raid;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.jensenj.youshallnottick.config.ServerConfig;
 
@@ -31,16 +35,31 @@ public class Utils {
     }
 
     public static boolean isIgnoredEntity(Entity entity) {
-        if (ServerConfig.entityIgnoreList.get().isEmpty())
-            return false;
+        if(entity.level().isClientSide()) {
+            return true;
+        }
+        //If it's not living or is a player, it's ignored
+        if(!(entity instanceof LivingEntity) || entity instanceof Player){
+            return true;
+        }
 
-        //Ignore tamed animals
-        if(ServerConfig.shouldTamedMobsBeExempt.get()) {
-            if (entity instanceof TamableAnimal tamedEntity) {
-                if (tamedEntity.getOwner() != null)
-                    return true;
+        //If this entity is part of a raid, it should be ignored
+        if (entity instanceof Raider){
+            Raid raid = ((ServerLevel) entity.level()).getRaidAt(entity.blockPosition());
+            if (raid != null) {
+                return true;
             }
         }
+
+        //Ignore tamed animals
+        if (entity instanceof TamableAnimal tamedEntity) {
+            if (tamedEntity.getOwner() != null)
+                return true;
+        }
+
+        //If the entity list is empty, this entity should not be ignored
+        if (ServerConfig.entityIgnoreList.get().isEmpty())
+            return false;
 
         EntityType<?> entityType = entity.getType();
         return isIgnored.computeIfAbsent(entityType, (et) -> {

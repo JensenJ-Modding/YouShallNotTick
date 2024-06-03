@@ -21,7 +21,6 @@ public class YouShallNotTickModFabric implements ModInitializer {
         YouShallNotTick.init();
         ForgeConfigRegistry.INSTANCE.register(YouShallNotTick.MOD_ID, ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
 
-        ServerPlayConnectionEvents.JOIN.register((ServerGamePacketListenerImpl handler, PacketSender sender, MinecraftServer server) -> TickingTotemBlockEntity.sendFullTotemMapToPlayer(handler.getPlayer()));
         ServerWorldEvents.LOAD.register((MinecraftServer server, ServerLevel level) -> ServerConfig.updateMobLists());
         ServerWorldEvents.UNLOAD.register((MinecraftServer server, ServerLevel level) -> TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.clear());
         ServerChunkEvents.CHUNK_LOAD.register(TickingTotemBlockEntity::handleChunkLoading);

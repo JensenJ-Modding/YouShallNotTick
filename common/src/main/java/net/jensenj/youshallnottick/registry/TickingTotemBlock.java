@@ -68,9 +68,9 @@ public class TickingTotemBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag flag) {
-        if(ServerConfig.shouldEnableTotemOfTicking.get() && (ServerConfig.shouldEnableTickMixin.get() || ServerConfig.shouldEnableSpawnMixin.get())) {
+        if(ServerConfig.shouldEnableTotemOfTicking.get() && (ServerConfig.shouldEnableAITickMixin.get() || ServerConfig.shouldEnableSpawnMixin.get())) {
             list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.info.tooltip").withStyle(ChatFormatting.GRAY));
-            if(ServerConfig.shouldEnableTickMixin.get()) {
+            if(ServerConfig.shouldEnableAITickMixin.get()) {
                 list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_h.tooltip")
                         .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get())).withStyle(ChatFormatting.YELLOW));
                 list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_v.tooltip")
@@ -101,7 +101,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
             return;
         if(state.getBlock() != state2.getBlock()) {
             if(!state.getValue(POWERED)) //If unpowered, add to positions
-                TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(level, pos, true);
+                TickingTotemBlockEntity.updateTickingTotemState(level, pos, true);
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
     }
@@ -112,7 +112,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
             return;
         if(state.getBlock() != state2.getBlock()) {
             if(!state.getValue(POWERED)) //If unpowered, remove from positions
-                TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(level, pos, false);
+                TickingTotemBlockEntity.updateTickingTotemState(level, pos, false);
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
     }
@@ -141,11 +141,11 @@ public class TickingTotemBlock extends BaseEntityBlock {
         if (previousPowered && !serverLevel.hasNeighborSignal(blockPos)) { //if was previously powered and there is no signal
             //Enable totem
             serverLevel.setBlock(blockPos, blockState.setValue(POWERED, false), 2);
-            TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(serverLevel, blockPos, true);
+            TickingTotemBlockEntity.updateTickingTotemState(serverLevel, blockPos, true);
         }else if(!previousPowered && serverLevel.hasNeighborSignal(blockPos)){ //If was previously unpowered and there is a signal
             //Disable totem
             serverLevel.setBlock(blockPos, blockState.setValue(POWERED, true), 2);
-            TickingTotemBlockEntity.ServerSendTickingTotemUpdateToClients(serverLevel, blockPos, false);
+            TickingTotemBlockEntity.updateTickingTotemState(serverLevel, blockPos, false);
         }
     }
 }

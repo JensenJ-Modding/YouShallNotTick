@@ -5,7 +5,6 @@ import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,11 +30,6 @@ public class YouShallNotTickModForge {
     }
 
     @SubscribeEvent
-    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent e){
-        TickingTotemBlockEntity.sendFullTotemMapToPlayer(e.getEntity());
-    }
-
-    @SubscribeEvent
     public static void onLevelLoad(LevelEvent.Load e){
         ServerConfig.updateMobLists();
     }
@@ -56,5 +50,4 @@ public class YouShallNotTickModForge {
     public static void onChunkUnload(ChunkEvent.Unload e){
         TickingTotemBlockEntity.handleChunkUnloading(e.getLevel(), e.getChunk());
     }
-
 }

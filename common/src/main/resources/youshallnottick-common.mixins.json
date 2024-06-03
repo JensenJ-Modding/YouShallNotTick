@@ -3,11 +3,9 @@
   "package": "net.jensenj.youshallnottick.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "client": [
-    "EntityRenderMixin"
-  ],
+  "client": [],
   "mixins": [
-    "EntityTickMixin",
+    "AIEntityTickMixin",
     "EntitySpawnMixin"
   ],
   "injectors": {
