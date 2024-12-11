@@ -70,16 +70,10 @@ components.java {
     }
 }
 
-allprojects {
-    base {
-        archivesName = rootProject.archives_base_name + "-forge-${minecraft_version}"
-    }
-}
-
 publishing {
     publications {
         mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.archives_name + "-" + project.name
             from components.java
         }
     }
