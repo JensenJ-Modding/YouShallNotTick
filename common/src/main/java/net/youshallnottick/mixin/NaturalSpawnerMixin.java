@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
-@Mixin(value = NaturalSpawner.class, priority = 1100)
+@Mixin(value = NaturalSpawner.class, priority = 10100)
 public class NaturalSpawnerMixin {
     @Inject(at = @At("HEAD"), method = "getRandomSpawnMobAt", cancellable = true)
     private static void youshallnottick$getRandomSpawnMobAt(ServerLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, MobCategory mobCategory, RandomSource randomSource, BlockPos blockPos, CallbackInfoReturnable<Optional<MobSpawnSettings.SpawnerData>> cir) {
