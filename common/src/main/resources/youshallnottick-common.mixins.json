@@ -5,8 +5,8 @@
   "minVersion": "0.8",
   "client": [],
   "mixins": [
-    "AIEntityTickMixin",
-    "EntitySpawnMixin"
+    "LivingEntityMixin",
+    "NaturalSpawnerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

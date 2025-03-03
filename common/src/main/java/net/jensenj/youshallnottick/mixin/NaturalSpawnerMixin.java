@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @SuppressWarnings("unused")
 @Mixin(value = NaturalSpawner.class, priority = 1100)
-public class EntitySpawnMixin {
+public class NaturalSpawnerMixin {
     @Inject(at = @At("HEAD"), method = "getRandomSpawnMobAt", cancellable = true)
     private static void youshallnottick$getRandomSpawnMobAt(ServerLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, MobCategory mobCategory, RandomSource randomSource, BlockPos blockPos, CallbackInfoReturnable<Optional<MobSpawnSettings.SpawnerData>> cir) {
         if (Utils.enoughPlayers(level) && ServerConfig.shouldEnableSpawnMixin.get()) {

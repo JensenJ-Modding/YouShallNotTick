@@ -7,18 +7,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @SuppressWarnings({"unused", ""})
 @Mixin(value = LivingEntity.class, priority = 1100)
-public abstract class AIEntityTickMixin {
+public abstract class LivingEntityMixin {
 
-    @WrapWithCondition(
-            method = "tick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;aiStep()V")
-    )
-    private boolean youshallnottick$CheckAIStep(LivingEntity entity){
+    @Unique
+    private boolean youshallnotgrief$shouldProcess(LivingEntity entity){
         Level level = entity.level();
+
+        //Allow ticking on client side, for animations and such
+        if(level.isClientSide()){
+            return true;
+        }
 
         //If the tick mixin is disabled, allow ticking
         if(!ServerConfig.shouldEnableAITickMixin.get()){
@@ -48,5 +51,21 @@ public abstract class AIEntityTickMixin {
 
         //If it is dead or dying, allow ticking
         return entity.isDeadOrDying();
+    }
+
+    @WrapWithCondition(
+            method = "aiStep",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;serverAiStep()V")
+    )
+    private boolean youshallnottick$handleAI(LivingEntity entity){
+        return youshallnotgrief$shouldProcess(entity);
+    }
+
+    @WrapWithCondition(
+            method = "aiStep",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;pushEntities()V")
+    )
+    private boolean youshallnottick$handleCollisions(LivingEntity entity){
+        return youshallnotgrief$shouldProcess(entity);
     }
 }
