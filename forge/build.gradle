@@ -13,8 +13,7 @@ base {
 
 loom {
     forge {
-        mixinConfig "youshallnotgrief-common.mixins.json"
-        mixinConfig "youshallnotgrief.mixins.json"
+        mixinConfig "youshallnottick-common.mixins.json"
     }
 }
 
