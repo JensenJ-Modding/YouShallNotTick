@@ -1,6 +1,6 @@
-package net.jensenj.youshallnottick.forge;
+package net.youshallnottick.forge;
 
-import net.jensenj.youshallnottick.config.ServerConfig;
+import net.youshallnottick.config.ServerConfig;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

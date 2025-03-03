@@ -17,14 +17,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabric"
+      "net.youshallnottick.fabric.YouShallNotTickModFabric"
     ],
     "client": [
-      "net.jensenj.youshallnottick.fabric.YouShallNotTickModFabricClient"
+      "net.youshallnottick.fabric.YouShallNotTickModFabricClient"
     ]
   },
   "mixins": [
-    "youshallnottick-common.mixins.json"
+    "youshallnottick-common.mixins.json",
+    "youshallnottick.mixins.json"
   ],
   "depends": {
     "fabric": "*",

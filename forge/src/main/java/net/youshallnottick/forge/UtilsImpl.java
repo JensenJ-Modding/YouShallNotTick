@@ -1,13 +1,13 @@
-package net.jensenj.youshallnottick.fabric;
+package net.youshallnottick.forge;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings("unused")
 public class UtilsImpl {
 
     public static ResourceLocation getEntityRegistrationLocation(Entity entity){
-        return BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+        return ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
     }
 }

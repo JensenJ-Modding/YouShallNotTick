@@ -1,7 +1,7 @@
-package net.jensenj.youshallnottick.forge;
+package net.youshallnottick.forge;
 
 import dev.architectury.platform.forge.EventBuses;
-import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
+import net.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,8 +13,8 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.jensenj.youshallnottick.config.ServerConfig;
-import net.jensenj.youshallnottick.YouShallNotTick;
+import net.youshallnottick.config.ServerConfig;
+import net.youshallnottick.YouShallNotTick;
 
 @Mod(YouShallNotTick.MOD_ID)
 @SuppressWarnings("unused")

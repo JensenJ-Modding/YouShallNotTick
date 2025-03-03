@@ -1,15 +1,11 @@
-package net.jensenj.youshallnottick.fabric;
+package net.youshallnottick.fabric;
 
-import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.jensenj.youshallnottick.YouShallNotTick;
-import net.jensenj.youshallnottick.config.ServerConfig;
-import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
+import net.youshallnottick.config.ServerConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraftforge.fml.config.ModConfig;
 
 @SuppressWarnings("unused")
 public class YouShallNotTickModFabricClient implements ClientModInitializer {

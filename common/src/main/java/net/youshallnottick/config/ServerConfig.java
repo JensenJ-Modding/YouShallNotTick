@@ -1,6 +1,6 @@
-package net.jensenj.youshallnottick.config;
+package net.youshallnottick.config;
 
-import net.jensenj.youshallnottick.Utils;
+import net.youshallnottick.Utils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;

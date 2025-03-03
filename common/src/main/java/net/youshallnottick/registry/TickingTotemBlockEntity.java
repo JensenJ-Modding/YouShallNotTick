@@ -1,4 +1,4 @@
-package net.jensenj.youshallnottick.registry;
+package net.youshallnottick.registry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;

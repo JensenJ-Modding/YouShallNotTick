@@ -1,7 +1,7 @@
-package net.jensenj.youshallnottick.registry;
+package net.youshallnottick.registry;
 
-import net.jensenj.youshallnottick.YouShallNotTick;
-import net.jensenj.youshallnottick.config.ServerConfig;
+import net.youshallnottick.YouShallNotTick;
+import net.youshallnottick.config.ServerConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -1,9 +1,9 @@
-package net.jensenj.youshallnottick;
+package net.youshallnottick;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
-import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
+import net.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
-import net.jensenj.youshallnottick.config.ServerConfig;
+import net.youshallnottick.config.ServerConfig;
 
 import java.util.List;
 import java.util.Set;
@@ -32,6 +32,44 @@ public class Utils {
     @SuppressWarnings("unused")
     public static ResourceLocation getEntityRegistrationLocation(Entity entity){
         throw new AssertionError("Override not found for getEntityRegistrationLocation in mod loader.");
+    }
+
+    public static boolean shouldProcessEntityTick(LivingEntity entity){
+        Level level = entity.level();
+
+        //Allow ticking on client side, for animations and such
+        if(level.isClientSide()){
+            return true;
+        }
+
+        //If the tick mixin is disabled, allow ticking
+        if(!ServerConfig.shouldEnableAITickMixin.get()){
+            return true;
+        }
+
+        //If there are enough players, allow ticking
+        if (!Utils.enoughPlayers(level)){
+            return true;
+        }
+
+        //If this is an ignored entity, allow ticking
+        if (Utils.isIgnoredEntity(entity)) {
+            return true;
+        }
+
+        int playerHorizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int playerVerticalDist = ServerConfig.playerMaxEntityTickVerticalDist.get();
+        int totemHorizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        int totemVerticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
+
+        //If it's near the player, allow ticking
+        BlockPos entityPos = entity.blockPosition();
+        if (Utils.isNearPlayer(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerHorizontalDist, playerVerticalDist, totemHorizontalDist, totemVerticalDist)) {
+            return true;
+        }
+
+        //If it is dead or dying, allow ticking
+        return entity.isDeadOrDying();
     }
 
     public static boolean isIgnoredEntity(Entity entity) {

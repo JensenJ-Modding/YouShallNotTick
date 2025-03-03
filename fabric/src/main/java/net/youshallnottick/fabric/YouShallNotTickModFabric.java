@@ -1,18 +1,15 @@
-package net.jensenj.youshallnottick.fabric;
+package net.youshallnottick.fabric;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.jensenj.youshallnottick.registry.TickingTotemBlockEntity;
+import net.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraftforge.fml.config.ModConfig;
-import net.jensenj.youshallnottick.config.ServerConfig;
-import net.jensenj.youshallnottick.YouShallNotTick;
+import net.youshallnottick.config.ServerConfig;
+import net.youshallnottick.YouShallNotTick;
 
 @SuppressWarnings("unused")
 public class YouShallNotTickModFabric implements ModInitializer {
