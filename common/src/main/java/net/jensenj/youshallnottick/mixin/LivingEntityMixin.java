@@ -4,8 +4,10 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.jensenj.youshallnottick.Utils;
 import net.jensenj.youshallnottick.config.ServerConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -75,6 +77,30 @@ public abstract class LivingEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;travel(Lnet/minecraft/world/phys/Vec3;)V")
     )
     private boolean youshallnottick$handleTravel(LivingEntity entity, Vec3 vec3){
+        return youshallnotgrief$shouldProcess(entity);
+    }
+
+    @WrapWithCondition(
+            method = "aiStep",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;updateFallFlying()V")
+    )
+    private boolean youshallnottick$handleFall(LivingEntity entity){
+        return youshallnotgrief$shouldProcess(entity);
+    }
+
+    @WrapWithCondition(
+            method = "aiStep",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;jumpFromGround()V")
+    )
+    private boolean youshallnottick$handleJump(LivingEntity entity){
+        return youshallnotgrief$shouldProcess(entity);
+    }
+
+    @WrapWithCondition(
+            method = "aiStep",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;jumpInLiquid(Lnet/minecraft/tags/TagKey;)V")
+    )
+    private boolean youshallnottick$handleJumpInLiquid(LivingEntity entity, TagKey<Fluid> tagKey){
         return youshallnotgrief$shouldProcess(entity);
     }
 }
