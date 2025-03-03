@@ -6,6 +6,7 @@ import net.jensenj.youshallnottick.config.ServerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -66,6 +67,14 @@ public abstract class LivingEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;pushEntities()V")
     )
     private boolean youshallnottick$handleCollisions(LivingEntity entity){
+        return youshallnotgrief$shouldProcess(entity);
+    }
+
+    @WrapWithCondition(
+            method = "aiStep",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;travel(Lnet/minecraft/world/phys/Vec3;)V")
+    )
+    private boolean youshallnottick$handleTravel(LivingEntity entity, Vec3 vec3){
         return youshallnotgrief$shouldProcess(entity);
     }
 }
