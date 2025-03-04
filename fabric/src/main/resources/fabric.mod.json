@@ -25,7 +25,7 @@
   },
   "mixins": [
     "youshallnottick-common.mixins.json",
-    "youshallnottick.mixins.json"
+    "youshallnottick-fabric.mixins.json"
   ],
   "depends": {
     "fabric": "*",
