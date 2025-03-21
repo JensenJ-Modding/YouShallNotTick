@@ -1,8 +1,7 @@
 package net.youshallnottick.registry;
 
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
-import net.youshallnottick.YouShallNotTick;
+import java.util.function.Supplier;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -13,31 +12,36 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import java.util.function.Supplier;
+import dev.architectury.registry.registries.DeferredRegister;
+import dev.architectury.registry.registries.RegistrySupplier;
+import net.youshallnottick.YouShallNotTick;
 
 public class YouShallNotTickRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.ITEM);
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.BLOCK);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
-    public static final RegistrySupplier<Block> TICKING_TOTEM_BLOCK = registerTotemBlock(
-            () -> new TickingTotemBlock(BlockBehaviour.Properties.copy(Blocks.CHEST)
+    public static final DeferredRegister<Block> BLOCKS =
+            DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.BLOCK);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
+            DeferredRegister.create(YouShallNotTick.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
+    public static final RegistrySupplier<Block> TICKING_TOTEM_BLOCK =
+            registerTotemBlock(() -> new TickingTotemBlock(BlockBehaviour.Properties.copy(Blocks.CHEST)
                     .strength(0.5f, 5.0f)
                     .sound(SoundType.WOOD)
-                    .noOcclusion())
-    );
+                    .noOcclusion()));
     public static final RegistrySupplier<BlockEntityType<TickingTotemBlockEntity>> TICKING_TOTEM_BLOCK_ENTITY =
-            BLOCK_ENTITIES.register("ticking_totem", () -> BlockEntityType.Builder.of(TickingTotemBlockEntity::new, TICKING_TOTEM_BLOCK.get()).build(null));
+            BLOCK_ENTITIES.register("ticking_totem", () -> BlockEntityType.Builder.of(
+                            TickingTotemBlockEntity::new, TICKING_TOTEM_BLOCK.get())
+                    .build(null));
 
-
-    private static <T extends Block> RegistrySupplier<T> registerTotemBlock(Supplier<T> block){
+    private static <T extends Block> RegistrySupplier<T> registerTotemBlock(Supplier<T> block) {
         RegistrySupplier<T> toReturn = BLOCKS.register("ticking_totem", block);
         registerTotemBlockItem(toReturn);
         return toReturn;
     }
 
     @SuppressWarnings("all")
-    private static <T extends Block> void registerTotemBlockItem(RegistrySupplier<T> block){
-        ITEMS.register("ticking_totem", () -> new BlockItem(block.get(), new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS)));
+    private static <T extends Block> void registerTotemBlockItem(RegistrySupplier<T> block) {
+        ITEMS.register(
+                "ticking_totem",
+                () -> new BlockItem(block.get(), new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS)));
     }
 }
-

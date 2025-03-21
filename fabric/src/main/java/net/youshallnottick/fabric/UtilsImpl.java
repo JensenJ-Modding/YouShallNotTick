@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 @SuppressWarnings("unused")
 public class UtilsImpl {
 
-    public static ResourceLocation getEntityRegistrationLocation(Entity entity){
+    public static ResourceLocation getEntityRegistrationLocation(Entity entity) {
         return BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
     }
 }

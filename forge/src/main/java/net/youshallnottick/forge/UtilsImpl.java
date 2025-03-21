@@ -7,7 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @SuppressWarnings("unused")
 public class UtilsImpl {
 
-    public static ResourceLocation getEntityRegistrationLocation(Entity entity){
+    public static ResourceLocation getEntityRegistrationLocation(Entity entity) {
         return ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
     }
 }

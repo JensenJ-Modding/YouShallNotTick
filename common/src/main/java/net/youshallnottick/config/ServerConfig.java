@@ -1,16 +1,17 @@
 package net.youshallnottick.config;
 
-import net.youshallnottick.Utils;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import net.youshallnottick.Utils;
 
 public class ServerConfig {
     public static final String CATEGORY_GENERAL = "general";
@@ -61,22 +62,29 @@ public class ServerConfig {
 
         BUILDER.comment("Spawning settings").push(CATEGORY_SPAWNING);
         shouldEnableSpawnMixin = BUILDER.comment(
-                        "Whether the living entity spawning check should be enabled [Default: false]",
-                        "Warning: having this turned on can cause higher mob spawn rates near players, as there are less places for mobs to spawn")
+                        "Whether the living entity spawning check should be enabled" + " [Default: false]",
+                        "Warning: having this turned on can cause higher mob spawn rates"
+                                + " near players, as there are less places for mobs to spawn")
                 .define("enableEntitySpawnCheck", false);
-        playerMaxEntitySpawnHorizontalDist = BUILDER.comment("Maximum distance from player (horizontally) for living entity spawning check [Default: 48]")
+        playerMaxEntitySpawnHorizontalDist = BUILDER.comment(
+                        "Maximum distance from player (horizontally) for living entity"
+                                + " spawning check [Default: 48]")
                 .define("playerMaxEntitySpawnDistanceHorizontal", 48);
-        playerMaxEntitySpawnVerticalDist = BUILDER.comment("Maximum distance from player (vertically) for living entity spawning check [Default: 32]")
+        playerMaxEntitySpawnVerticalDist = BUILDER.comment(
+                        "Maximum distance from player (vertically) for living entity" + " spawning check [Default: 32]")
                 .define("playerMaxEntitySpawnDistanceVertical", 32);
         BUILDER.pop();
 
         BUILDER.comment("Ticking settings").push(CATEGORY_TICKING);
-        shouldEnableAITickMixin = BUILDER.comment(
-                        "Whether the living entity AI ticking check should be enabled. This disables AI for entities outside of tick distance. [Default: true]")
+        shouldEnableAITickMixin = BUILDER.comment("Whether the living entity AI ticking check should be enabled. This"
+                        + " disables AI for entities outside of tick distance."
+                        + " [Default: true]")
                 .define("enableAIEntityTickCheck", true);
-        playerMaxEntityTickHorizontalDist = BUILDER.comment("Maximum distance from player (horizontally) to allow living entity ticking [Default: 48]")
+        playerMaxEntityTickHorizontalDist = BUILDER.comment(
+                        "Maximum distance from player (horizontally) to allow living entity" + " ticking [Default: 48]")
                 .define("playerMaxEntityTickDistanceHorizontal", 48);
-        playerMaxEntityTickVerticalDist = BUILDER.comment("Maximum distance from player (vertically) to allow living entity ticking [Default: 32]")
+        playerMaxEntityTickVerticalDist = BUILDER.comment(
+                        "Maximum distance from player (vertically) to allow living entity" + " ticking [Default: 32]")
                 .define("playerMaxEntityTickDistanceVertical", 32);
 
         List<String> defaultIgnoreList = new ArrayList<>();
@@ -89,28 +97,39 @@ public class ServerConfig {
         defaultIgnoreList.add("minecraft:elder_guardian");
         defaultIgnoreList.add("minecraft:warden");
         entityIgnoreList = BUILDER.comment(
-                        "List of living entities to ignore when checking if they are allowed to tick",
-                        "Only living entities need to be added to this list, all other entities are ignored by the mod",
-                        "Living entities which have an owner, e.g. wolves are also ignored by the mod.",
+                        "List of living entities to ignore when checking if they are" + " allowed to tick",
+                        "Only living entities need to be added to this list, all other"
+                                + " entities are ignored by the mod",
+                        "Living entities which have an owner, e.g. wolves are also ignored" + " by the mod.",
                         "This list is not taken into account with the spawning check.",
-                        "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
+                        "Tags can be used by using #minecraft:<tag_name> or" + " #modid:<tag_name>",
                         "You can also use a wildcard after modid (modid:*)",
-                        "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally",
-                        "[Default: [\"minecraft:wither\", \"minecraft:phantom\", \"minecraft:blaze\", \"minecraft:ghast\", \"minecraft:enderman\", \"minecraft:ender_dragon\", \"minecraft:elder_guardian\", \"minecraft:warden\"]]"
-                )
+                        "For example, alexsmobs:* would allow all mobs from alex's mobs to" + " tick normally",
+                        "[Default: [\"minecraft:wither\", \"minecraft:phantom\","
+                                + " \"minecraft:blaze\", \"minecraft:ghast\","
+                                + " \"minecraft:enderman\", \"minecraft:ender_dragon\","
+                                + " \"minecraft:elder_guardian\", \"minecraft:warden\"]]")
                 .define("entityIgnoreList", defaultIgnoreList);
         BUILDER.pop();
 
         BUILDER.comment("Totem of Ticking Settings").push(CATEGORY_TOTEM);
         shouldEnableTotemOfTicking = BUILDER.comment("Whether the totem of ticking should be enabled [Default: true]")
                 .define("enableTotemOfTicking", true);
-        totemMaxEntitySpawnHorizontalDist = BUILDER.comment("Maximum distance from a totem of ticking (horizontally) for living entity spawning check [Default: 24]")
+        totemMaxEntitySpawnHorizontalDist = BUILDER.comment(
+                        "Maximum distance from a totem of ticking (horizontally) for living"
+                                + " entity spawning check [Default: 24]")
                 .define("totemMaxEntitySpawnDistanceHorizontal", 24);
-        totemMaxEntitySpawnVerticalDist = BUILDER.comment("Maximum distance from a totem of ticking (vertically) for living entity spawning check [Default: 16]")
+        totemMaxEntitySpawnVerticalDist = BUILDER.comment(
+                        "Maximum distance from a totem of ticking (vertically) for living"
+                                + " entity spawning check [Default: 16]")
                 .define("totemMaxEntitySpawnDistanceVertical", 16);
-        totemMaxEntityTickHorizontalDist = BUILDER.comment("Maximum distance from a totem of ticking (horizontally) to allow living entity ticking [Default: 24]")
+        totemMaxEntityTickHorizontalDist = BUILDER.comment(
+                        "Maximum distance from a totem of ticking (horizontally) to allow"
+                                + " living entity ticking [Default: 24]")
                 .define("totemMaxEntityTickDistanceHorizontal", 24);
-        totemMaxEntityTickVerticalDist = BUILDER.comment("Maximum distance from a totem of ticking (vertically) to allow living entity ticking [Default: 16]")
+        totemMaxEntityTickVerticalDist = BUILDER.comment(
+                        "Maximum distance from a totem of ticking (vertically) to allow"
+                                + " living entity ticking [Default: 16]")
                 .define("totemMaxEntityTickDistanceVertical", 16);
         BUILDER.pop();
 

@@ -1,7 +1,5 @@
 package net.youshallnottick.forge;
 
-import dev.architectury.platform.forge.EventBuses;
-import net.youshallnottick.registry.TickingTotemBlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,14 +11,18 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.youshallnottick.config.ServerConfig;
+
+import dev.architectury.platform.forge.EventBuses;
 import net.youshallnottick.YouShallNotTick;
+import net.youshallnottick.config.ServerConfig;
+import net.youshallnottick.registry.TickingTotemBlockEntity;
 
 @Mod(YouShallNotTick.MOD_ID)
 @SuppressWarnings("unused")
 public class YouShallNotTickModForge {
     public YouShallNotTickModForge() {
-        EventBuses.registerModEventBus(YouShallNotTick.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+        EventBuses.registerModEventBus(
+                YouShallNotTick.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         YouShallNotTick.init();
 
         MinecraftForge.EVENT_BUS.register(YouShallNotTickModForge.class);
@@ -30,24 +32,24 @@ public class YouShallNotTickModForge {
     }
 
     @SubscribeEvent
-    public static void onLevelLoad(LevelEvent.Load e){
+    public static void onLevelLoad(LevelEvent.Load e) {
         ServerConfig.updateMobLists();
     }
 
     @SubscribeEvent
-    public static void onLevelUnload(LevelEvent.Unload e){
-        if(e.getLevel().isClientSide())
-            return;
-        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.remove(((Level) e.getLevel()).dimension().location());
+    public static void onLevelUnload(LevelEvent.Unload e) {
+        if (e.getLevel().isClientSide()) return;
+        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.remove(
+                ((Level) e.getLevel()).dimension().location());
     }
 
     @SubscribeEvent
-    public static void onChunkLoad(ChunkEvent.Load e){
+    public static void onChunkLoad(ChunkEvent.Load e) {
         TickingTotemBlockEntity.handleChunkLoading(e.getLevel(), e.getChunk());
     }
 
     @SubscribeEvent
-    public static void onChunkUnload(ChunkEvent.Unload e){
+    public static void onChunkUnload(ChunkEvent.Unload e) {
         TickingTotemBlockEntity.handleChunkUnloading(e.getLevel(), e.getChunk());
     }
 }
