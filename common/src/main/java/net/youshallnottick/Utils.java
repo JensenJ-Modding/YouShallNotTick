@@ -151,6 +151,7 @@ public class Utils {
         List<? extends Player> players = level.players();
         for (Player player : players) {
             if (player == null) continue;
+            if (!ServerConfig.spectatorsAllowTicking.get() && player.isSpectator()) continue;
 
             if (Math.abs(player.getY() - posY) < verticalDist) {
                 double x = player.getX() - posX;

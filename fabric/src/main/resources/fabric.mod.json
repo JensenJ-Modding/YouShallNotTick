@@ -21,6 +21,9 @@
     ],
     "client": [
       "net.youshallnottick.fabric.YouShallNotTickModFabricClient"
+    ],
+    "jade": [
+      "net.youshallnottick.compat.jade.YouShallNotTickJadePlugin"
     ]
   },
   "mixins": [

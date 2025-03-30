@@ -33,3 +33,10 @@ mandatory = true
 versionRange = "[9.2.14,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.youshallnottick]]
+modId = "jade"
+mandatory = false
+versionRange = "[11.12.3,)"
+ordering = "AFTER"
+side = "BOTH"

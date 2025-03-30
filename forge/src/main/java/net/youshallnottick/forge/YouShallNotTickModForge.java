@@ -7,7 +7,6 @@ import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -20,15 +19,14 @@ import net.youshallnottick.registry.TickingTotemBlockEntity;
 @Mod(YouShallNotTick.MOD_ID)
 @SuppressWarnings("unused")
 public class YouShallNotTickModForge {
-    public YouShallNotTickModForge() {
-        EventBuses.registerModEventBus(
-                YouShallNotTick.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+    public YouShallNotTickModForge(FMLJavaModLoadingContext context) {
+        EventBuses.registerModEventBus(YouShallNotTick.MOD_ID, context.getModEventBus());
         YouShallNotTick.init();
 
         MinecraftForge.EVENT_BUS.register(YouShallNotTickModForge.class);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> YouShallNotTickModForgeClient::clientSetup);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
+        context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
     }
 
     @SubscribeEvent

@@ -3,3 +3,16 @@ plugins {
 }
 
 apply from: 'https://raw.githubusercontent.com/JensenJ-Modding/Mod-Resources/refs/heads/main/1.20.1/Gradle/fabric-build.gradle'
+
+repositories {
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+dependencies {
+    modImplementation("curse.maven:jade-324717:${fabric_jade_id}")
+}

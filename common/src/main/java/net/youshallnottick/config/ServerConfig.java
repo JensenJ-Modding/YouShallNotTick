@@ -20,6 +20,7 @@ public class ServerConfig {
     public static final String CATEGORY_TOTEM = "totem";
     public static ForgeConfigSpec SERVER_CONFIG;
     public static ForgeConfigSpec.ConfigValue<Integer> minPlayers;
+    public static ForgeConfigSpec.ConfigValue<Boolean> spectatorsAllowTicking;
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableSpawnMixin;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnHorizontalDist;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnVerticalDist;
@@ -59,6 +60,8 @@ public class ServerConfig {
         BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         minPlayers = BUILDER.comment("Minimum number of players before mod is enabled. [Default: 1]")
                 .define("minPlayers", 1);
+        spectatorsAllowTicking = BUILDER.comment("Should spectators allow nearby entities to tick. [Default: false]")
+                .define("spectatorsAllowTicking", false);
         BUILDER.pop();
 
         BUILDER.comment("Spawning settings").push(CATEGORY_SPAWNING);

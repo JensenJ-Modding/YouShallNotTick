@@ -1,10 +1,13 @@
 {
   "block.youshallnottick.ticking_totem": "Totem of Ticking",
-  "block.youshallnottick.ticking_totem.info.tooltip": "Enables living entity ticking within a radius",
-  "block.youshallnottick.ticking_totem.tick_range_h.tooltip": "Horizontal Tick Range: ",
-  "block.youshallnottick.ticking_totem.tick_range_v.tooltip": "Vertical Tick Range: ",
-  "block.youshallnottick.ticking_totem.spawn_range_h.tooltip": "Horizontal Spawn Range: ",
-  "block.youshallnottick.ticking_totem.spawn_range_v.tooltip": "Vertical Spawn Range: ",
-  "block.youshallnottick.ticking_totem.redstone.tooltip": "Can be disabled with redstone.",
-  "block.youshallnottick.ticking_totem.disabled.tooltip": "Disabled by server configuration."
+  "tooltip.youshallnottick.ticking_totem.info": "Enables living entity ticking within a radius",
+  "tooltip.youshallnottick.ticking_totem.tick_range_h": "Horizontal Tick Range: ",
+  "tooltip.youshallnottick.ticking_totem.tick_range_v": "Vertical Tick Range: ",
+  "tooltip.youshallnottick.ticking_totem.spawn_range_h": "Horizontal Spawn Range: ",
+  "tooltip.youshallnottick.ticking_totem.spawn_range_v": "Vertical Spawn Range: ",
+  "tooltip.youshallnottick.ticking_totem.redstone": "Can be disabled with redstone",
+  "tooltip.youshallnottick.ticking_totem.disabled": "Disabled by server configuration",
+  "config.jade.plugin_youshallnottick.nontickingentity": "NonTickingEntity",
+  "config.jade.plugin_youshallnottick.tickingtotem": "TickingTotemEnabled",
+  "tooltip.youshallnottick.nontickingentity": "Disabled by YouShallNotTick"
 }

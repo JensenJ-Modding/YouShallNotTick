@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.youshallnottick.YouShallNotTick;
 import net.youshallnottick.config.ServerConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -77,32 +76,28 @@ public class TickingTotemBlock extends BaseEntityBlock {
             ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag flag) {
         if (ServerConfig.shouldEnableTotemOfTicking.get()
                 && (ServerConfig.shouldEnableAITickMixin.get() || ServerConfig.shouldEnableSpawnMixin.get())) {
-            list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.info.tooltip")
+            list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.info")
                     .withStyle(ChatFormatting.GRAY));
             if (ServerConfig.shouldEnableAITickMixin.get()) {
-                list.add(Component.translatable(
-                                "block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_h.tooltip")
+                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_h")
                         .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get()))
                         .withStyle(ChatFormatting.YELLOW));
-                list.add(Component.translatable(
-                                "block." + YouShallNotTick.MOD_ID + ".ticking_totem.tick_range_v.tooltip")
+                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_v")
                         .append(String.valueOf(ServerConfig.totemMaxEntityTickVerticalDist.get()))
                         .withStyle(ChatFormatting.YELLOW));
             }
             if (ServerConfig.shouldEnableSpawnMixin.get()) {
-                list.add(Component.translatable(
-                                "block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_h.tooltip")
+                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.spawn_range_h")
                         .append(String.valueOf(ServerConfig.totemMaxEntitySpawnHorizontalDist.get()))
                         .withStyle(ChatFormatting.YELLOW));
-                list.add(Component.translatable(
-                                "block." + YouShallNotTick.MOD_ID + ".ticking_totem.spawn_range_v.tooltip")
+                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.spawn_range_v")
                         .append(String.valueOf(ServerConfig.totemMaxEntitySpawnVerticalDist.get()))
                         .withStyle(ChatFormatting.YELLOW));
             }
-            list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.redstone.tooltip")
+            list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.redstone")
                     .withStyle(ChatFormatting.GRAY));
         } else {
-            list.add(Component.translatable("block." + YouShallNotTick.MOD_ID + ".ticking_totem.disabled.tooltip")
+            list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.disabled")
                     .withStyle(ChatFormatting.DARK_RED));
         }
     }
