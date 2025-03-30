@@ -14,7 +14,7 @@
       "item": "minecraft:hay_block"
     },
     "L": {
-      "item": "minecraft:smooth_stone_slab"
+      "item": "minecraft:stone_slab"
     }
   },
   "pattern": [
@@ -23,6 +23,7 @@
     "RLR"
   ],
   "result": {
-    "item": "youshallnottick:ticking_totem"
+    "item": "youshallnottick:ticking_totem",
+    "count": 2
   }
 }
