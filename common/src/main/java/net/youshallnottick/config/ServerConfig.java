@@ -101,6 +101,9 @@ public class ServerConfig {
         defaultIgnoreList.add("minecraft:ender_dragon");
         defaultIgnoreList.add("minecraft:elder_guardian");
         defaultIgnoreList.add("minecraft:warden");
+        defaultIgnoreList.add("create:package");
+        defaultIgnoreList.add("railways:conductor");
+        defaultIgnoreList.add("minecolonies:*");
         entityIgnoreList = BUILDER.comment(
                         "List of living entities to ignore when checking if they are" + " allowed to tick",
                         "Only living entities need to be added to this list, all other"
@@ -113,7 +116,9 @@ public class ServerConfig {
                         "[Default: [\"minecraft:wither\", \"minecraft:phantom\","
                                 + " \"minecraft:blaze\", \"minecraft:ghast\","
                                 + " \"minecraft:enderman\", \"minecraft:ender_dragon\","
-                                + " \"minecraft:elder_guardian\", \"minecraft:warden\"]]")
+                                + " \"minecraft:elder_guardian\", \"minecraft:warden\","
+                                + " \"create:package\", \"railways:conductor\","
+                                + " \"minecolonies:*\"]]")
                 .define("entityIgnoreList", defaultIgnoreList);
         BUILDER.pop();
 
