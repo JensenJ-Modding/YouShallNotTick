@@ -25,6 +25,7 @@ public class ServerConfig {
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntitySpawnVerticalDist;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableAITickMixin;
+    public static ForgeConfigSpec.ConfigValue<Boolean> shouldRaidParticipantsTick;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickHorizontalDist;
     public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickVerticalDist;
     public static ForgeConfigSpec.ConfigValue<List<String>> entityIgnoreList;
@@ -80,6 +81,10 @@ public class ServerConfig {
                         + " disables AI for entities outside of tick distance."
                         + " [Default: true]")
                 .define("enableAIEntityTickCheck", true);
+        shouldRaidParticipantsTick = BUILDER.comment(
+                        "Should raid participants tick regardless of the range from a player or totem?"
+                                + " [Default: true]")
+                .define("shouldRaidParticipantsTick", true);
         playerMaxEntityTickHorizontalDist = BUILDER.comment(
                         "Maximum distance from player (horizontally) to allow living entity" + " ticking [Default: 48]")
                 .define("playerMaxEntityTickDistanceHorizontal", 48);

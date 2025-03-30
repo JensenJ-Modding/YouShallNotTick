@@ -10,6 +10,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.entity.raid.Raider;
@@ -91,10 +93,13 @@ public class Utils {
         }
 
         // If this entity is part of a raid, it should be ignored
-        if (entity instanceof Raider) {
-            Raid raid = ((ServerLevel) entity.level()).getRaidAt(entity.blockPosition());
-            if (raid != null) {
-                return true;
+        if (ServerConfig.shouldRaidParticipantsTick.get()) {
+            if (entity instanceof Raider raider) {
+                if (raider.hasActiveRaid()) return true;
+            }
+            if (entity instanceof Villager || entity instanceof IronGolem) {
+                Raid raid = ((ServerLevel) entity.level()).getRaidAt(entity.blockPosition());
+                if (raid != null && raid.isActive() && !raid.isOver()) return true;
             }
         }
 
