@@ -7,8 +7,10 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url = "https://maven.createmod.net" }
 }
 
 dependencies {
     modImplementation("curse.maven:jade-324717:${fabric_jade_id}")
+    modImplementation("net.createmod.ponder:Ponder-Common-${minecraft_version}:${ponder_version}")
 }

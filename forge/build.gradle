@@ -11,8 +11,11 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url = "https://maven.createmod.net" }
 }
 
 dependencies {
     modImplementation("curse.maven:jade-324717:${forge_jade_id}")
+    modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
+    include("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
 }

@@ -11,8 +11,18 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url = "https://maven.createmod.net" } // Ponder
+    maven { url = "https://mvn.devos.one/releases" } // Porting Lib (needed for ponder)
+    maven {
+        url "https://maven.jamieswhiteshirt.com/libs-release" // Reach Entity Attributes (needed for porting lib)
+        content {
+            includeGroup "com.jamieswhiteshirt"
+        }
+    }
 }
 
 dependencies {
     modImplementation("curse.maven:jade-324717:${fabric_jade_id}")
+    modImplementation("net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}")
+    include("net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}")
 }

@@ -6,6 +6,7 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.youshallnottick.YouShallNotTickClient;
 import net.youshallnottick.config.ServerConfig;
 
 @SuppressWarnings("unused")
@@ -15,5 +16,6 @@ public class YouShallNotTickModFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientPlayConnectionEvents.JOIN.register(
                 (ClientPacketListener handler, PacketSender sender, Minecraft client) -> ServerConfig.updateMobLists());
+        YouShallNotTickClient.initialiseClient();
     }
 }

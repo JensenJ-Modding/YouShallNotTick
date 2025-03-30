@@ -9,5 +9,8 @@
   "tooltip.youshallnottick.ticking_totem.disabled": "Disabled by server configuration",
   "config.jade.plugin_youshallnottick.nontickingentity": "NonTickingEntity",
   "config.jade.plugin_youshallnottick.tickingtotem": "TickingTotemEnabled",
-  "tooltip.youshallnottick.nontickingentity": "Disabled by YouShallNotTick"
+  "tooltip.youshallnottick.nontickingentity": "Disabled by YouShallNotTick",
+  "youshallnottick.ponder.tag.ticking_components": "Ticking Components",
+  "youshallnottick.ponder.tag.ticking_components.description": "Components which help control living entity ticking in the world.",
+  "youshallnottick.ponder.ticking_totem.header": "Totem of Ticking"
 }
