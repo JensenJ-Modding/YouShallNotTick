@@ -12,5 +12,12 @@
   "tooltip.youshallnottick.nontickingentity": "Disabled by YouShallNotTick",
   "youshallnottick.ponder.tag.ticking_components": "Ticking Components",
   "youshallnottick.ponder.tag.ticking_components.description": "Components which help control living entity ticking in the world.",
-  "youshallnottick.ponder.ticking_totem.header": "Totem of Ticking"
+  "youshallnottick.ponder.ticking_totem.header": "Totem of Ticking",
+  "youshallnottick.ponder.ticking_totem.text_1": "YouShallNotTick is a simple mod which disables unnecessary AI processing of configured entities far away from players.",
+  "youshallnottick.ponder.ticking_totem.text_2": "The mod only disables AI, movement and collisions of living entities, drastically improving performance.",
+  "youshallnottick.ponder.ticking_totem.text_3": "Processing such as cooldowns and events are still processed as normal, regardless of range.",
+  "youshallnottick.ponder.ticking_totem.text_4": "The Totem of Ticking allows living entities within it's radius to tick like normal, regardless of the distance from players.",
+  "youshallnottick.ponder.ticking_totem.text_5": "It should be noted that the Totem of Ticking is not a Chunk Loader.",
+  "youshallnottick.ponder.ticking_totem.text_6": "The Totem of Ticking can be controlled via redstone.",
+  "youshallnottick.ponder.ticking_totem.text_7": "When powered, the totem is deactivated. It will no longer allow entities within it's radius to tick."
 }

@@ -5,7 +5,7 @@ import net.youshallnottick.compat.ponder.YouShallNotTickPonderPlugin;
 
 public class YouShallNotTickClient {
 
-    public static void initialiseClient(){
+    public static void initialiseClient() {
         PonderIndex.addPlugin(new YouShallNotTickPonderPlugin());
     }
 }
