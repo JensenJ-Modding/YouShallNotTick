@@ -15,7 +15,7 @@ public class YouShallNotTickModFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientPlayConnectionEvents.JOIN.register(
                 (ClientPacketListener handler, PacketSender sender, Minecraft client) -> ServerConfig.updateMobLists());
-        //TODO: Reenable when ponder is properly supported on Fabric
-        //YouShallNotTickClient.initialiseClient();
+        // TODO: Reenable when ponder is properly supported on Fabric
+        // YouShallNotTickClient.initialiseClient();
     }
 }

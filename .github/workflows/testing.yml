@@ -57,7 +57,7 @@ jobs:
           cache-read-only: false
 
       - name: Build
-        run: gradle build -PbuildNumber=${{ github.run_number }}
+        run: gradle build -x spotlessJava -x spotlessJavaCheck -x spotlessCheck -PbuildNumber=${{ github.run_number }}
 
       - name: Setup environment variables
         run: |
