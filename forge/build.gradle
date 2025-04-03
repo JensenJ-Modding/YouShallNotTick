@@ -19,4 +19,6 @@ dependencies {
     modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
     include("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
     include("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    modRuntimeOnly("curse.maven:embeddium-908741:5681725")
+    modRuntimeOnly("curse.maven:spark-361579:4738952")
 }

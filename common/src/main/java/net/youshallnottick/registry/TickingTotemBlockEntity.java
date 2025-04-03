@@ -26,9 +26,11 @@ public class TickingTotemBlockEntity extends BlockEntity {
         Level level = (Level) levelAccessor;
         ResourceLocation dimension = level.dimensionTypeId().location();
 
-        if (shouldAdd) // Server side updating totems
-        addTickingTotemPosition(dimension, pos);
-        else removeTickingTotemPosition(dimension, pos);
+        if (shouldAdd) {
+            addTickingTotemPosition(dimension, pos);
+        } else {
+            removeTickingTotemPosition(dimension, pos);
+        }
     }
 
     public static void addTickingTotemPosition(ResourceLocation dimension, BlockPos pos) {
@@ -50,8 +52,9 @@ public class TickingTotemBlockEntity extends BlockEntity {
         if (level.isClientSide()) return;
         for (BlockPos pos : chunk.getBlockEntitiesPos()) {
             if (!(chunk.getBlockEntity(pos) instanceof TickingTotemBlockEntity)) continue;
-            if (chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)) // Skip powered totems
-            continue;
+            if (chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)) {
+                continue;
+            }
             updateTickingTotemState(level, pos, true);
             return;
         }
@@ -61,8 +64,9 @@ public class TickingTotemBlockEntity extends BlockEntity {
         if (level.isClientSide()) return;
         for (BlockPos pos : chunk.getBlockEntitiesPos()) {
             if (!(chunk.getBlockEntity(pos) instanceof TickingTotemBlockEntity)) continue;
-            if (!chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)) // Skip unpowered totems
-            continue;
+            if (!chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)) {
+                continue;
+            }
             updateTickingTotemState(level, pos, false);
             return;
         }

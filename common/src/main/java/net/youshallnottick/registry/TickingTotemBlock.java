@@ -114,8 +114,9 @@ public class TickingTotemBlock extends BaseEntityBlock {
             BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState state2, boolean pIsMoving) {
         if (level.isClientSide()) return;
         if (state.getBlock() != state2.getBlock()) {
-            if (!state.getValue(POWERED)) // If unpowered, add to positions
-            TickingTotemBlockEntity.updateTickingTotemState(level, pos, true);
+            if (!state.getValue(POWERED)) {
+                TickingTotemBlockEntity.updateTickingTotemState(level, pos, true);
+            }
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
     }
@@ -125,8 +126,9 @@ public class TickingTotemBlock extends BaseEntityBlock {
             BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState state2, boolean pIsMoving) {
         if (level.isClientSide()) return;
         if (state.getBlock() != state2.getBlock()) {
-            if (!state.getValue(POWERED)) // If unpowered, remove from positions
-            TickingTotemBlockEntity.updateTickingTotemState(level, pos, false);
+            if (!state.getValue(POWERED)) {
+                TickingTotemBlockEntity.updateTickingTotemState(level, pos, false);
+            }
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
     }

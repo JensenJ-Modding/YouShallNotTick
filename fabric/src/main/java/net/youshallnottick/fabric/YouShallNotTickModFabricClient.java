@@ -1,21 +1,25 @@
 package net.youshallnottick.fabric;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientPacketListener;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.youshallnottick.config.ServerConfig;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.youshallnottick.YouShallNotTickClient;
 
 @SuppressWarnings("unused")
 public class YouShallNotTickModFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientPlayConnectionEvents.JOIN.register(
-                (ClientPacketListener handler, PacketSender sender, Minecraft client) -> ServerConfig.updateMobLists());
+
         // TODO: Reenable when ponder is properly supported on Fabric
         // YouShallNotTickClient.initialiseClient();
+
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(renderContext -> {
+            YouShallNotTickClient.renderTotemOutlines(renderContext.matrixStack());
+        });
+
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            YouShallNotTickClient.clearOutlines();
+        });
     }
 }

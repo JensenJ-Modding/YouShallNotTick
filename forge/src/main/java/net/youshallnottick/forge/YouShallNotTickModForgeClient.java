@@ -1,11 +1,11 @@
 package net.youshallnottick.forge;
 
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.youshallnottick.YouShallNotTickClient;
-import net.youshallnottick.config.ServerConfig;
 
 @SuppressWarnings("unused")
 public class YouShallNotTickModForgeClient {
@@ -16,7 +16,15 @@ public class YouShallNotTickModForgeClient {
     }
 
     @SubscribeEvent
-    public static void onPlayerConnect(ClientPlayerNetworkEvent.LoggingIn e) {
-        ServerConfig.updateMobLists();
+    public static void renderLevel(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
+            return;
+        }
+        YouShallNotTickClient.renderTotemOutlines(event.getPoseStack());
+    }
+
+    @SubscribeEvent
+    public static void onExitWorld(ClientPlayerNetworkEvent.LoggingOut event) {
+        YouShallNotTickClient.clearOutlines();
     }
 }
