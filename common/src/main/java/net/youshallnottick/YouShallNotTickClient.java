@@ -13,9 +13,9 @@ import net.youshallnottick.render.TotemOutlineGenerator;
 
 public class YouShallNotTickClient {
 
-    private static final OutlineRenderer outliner = new OutlineRenderer();
+    private static OutlineRenderer outliner;
     // TODO: This is only a temporary variable until we have a better way to add/remove outline generators
-    public static boolean rendered = false;
+    public static boolean generated = false;
 
     public static void renderTotemOutlines(PoseStack poseStack) {
         Player player = Minecraft.getInstance().player;
@@ -31,9 +31,13 @@ public class YouShallNotTickClient {
             return;
         }
 
-        if (!rendered) {
-            rendered = true;
-            outliner.addGenerator(new TotemOutlineGenerator(player.blockPosition()));
+        if (outliner == null) {
+            outliner = new OutlineRenderer();
+        }
+
+        if (!generated) {
+            generated = true;
+            outliner.setGenerator(new TotemOutlineGenerator(player.blockPosition()));
         }
 
         outliner.render(
@@ -41,8 +45,11 @@ public class YouShallNotTickClient {
     }
 
     public static void clearOutlines() {
-        rendered = false;
-        outliner.cleanup();
+        generated = false;
+        if (outliner != null) {
+            outliner.cleanup();
+            outliner = null;
+        }
     }
 
     public static void initialiseClient() {

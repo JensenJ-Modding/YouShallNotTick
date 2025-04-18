@@ -1,7 +1,5 @@
 package net.youshallnottick.render;
 
-import java.util.HashSet;
-
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.phys.Vec3;
 
@@ -10,7 +8,7 @@ import com.mojang.blaze3d.vertex.*;
 
 public class OutlineRenderer {
     private VertexBuffer vertexBuffer;
-    private final HashSet<OutlineGenerator> outlineGenerators = new HashSet<>();
+    private OutlineGenerator outlineGenerator;
 
     private void refreshRenderer() {
         if (vertexBuffer != null) {
@@ -21,13 +19,8 @@ public class OutlineRenderer {
         updateBuffer();
     }
 
-    public void addGenerator(OutlineGenerator generator) {
-        outlineGenerators.add(generator);
-        refreshRenderer();
-    }
-
-    public void removeGenerator(OutlineGenerator generator) {
-        outlineGenerators.remove(generator);
+    public void setGenerator(OutlineGenerator generator) {
+        outlineGenerator = generator;
         refreshRenderer();
     }
 
@@ -38,13 +31,11 @@ public class OutlineRenderer {
 
         buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 
-        for (OutlineGenerator generator : outlineGenerators) {
-            generator.generateOutline((position, colour) -> {
-                buffer.vertex(position.x, position.y, position.z)
-                        .color(colour.x, colour.y, colour.z, colour.w)
-                        .endVertex();
-            });
-        }
+        outlineGenerator.generateOutline((position, colour) -> {
+            buffer.vertex(position.x, position.y, position.z)
+                    .color(colour.x, colour.y, colour.z, colour.w)
+                    .endVertex();
+        });
 
         vertexBuffer.bind();
         vertexBuffer.upload(buffer.end());
@@ -55,11 +46,11 @@ public class OutlineRenderer {
         RenderSystem.assertOnRenderThread();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         poseStack.pushPose();
-        PoseStack.Pose pose = poseStack.last();
-        poseStack.translate(-camera.x, -camera.y, -camera.z);
+        outlineGenerator.transformOutline(poseStack, camera);
         if (vertexBuffer != null && !vertexBuffer.isInvalid()) {
             vertexBuffer.bind();
-            vertexBuffer.drawWithShader(pose.pose(), RenderSystem.getProjectionMatrix(), RenderSystem.getShader());
+            vertexBuffer.drawWithShader(
+                    poseStack.last().pose(), RenderSystem.getProjectionMatrix(), RenderSystem.getShader());
             VertexBuffer.unbind();
         }
         poseStack.popPose();
@@ -70,6 +61,5 @@ public class OutlineRenderer {
             vertexBuffer.close();
             vertexBuffer = null;
         }
-        outlineGenerators.clear();
     }
 }

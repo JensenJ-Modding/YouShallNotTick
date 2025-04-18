@@ -17,7 +17,6 @@ import net.youshallnottick.config.ServerConfig;
 import net.youshallnottick.registry.TickingTotemBlockEntity;
 
 @Mod(YouShallNotTick.MOD_ID)
-@SuppressWarnings("unused")
 public class YouShallNotTickModForge {
     public YouShallNotTickModForge(FMLJavaModLoadingContext context) {
         EventBuses.registerModEventBus(YouShallNotTick.MOD_ID, context.getModEventBus());

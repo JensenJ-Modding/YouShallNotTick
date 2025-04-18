@@ -12,7 +12,6 @@ import net.youshallnottick.YouShallNotTick;
 import net.youshallnottick.config.ServerConfig;
 import net.youshallnottick.registry.TickingTotemBlockEntity;
 
-@SuppressWarnings("unused")
 public class YouShallNotTickModFabric implements ModInitializer {
     @Override
     public void onInitialize() {
