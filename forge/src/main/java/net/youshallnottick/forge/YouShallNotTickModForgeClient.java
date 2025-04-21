@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.youshallnottick.YouShallNotTickClient;
+import net.youshallnottick.registry.TickingTotemBlockEntity;
 
 public class YouShallNotTickModForgeClient {
 
@@ -25,5 +26,7 @@ public class YouShallNotTickModForgeClient {
     @SubscribeEvent
     public static void onExitWorld(ClientPlayerNetworkEvent.LoggingOut event) {
         YouShallNotTickClient.clearOutlines();
+        TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.clear();
+        TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.clear();
     }
 }

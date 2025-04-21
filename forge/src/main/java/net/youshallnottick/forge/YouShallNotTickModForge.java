@@ -36,7 +36,9 @@ public class YouShallNotTickModForge {
     @SubscribeEvent
     public static void onLevelUnload(LevelEvent.Unload e) {
         if (e.getLevel().isClientSide()) return;
-        TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.remove(
+        TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.remove(
+                ((Level) e.getLevel()).dimension().location());
+        TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.remove(
                 ((Level) e.getLevel()).dimension().location());
     }
 

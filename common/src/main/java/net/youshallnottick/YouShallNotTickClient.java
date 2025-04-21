@@ -53,6 +53,7 @@ public class YouShallNotTickClient {
     }
 
     public static void initialiseClient() {
+        YouShallNotTickRegistry.registerS2CPackets();
         PonderIndex.addPlugin(new YouShallNotTickPonderPlugin());
     }
 }

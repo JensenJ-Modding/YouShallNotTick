@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
@@ -35,6 +36,11 @@ public class Utils {
     @SuppressWarnings("unused")
     public static ResourceLocation getEntityRegistrationLocation(Entity entity) {
         throw new AssertionError("Override not found for getEntityRegistrationLocation in mod loader.");
+    }
+
+    public static ResourceLocation resourceLocationForLevel(LevelAccessor levelAccessor) {
+        if (levelAccessor.isClientSide()) return null;
+        return ((Level) levelAccessor).dimensionTypeId().location();
     }
 
     public static boolean shouldProcessEntityTick(LivingEntity entity) {
@@ -165,7 +171,7 @@ public class Utils {
 
     private static boolean isNearTotemOfTickingInternal(
             Level level, double posX, double posY, double posZ, int horizontalDist, int verticalDist) {
-        Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.TICKING_TOTEM_LOCATIONS.get(
+        Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.get(
                 level.dimension().location());
         if (totemsForThisLevel == null) return false;
         for (BlockPos totemPos : totemsForThisLevel) {
