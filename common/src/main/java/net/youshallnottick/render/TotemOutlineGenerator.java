@@ -11,16 +11,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.youshallnottick.config.ServerConfig;
 import org.joml.Vector3d;
 import org.joml.Vector4f;
 
 public class TotemOutlineGenerator implements OutlineGenerator {
 
-    private final BlockPos totemPosition;
+    private final boolean isTotemActive;
 
-    public TotemOutlineGenerator(BlockPos totemPosition) {
-        this.totemPosition = totemPosition;
+    public TotemOutlineGenerator(boolean isTotemActive) {
+        this.isTotemActive = isTotemActive;
     }
 
     @Override
@@ -30,19 +29,23 @@ public class TotemOutlineGenerator implements OutlineGenerator {
             return;
         }
 
-        List<BlockPos> blockPositions = getPositionsInEllipsoid(
-                totemPosition,
-                ServerConfig.totemMaxEntityTickHorizontalDist.get(),
-                ServerConfig.totemMaxEntityTickVerticalDist.get());
+        // List<BlockPos> blockPositions = getPositionsInEllipsoid(
+        //        totemPosition,
+        //        ServerConfig.totemMaxEntityTickHorizontalDist.get(),
+        //        ServerConfig.totemMaxEntityTickVerticalDist.get());
+
+        Vector4f colour = new Vector4f(1, 0, 0, 1);
+        if (isTotemActive) {
+            colour = new Vector4f(0, 1, 0, 1);
+        }
 
         // TODO: replace with actual outline generator for the totem
-        for (int x = 0; x < 10; x++) {
+        for (int x = 0; x < 100; x++) {
             for (int y = 0; y < 10; y++) {
-                for (int z = 0; z < 10; z++) {
-                    BlockPos renderPos = totemPosition.offset(x * 4, y * 4, z * -4);
-                    Vec3 min = renderPos.getCenter();
-                    Vec3 max = renderPos.east(2).above(3).getCenter();
-                    Vector4f colour = new Vector4f(1, 0, 0, 1);
+                for (int z = 0; z < 100; z++) {
+                    BlockPos renderPos = new BlockPos(x * 4, y * 4, -z * 4);
+                    Vec3 min = renderPos.above(1).getCenter();
+                    Vec3 max = renderPos.east(1).above(2).getCenter();
 
                     vertexConsumer.accept(new Vector3d(min.x, min.y, min.z), colour);
                     vertexConsumer.accept(new Vector3d(max.x, min.y, min.z), colour);
@@ -54,17 +57,14 @@ public class TotemOutlineGenerator implements OutlineGenerator {
     }
 
     @Override
-    public void transformOutline(PoseStack pose, Vec3 camera) {
+    public void transformOutline(PoseStack pose, Vec3 renderPos, Vec3 camera) {
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null) {
             return;
         }
         double time = System.currentTimeMillis() / 1000.0;
         float scale = 1.0f + 0.25f * (float) Math.sin(time * Math.PI);
-        pose.translate(
-                totemPosition.getX() - camera.x, totemPosition.getY() - camera.y, totemPosition.getZ() - camera.z);
-        pose.scale(scale, scale, scale);
-        pose.translate(-totemPosition.getX(), -totemPosition.getY(), -totemPosition.getZ());
+        // pose.scale(scale, scale, scale);
     }
 
     public static List<BlockPos> getPositionsInEllipsoid(BlockPos center, int horizontalDist, int verticalDist) {

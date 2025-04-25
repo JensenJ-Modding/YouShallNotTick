@@ -5,6 +5,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -22,9 +23,12 @@ public class YouShallNotTickModForge {
         EventBuses.registerModEventBus(YouShallNotTick.MOD_ID, context.getModEventBus());
         YouShallNotTick.init();
 
-        MinecraftForge.EVENT_BUS.register(YouShallNotTickModForge.class);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> YouShallNotTickModForgeClient::clientSetup);
 
+        IEventBus bus = context.getModEventBus();
+        bus.register(YouShallNotTickForgeSetupEvents.class);
+
+        MinecraftForge.EVENT_BUS.register(YouShallNotTickModForge.class);
         context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);
     }
 
@@ -37,8 +41,6 @@ public class YouShallNotTickModForge {
     public static void onLevelUnload(LevelEvent.Unload e) {
         if (e.getLevel().isClientSide()) return;
         TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.remove(
-                ((Level) e.getLevel()).dimension().location());
-        TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.remove(
                 ((Level) e.getLevel()).dimension().location());
     }
 

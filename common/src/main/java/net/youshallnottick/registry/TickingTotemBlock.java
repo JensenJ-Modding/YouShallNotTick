@@ -5,11 +5,9 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +17,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,8 +28,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import dev.architectury.networking.NetworkManager;
-import io.netty.buffer.Unpooled;
 import net.youshallnottick.Utils;
 import net.youshallnottick.config.ServerConfig;
 import org.jetbrains.annotations.NotNull;
@@ -73,31 +68,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
         ResourceLocation dim = Utils.resourceLocationForLevel(level);
         if (dim == null) return InteractionResult.PASS;
 
-        if (newState.getValue(OUTLINED)) TickingTotemBlockEntity.addOutlinedTickingTotem(dim, blockPos);
-        else TickingTotemBlockEntity.removeOutlinedTickingTotem(dim, blockPos);
-
-        sendDataToClient(level, blockPos, newState);
-
         return InteractionResult.SUCCESS;
-    }
-
-    public static void sendDataToClient(LevelAccessor level, BlockPos pos, BlockState state) {
-        ResourceLocation dim = Utils.resourceLocationForLevel(level);
-        if (dim == null) return;
-        sendDataToClient(dim, level, pos, !state.getValue(POWERED), state.getValue(OUTLINED));
-    }
-
-    public static void sendDataToClient(
-            ResourceLocation dim, LevelAccessor level, BlockPos pos, boolean active, boolean outlined) {
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeResourceLocation(dim);
-        buf.writeBlockPos(pos);
-        buf.writeBoolean(active);
-        buf.writeBoolean(outlined);
-        for (Player player : level.players()) {
-            NetworkManager.sendToPlayer(
-                    (ServerPlayer) player, YouShallNotTickRegistry.UPDATE_TICKING_TOTEM_PACKET_ID, buf);
-        }
     }
 
     @Override
@@ -181,7 +152,6 @@ public class TickingTotemBlock extends BaseEntityBlock {
                 ResourceLocation dim = Utils.resourceLocationForLevel(level);
                 if (dim == null) return;
                 TickingTotemBlockEntity.addActiveTickingTotem(dim, pos);
-                sendDataToClient(level, pos, state);
             }
         }
         super.onPlace(state, level, pos, state2, pIsMoving);
@@ -196,7 +166,6 @@ public class TickingTotemBlock extends BaseEntityBlock {
                 ResourceLocation dim = Utils.resourceLocationForLevel(level);
                 if (dim == null) return;
                 TickingTotemBlockEntity.removeActiveTickingTotem(dim, pos);
-                sendDataToClient(level, pos, state);
             }
         }
         super.onRemove(state, level, pos, state2, pIsMoving);
@@ -234,6 +203,5 @@ public class TickingTotemBlock extends BaseEntityBlock {
             serverLevel.setBlock(blockPos, blockState.setValue(POWERED, true), 2);
             TickingTotemBlockEntity.removeActiveTickingTotem(dim, blockPos);
         }
-        sendDataToClient(serverLevel, blockPos, serverLevel.getBlockState(blockPos));
     }
 }

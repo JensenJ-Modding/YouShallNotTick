@@ -1,22 +1,17 @@
 package net.youshallnottick.fabric;
 
+import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.youshallnottick.YouShallNotTickClient;
-import net.youshallnottick.registry.TickingTotemBlockEntity;
+import net.youshallnottick.registry.TickingTotemBlockEntityRenderer;
+import net.youshallnottick.registry.YouShallNotTickRegistry;
 
 public class YouShallNotTickModFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        YouShallNotTickClient.initialiseClient();
-
-        // The rendering of totems is handled within LeverRendererMixin, we can still use the event to clear them
-        // though.
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
-            YouShallNotTickClient.clearOutlines();
-            TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.clear();
-            TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.clear();
-        });
+        // TODO: Reenable when ponder works on both server and client outside of dev environment
+        // PonderIndex.addPlugin(new YouShallNotTickPonderPlugin());
+        BlockEntityRendererRegistry.register(
+                YouShallNotTickRegistry.TICKING_TOTEM_BLOCK_ENTITY.get(), TickingTotemBlockEntityRenderer::new);
     }
 }

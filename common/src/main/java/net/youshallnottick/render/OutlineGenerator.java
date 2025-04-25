@@ -11,5 +11,5 @@ import org.joml.Vector4f;
 public interface OutlineGenerator {
     void generateOutline(BiConsumer<Vector3d, Vector4f> vertexConsumer);
 
-    void transformOutline(PoseStack poseStack, Vec3 camera);
+    void transformOutline(PoseStack poseStack, Vec3 renderPos, Vec3 camera);
 }

@@ -13,15 +13,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
 import net.youshallnottick.Utils;
+import net.youshallnottick.render.OutlineRenderer;
 
 public class TickingTotemBlockEntity extends BlockEntity {
 
-    // These are updated first on the server then propagated to clients
+    // Client fields for rendering
+    private final OutlineRenderer outlineRenderer;
+    private boolean lastOutlined = false;
+    private boolean lastActive = false;
+
     public static final Map<ResourceLocation, Set<BlockPos>> ACTIVE_TICKING_TOTEMS = new HashMap<>();
-    public static final Map<ResourceLocation, Set<BlockPos>> OUTLINED_TICKING_TOTEMS = new HashMap<>();
 
     public TickingTotemBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(YouShallNotTickRegistry.TICKING_TOTEM_BLOCK_ENTITY.get(), blockPos, blockState);
+        outlineRenderer = new OutlineRenderer();
     }
 
     public static void addActiveTickingTotem(ResourceLocation dim, BlockPos pos) {
@@ -32,19 +37,6 @@ public class TickingTotemBlockEntity extends BlockEntity {
 
     public static void removeActiveTickingTotem(ResourceLocation dim, BlockPos pos) {
         TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.computeIfPresent(dim, (k, blockPosSet) -> {
-            blockPosSet.remove(pos);
-            return blockPosSet.isEmpty() ? null : blockPosSet;
-        });
-    }
-
-    public static void addOutlinedTickingTotem(ResourceLocation dim, BlockPos pos) {
-        Set<BlockPos> blockPosSet =
-                TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.computeIfAbsent(dim, k -> new HashSet<>());
-        blockPosSet.add(pos);
-    }
-
-    public static void removeOutlinedTickingTotem(ResourceLocation dim, BlockPos pos) {
-        TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.computeIfPresent(dim, (k, blockPosSet) -> {
             blockPosSet.remove(pos);
             return blockPosSet.isEmpty() ? null : blockPosSet;
         });
@@ -62,12 +54,6 @@ public class TickingTotemBlockEntity extends BlockEntity {
             if (!chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)) {
                 addActiveTickingTotem(dim, pos);
             }
-
-            if (chunk.getBlockState(pos).getValue(TickingTotemBlock.OUTLINED)) {
-                addOutlinedTickingTotem(dim, pos);
-            }
-
-            TickingTotemBlock.sendDataToClient(level, pos, chunk.getBlockState(pos));
         }
     }
 
@@ -83,12 +69,26 @@ public class TickingTotemBlockEntity extends BlockEntity {
             if (chunk.getBlockState(pos).getValue(TickingTotemBlock.POWERED)) {
                 removeActiveTickingTotem(dim, pos);
             }
-
-            if (!chunk.getBlockState(pos).getValue(TickingTotemBlock.OUTLINED)) {
-                removeOutlinedTickingTotem(dim, pos);
-            }
-
-            TickingTotemBlock.sendDataToClient(level, pos, chunk.getBlockState(pos));
         }
+    }
+
+    public OutlineRenderer getOutlineRenderer() {
+        return outlineRenderer;
+    }
+
+    public boolean getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(boolean active) {
+        lastActive = active;
+    }
+
+    public boolean getLastOutlined() {
+        return lastOutlined;
+    }
+
+    public void setLastOutlined(boolean outlined) {
+        lastOutlined = outlined;
     }
 }

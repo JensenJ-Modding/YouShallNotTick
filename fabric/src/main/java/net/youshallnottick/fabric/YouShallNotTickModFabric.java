@@ -22,7 +22,6 @@ public class YouShallNotTickModFabric implements ModInitializer {
         ServerWorldEvents.LOAD.register((MinecraftServer server, ServerLevel level) -> ServerConfig.updateMobLists());
         ServerWorldEvents.UNLOAD.register((MinecraftServer server, ServerLevel level) -> {
             TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.clear();
-            TickingTotemBlockEntity.OUTLINED_TICKING_TOTEMS.clear();
         });
         ServerChunkEvents.CHUNK_LOAD.register(TickingTotemBlockEntity::handleChunkLoading);
         ServerChunkEvents.CHUNK_UNLOAD.register(TickingTotemBlockEntity::handleChunkUnloading);

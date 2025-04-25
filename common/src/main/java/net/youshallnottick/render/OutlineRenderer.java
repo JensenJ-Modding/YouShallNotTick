@@ -11,17 +11,9 @@ public class OutlineRenderer {
     private OutlineGenerator outlineGenerator;
 
     private void refreshRenderer() {
-        if (vertexBuffer != null) {
-            vertexBuffer.close();
-            vertexBuffer = null;
-        }
+        cleanup();
         vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
         updateBuffer();
-    }
-
-    public void setGenerator(OutlineGenerator generator) {
-        outlineGenerator = generator;
-        refreshRenderer();
     }
 
     private void updateBuffer() {
@@ -42,17 +34,19 @@ public class OutlineRenderer {
         VertexBuffer.unbind();
     }
 
-    public void render(PoseStack poseStack, Vec3 camera) {
+    public void render(PoseStack poseStack, Vec3 renderPos, Vec3 camera) {
         RenderSystem.assertOnRenderThread();
+        RenderSystem.enableDepthTest();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         poseStack.pushPose();
-        outlineGenerator.transformOutline(poseStack, camera);
+        outlineGenerator.transformOutline(poseStack, renderPos, camera);
         if (vertexBuffer != null && !vertexBuffer.isInvalid()) {
             vertexBuffer.bind();
             vertexBuffer.drawWithShader(
                     poseStack.last().pose(), RenderSystem.getProjectionMatrix(), RenderSystem.getShader());
             VertexBuffer.unbind();
         }
+        RenderSystem.disableDepthTest();
         poseStack.popPose();
     }
 
@@ -61,5 +55,10 @@ public class OutlineRenderer {
             vertexBuffer.close();
             vertexBuffer = null;
         }
+    }
+
+    public void setGenerator(OutlineGenerator generator) {
+        outlineGenerator = generator;
+        refreshRenderer();
     }
 }
