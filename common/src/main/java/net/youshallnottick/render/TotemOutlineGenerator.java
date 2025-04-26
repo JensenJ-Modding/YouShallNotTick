@@ -4,31 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import org.joml.Vector3d;
 import org.joml.Vector4f;
 
-public class TotemOutlineGenerator implements OutlineGenerator {
+public class TotemOutlineGenerator extends OutlineGenerator {
 
     private final boolean isTotemActive;
 
     public TotemOutlineGenerator(boolean isTotemActive) {
+        super();
         this.isTotemActive = isTotemActive;
+        populateVertexBuffer();
     }
 
     @Override
     public void generateOutline(BiConsumer<Vector3d, Vector4f> vertexConsumer) {
-        Player player = Minecraft.getInstance().player;
-        if (player == null) {
-            return;
-        }
-
         // List<BlockPos> blockPositions = getPositionsInEllipsoid(
         //        totemPosition,
         //        ServerConfig.totemMaxEntityTickHorizontalDist.get(),
@@ -57,11 +51,7 @@ public class TotemOutlineGenerator implements OutlineGenerator {
     }
 
     @Override
-    public void transformOutline(PoseStack pose, Vec3 renderPos, Vec3 camera) {
-        ClientLevel level = Minecraft.getInstance().level;
-        if (level == null) {
-            return;
-        }
+    public void transformOutline(PoseStack pose) {
         double time = System.currentTimeMillis() / 1000.0;
         float scale = 1.0f + 0.25f * (float) Math.sin(time * Math.PI);
         // pose.scale(scale, scale, scale);

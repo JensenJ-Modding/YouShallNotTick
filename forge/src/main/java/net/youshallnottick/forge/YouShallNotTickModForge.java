@@ -26,7 +26,7 @@ public class YouShallNotTickModForge {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> YouShallNotTickModForgeClient::clientSetup);
 
         IEventBus bus = context.getModEventBus();
-        bus.register(YouShallNotTickForgeSetupEvents.class);
+        bus.register(YouShallNotTickForgeLifecycleEvents.class);
 
         MinecraftForge.EVENT_BUS.register(YouShallNotTickModForge.class);
         context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SERVER_CONFIG);

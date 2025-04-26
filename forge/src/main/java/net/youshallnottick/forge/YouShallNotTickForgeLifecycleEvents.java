@@ -7,7 +7,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.youshallnottick.registry.TickingTotemBlockEntityRenderer;
 import net.youshallnottick.registry.YouShallNotTickRegistry;
 
-public class YouShallNotTickForgeSetupEvents {
+public class YouShallNotTickForgeLifecycleEvents {
 
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent event) {

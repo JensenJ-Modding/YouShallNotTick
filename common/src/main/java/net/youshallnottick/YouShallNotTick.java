@@ -1,5 +1,7 @@
 package net.youshallnottick;
 
+import dev.architectury.event.events.client.ClientLifecycleEvent;
+import net.youshallnottick.registry.TickingTotemBlockEntityRenderer;
 import net.youshallnottick.registry.YouShallNotTickRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,5 +14,9 @@ public class YouShallNotTick {
         YouShallNotTickRegistry.BLOCKS.register();
         YouShallNotTickRegistry.ITEMS.register();
         YouShallNotTickRegistry.BLOCK_ENTITIES.register();
+
+        ClientLifecycleEvent.CLIENT_STOPPING.register((minecraft) -> {
+            TickingTotemBlockEntityRenderer.cleanupOutlines();
+        });
     }
 }
