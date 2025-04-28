@@ -99,14 +99,8 @@ public class Utils {
         }
 
         // If this entity is part of a raid, it should be ignored
-        if (ServerConfig.shouldRaidParticipantsTick.get()) {
-            if (entity instanceof Raider raider) {
-                if (raider.hasActiveRaid()) return true;
-            }
-            if (entity instanceof Villager || entity instanceof IronGolem) {
-                Raid raid = ((ServerLevel) entity.level()).getRaidAt(entity.blockPosition());
-                if (raid != null && raid.isActive() && !raid.isOver()) return true;
-            }
+        if (ServerConfig.shouldRaidParticipantsTick.get() && isEntityRaidParticipant(entity)) {
+            return true;
         }
 
         // Ignore tamed animals
@@ -114,7 +108,10 @@ public class Utils {
             if (tamedEntity.getOwner() != null) return true;
         }
 
-        // If the entity list is empty, this entity should not be ignored
+        return isEntityOnIgnoreList(entity);
+    }
+
+    private static boolean isEntityOnIgnoreList(Entity entity) {
         if (ServerConfig.entityIgnoreList.get().isEmpty()) return false;
 
         EntityType<?> entityType = entity.getType();
@@ -134,6 +131,17 @@ public class Utils {
 
             return ignored;
         });
+    }
+
+    private static boolean isEntityRaidParticipant(Entity entity) {
+        if (entity instanceof Raider raider) {
+            return raider.hasActiveRaid();
+        }
+        if (entity instanceof Villager || entity instanceof IronGolem) {
+            Raid raid = ((ServerLevel) entity.level()).getRaidAt(entity.blockPosition());
+            return raid != null && raid.isActive() && !raid.isOver();
+        }
+        return false;
     }
 
     public static boolean isNearPlayer(
