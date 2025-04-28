@@ -14,7 +14,9 @@ public class YouShallNotTick {
         YouShallNotTickRegistry.BLOCKS.register();
         YouShallNotTickRegistry.ITEMS.register();
         YouShallNotTickRegistry.BLOCK_ENTITIES.register();
+    }
 
+    public static void initClient() {
         ClientLifecycleEvent.CLIENT_STOPPING.register((minecraft) -> {
             TickingTotemBlockEntityRenderer.cleanupOutlines();
         });
