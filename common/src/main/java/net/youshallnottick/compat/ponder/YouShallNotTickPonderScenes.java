@@ -27,7 +27,6 @@ public class YouShallNotTickPonderScenes {
                         YouShallNotTickPonderTags.TICKING_COMPONENTS);
     }
 
-    // TODO: Update ponder to show outlining feature
     public static void tickingTotem(SceneBuilder scene, SceneBuildingUtil util) {
         scene.title("ticking_totem", "youshallnottick.ponder.ticking_totem.header");
         scene.configureBasePlate(0, 0, 5);
@@ -82,6 +81,19 @@ public class YouShallNotTickPonderScenes {
                 .pointAt(sideOf);
         scene.idle(80);
 
+        scene.overlay()
+                .showControls(util.vector().topOf(tickingTotem), Pointing.DOWN, 40)
+                .whileSneaking()
+                .rightClick();
+        scene.idle(80);
+
+        scene.addKeyframe();
+        scene.overlay()
+                .showText(70)
+                .text("youshallnottick.ponder.ticking_totem.text_7")
+                .placeNearTarget()
+                .pointAt(sideOf);
+        scene.idle(80);
         BlockPos redstone = util.grid().at(1, 1, 2);
         BlockPos lever = util.grid().at(0, 1, 2);
         scene.world().showSection(util.select().position(redstone), Direction.DOWN);
