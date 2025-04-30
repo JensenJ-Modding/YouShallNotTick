@@ -40,3 +40,10 @@ mandatory = false
 versionRange = "[11.12.3,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.youshallnottick]]
+modId = "ponder"
+mandatory = true
+versionRange = "[1.0.59,)"
+ordering = "AFTER"
+side = "BOTH"
