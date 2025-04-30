@@ -2,6 +2,8 @@ package net.youshallnottick;
 
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientPlayerEvent;
+import net.createmod.ponder.foundation.PonderIndex;
+import net.youshallnottick.compat.ponder.YouShallNotTickPonderPlugin;
 import net.youshallnottick.registry.TickingTotemBlockEntityRenderer;
 import net.youshallnottick.registry.YouShallNotTickRegistry;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +20,8 @@ public class YouShallNotTick {
     }
 
     public static void initClient() {
+        PonderIndex.addPlugin(new YouShallNotTickPonderPlugin());
+
         ClientLifecycleEvent.CLIENT_STOPPING.register((minecraft) -> TickingTotemBlockEntityRenderer.cleanupOutlines());
         ClientPlayerEvent.CLIENT_PLAYER_QUIT.register((minecraft) -> TickingTotemBlockEntityRenderer.cleanupOutlines());
 
