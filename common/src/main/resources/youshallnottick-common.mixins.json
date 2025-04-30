@@ -5,8 +5,7 @@
   "minVersion": "0.8",
   "client": [],
   "mixins": [
-    "LivingEntityMixin",
-    "NaturalSpawnerMixin"
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

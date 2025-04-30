@@ -27,6 +27,7 @@ public class YouShallNotTickPonderScenes {
                         YouShallNotTickPonderTags.TICKING_COMPONENTS);
     }
 
+    // TODO: Update ponder to show outlining feature
     public static void tickingTotem(SceneBuilder scene, SceneBuildingUtil util) {
         scene.title("ticking_totem", "youshallnottick.ponder.ticking_totem.header");
         scene.configureBasePlate(0, 0, 5);

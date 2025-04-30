@@ -108,26 +108,16 @@ public class TickingTotemBlock extends BaseEntityBlock {
     @Override
     public void appendHoverText(
             ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag flag) {
-        if (ServerConfig.shouldEnableTotemOfTicking.get()
-                && (ServerConfig.shouldEnableAITickMixin.get() || ServerConfig.shouldEnableSpawnMixin.get())) {
+        if (ServerConfig.shouldEnableTotemOfTicking.get()) {
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.info")
                     .withStyle(ChatFormatting.GRAY));
-            if (ServerConfig.shouldEnableAITickMixin.get()) {
-                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_h")
-                        .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get()))
-                        .withStyle(ChatFormatting.YELLOW));
-                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_v")
-                        .append(String.valueOf(ServerConfig.totemMaxEntityTickVerticalDist.get()))
-                        .withStyle(ChatFormatting.YELLOW));
-            }
-            if (ServerConfig.shouldEnableSpawnMixin.get()) {
-                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.spawn_range_h")
-                        .append(String.valueOf(ServerConfig.totemMaxEntitySpawnHorizontalDist.get()))
-                        .withStyle(ChatFormatting.YELLOW));
-                list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.spawn_range_v")
-                        .append(String.valueOf(ServerConfig.totemMaxEntitySpawnVerticalDist.get()))
-                        .withStyle(ChatFormatting.YELLOW));
-            }
+            list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_h")
+                    .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get()))
+                    .withStyle(ChatFormatting.YELLOW));
+            list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_v")
+                    .append(String.valueOf(ServerConfig.totemMaxEntityTickVerticalDist.get()))
+                    .withStyle(ChatFormatting.YELLOW));
+
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.redstone")
                     .withStyle(ChatFormatting.GRAY));
         } else {

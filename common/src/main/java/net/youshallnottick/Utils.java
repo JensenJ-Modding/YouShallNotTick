@@ -46,13 +46,8 @@ public class Utils {
     public static boolean shouldProcessEntityTick(LivingEntity entity) {
         Level level = entity.level();
 
-        // Allow ticking on client side, for animations and such
+        // Allow ticking on the client side, for animations and such
         if (level.isClientSide()) {
-            return true;
-        }
-
-        // If the tick mixin is disabled, allow ticking
-        if (!ServerConfig.shouldEnableAITickMixin.get()) {
             return true;
         }
 
