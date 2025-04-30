@@ -29,9 +29,6 @@ public class TotemOutlineGenerator extends OutlineGenerator {
                 ServerConfig.totemMaxEntityTickHorizontalDist.get(), ServerConfig.totemMaxEntityTickVerticalDist.get());
     }
 
-    // TODO: Fix minor discrepancy in outline vs real ticking distance
-    // This is caused by measuring in full blocks for outline and raw distance for ticking
-    // Could be maybe fixed by flooring/rounding the result in the raw distance check
     @Override
     public void generateOutline(BiConsumer<Vector3d, Vector4f> vertexConsumer) {
         Vector4f colour = new Vector4f(0.75f, 0, 0, 1);
@@ -45,7 +42,7 @@ public class TotemOutlineGenerator extends OutlineGenerator {
     @Override
     public void transformOutline(PoseStack pose, BlockEntity entity) {
         // Transform the outline to the correct location around the totem
-        float offsetX = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        float offsetX = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get() - 1;
         float offsetY = (float) ServerConfig.totemMaxEntityTickVerticalDist.get();
         float offsetZ = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get() / 4;
 
@@ -54,7 +51,7 @@ public class TotemOutlineGenerator extends OutlineGenerator {
         float scale = totem.getRenderScale();
         pose.translate(0.5f, 0.5f, 0.5f);
         pose.scale(scale, scale, scale);
-
+        pose.translate(-0.5f, -0.5f, -0.5f);
         pose.translate(-offsetX, -offsetY, -offsetZ);
     }
 

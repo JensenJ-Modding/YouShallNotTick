@@ -45,42 +45,27 @@ public class Utils {
 
     public static boolean shouldProcessEntityTick(LivingEntity entity) {
         Level level = entity.level();
-
-        // Allow ticking on the client side, for animations and such
         if (level.isClientSide()) {
             return true;
         }
 
-        // If there are enough players, allow ticking
         if (!Utils.enoughPlayers(level)) {
             return true;
         }
 
-        // If this is an ignored entity, allow ticking
         if (Utils.isIgnoredEntity(entity)) {
             return true;
         }
 
-        int playerHorizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
-        int playerVerticalDist = ServerConfig.playerMaxEntityTickVerticalDist.get();
-        int totemHorizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
-        int totemVerticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
-
-        // If it's near the player, allow ticking
-        BlockPos entityPos = entity.blockPosition();
-        if (Utils.isNearPlayer(
-                level,
-                entityPos.getX(),
-                entityPos.getY(),
-                entityPos.getZ(),
-                playerHorizontalDist,
-                playerVerticalDist,
-                totemHorizontalDist,
-                totemVerticalDist)) {
+        if (Utils.isNearPlayer(level, entity.blockPosition())) {
             return true;
         }
 
-        // If it is dead or dying, allow ticking
+        if (ServerConfig.shouldEnableTotemOfTicking.get()
+                && Utils.isNearTotemOfTicking(level, entity.blockPosition())) {
+            return true;
+        }
+
         return entity.isDeadOrDying();
     }
 
@@ -88,17 +73,15 @@ public class Utils {
         if (entity.level().isClientSide()) {
             return true;
         }
-        // If it's not living or is a player, it's ignored
+
         if (!(entity instanceof LivingEntity) || entity instanceof Player) {
             return true;
         }
 
-        // If this entity is part of a raid, it should be ignored
         if (ServerConfig.shouldRaidParticipantsTick.get() && isEntityRaidParticipant(entity)) {
             return true;
         }
 
-        // Ignore tamed animals
         if (entity instanceof TamableAnimal tamedEntity) {
             if (tamedEntity.getOwner() != null) return true;
         }
@@ -139,32 +122,18 @@ public class Utils {
         return false;
     }
 
-    public static boolean isNearPlayer(
-            Level level,
-            double posX,
-            double posY,
-            double posZ,
-            int playerHorizontalDist,
-            int playerVerticalDist,
-            int totemHorizontalDist,
-            int totemVerticalDist) {
-        boolean isNearPlayer = isNearPlayerInternal(level, posX, posY, posZ, playerHorizontalDist, playerVerticalDist);
-        if (isNearPlayer) return true;
-        if (ServerConfig.shouldEnableTotemOfTicking.get())
-            return isNearTotemOfTickingInternal(level, posX, posY, posZ, totemHorizontalDist, totemVerticalDist);
-        return false;
-    }
+    private static boolean isNearPlayer(Level level, BlockPos entityPos) {
+        int horizontalDist = ServerConfig.playerMaxEntityTickHorizontalDist.get();
+        int verticalDist = ServerConfig.playerMaxEntityTickVerticalDist.get();
 
-    private static boolean isNearPlayerInternal(
-            Level level, double posX, double posY, double posZ, int horizontalDist, int verticalDist) {
         List<? extends Player> players = level.players();
         for (Player player : players) {
             if (player == null) continue;
             if (!ServerConfig.spectatorsAllowTicking.get() && player.isSpectator()) continue;
 
-            if (Math.abs(player.getY() - posY) < verticalDist) {
-                double x = player.getX() - posX;
-                double z = player.getZ() - posZ;
+            if (Math.abs(player.getBlockY() - entityPos.getY()) <= verticalDist) {
+                double x = player.getBlockX() - entityPos.getX();
+                double z = player.getBlockZ() - entityPos.getZ();
 
                 if (x * x + z * z < horizontalDist * horizontalDist) return true;
             }
@@ -172,15 +141,17 @@ public class Utils {
         return false;
     }
 
-    private static boolean isNearTotemOfTickingInternal(
-            Level level, double posX, double posY, double posZ, int horizontalDist, int verticalDist) {
+    private static boolean isNearTotemOfTicking(Level level, BlockPos entityPos) {
+        int horizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        int verticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
+
         Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.get(
                 level.dimension().location());
         if (totemsForThisLevel == null) return false;
         for (BlockPos totemPos : totemsForThisLevel) {
-            if (Math.abs(totemPos.getY() - posY) < verticalDist) {
-                double x = totemPos.getX() - posX;
-                double z = totemPos.getZ() - posZ;
+            if (Math.abs(totemPos.getY() - entityPos.getY()) <= verticalDist) {
+                double x = totemPos.getX() - entityPos.getX();
+                double z = totemPos.getZ() - entityPos.getZ();
 
                 if (x * x + z * z < horizontalDist * horizontalDist) return true;
             }
