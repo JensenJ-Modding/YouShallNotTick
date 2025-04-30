@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.youshallnottick.config.ServerConfig;
 import org.joml.Vector3d;
 import org.joml.Vector4f;
 
 public class TotemOutlineGenerator extends OutlineGenerator {
 
     private final boolean isTotemActive;
+    private static List<BlockPos> blockPositions;
 
     public TotemOutlineGenerator(boolean isTotemActive) {
         super();
@@ -21,60 +22,48 @@ public class TotemOutlineGenerator extends OutlineGenerator {
         populateVertexBuffer();
     }
 
+    public static void preGenerateOutlineResources() {
+        blockPositions = getPositionsInEllipsoid(
+                ServerConfig.totemMaxEntityTickHorizontalDist.get(), ServerConfig.totemMaxEntityTickVerticalDist.get());
+    }
+
+    // TODO: Fix minor discrepancy in outline vs real ticking distance
+    // This is caused by measuring in full blocks for outline and raw distance for ticking
+    // Could be maybe fixed by flooring/rounding the result in the raw distance check
     @Override
     public void generateOutline(BiConsumer<Vector3d, Vector4f> vertexConsumer) {
-        // List<BlockPos> blockPositions = getPositionsInEllipsoid(
-        //        totemPosition,
-        //        ServerConfig.totemMaxEntityTickHorizontalDist.get(),
-        //        ServerConfig.totemMaxEntityTickVerticalDist.get());
-
+        // TODO: Use nicer colours
         Vector4f colour = new Vector4f(1, 0, 0, 1);
         if (isTotemActive) {
             colour = new Vector4f(0, 1, 0, 1);
         }
 
-        // TODO: replace with actual outline generator for the totem
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 10; y++) {
-                for (int z = 0; z < 100; z++) {
-                    BlockPos renderPos = new BlockPos(x * 4, y * 4, -z * 4);
-                    Vec3 min = renderPos.above(1).getCenter();
-                    Vec3 max = renderPos.east(1).above(2).getCenter();
-
-                    vertexConsumer.accept(new Vector3d(min.x, min.y, min.z), colour);
-                    vertexConsumer.accept(new Vector3d(max.x, min.y, min.z), colour);
-                    vertexConsumer.accept(new Vector3d(max.x, max.y, min.z), colour);
-                    vertexConsumer.accept(new Vector3d(min.x, max.y, min.z), colour);
-                }
-            }
-        }
+        OutlineMeshBuilder.buildMesh(blockPositions, colour, (float) 1 / 16, vertexConsumer);
     }
 
     @Override
     public void transformOutline(PoseStack pose) {
+        // Transform the outline to the correct location around the totem
+        float offsetX = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get();
+        float offsetY = (float) ServerConfig.totemMaxEntityTickVerticalDist.get();
+        float offsetZ = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get() / 4;
+
+        // TODO: Animation for turning off and on outlining
         double time = System.currentTimeMillis() / 1000.0;
         float scale = 1.0f + 0.25f * (float) Math.sin(time * Math.PI);
         // pose.scale(scale, scale, scale);
+
+        pose.translate(-offsetX, -offsetY, -offsetZ);
     }
 
-    public static List<BlockPos> getPositionsInEllipsoid(BlockPos center, int horizontalDist, int verticalDist) {
+    public static List<BlockPos> getPositionsInEllipsoid(int horizontalDist, int verticalDist) {
         List<BlockPos> positions = new ArrayList<>();
 
-        int xMin = center.getX() - horizontalDist;
-        int xMax = center.getX() + horizontalDist;
-        int yMin = center.getY() - verticalDist;
-        int yMax = center.getY() + verticalDist;
-        int zMin = center.getZ() - horizontalDist;
-        int zMax = center.getZ() + horizontalDist;
-
-        for (int x = xMin; x <= xMax; x++) {
-            for (int y = yMin; y <= yMax; y++) {
-                for (int z = zMin; z <= zMax; z++) {
-                    double dx = x - center.getX();
-                    double dy = (y - center.getY()) / (double) verticalDist;
-                    double dz = z - center.getZ();
-
-                    double distanceSq = dx * dx + dy * dy + dz * dz;
+        for (int x = -horizontalDist; x <= horizontalDist; x++) {
+            for (int y = -verticalDist; y <= verticalDist; y++) {
+                for (int z = -horizontalDist; z <= horizontalDist; z++) {
+                    double dy = y / (double) verticalDist;
+                    double distanceSq = x * x + dy * dy + z * z;
                     double maxDistSq = horizontalDist * horizontalDist;
 
                     if (distanceSq < maxDistSq) {

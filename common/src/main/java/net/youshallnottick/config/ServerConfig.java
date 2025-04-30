@@ -13,6 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import net.youshallnottick.Utils;
 
+// TODO: Remove spawn configs, as it modifies gameplay too much, and is generally unused
 public class ServerConfig {
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_SPAWNING = "spawning";

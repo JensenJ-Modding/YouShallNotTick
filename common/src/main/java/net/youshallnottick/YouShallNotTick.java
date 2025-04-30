@@ -1,6 +1,7 @@
 package net.youshallnottick;
 
 import dev.architectury.event.events.client.ClientLifecycleEvent;
+import dev.architectury.event.events.client.ClientPlayerEvent;
 import net.youshallnottick.registry.TickingTotemBlockEntityRenderer;
 import net.youshallnottick.registry.YouShallNotTickRegistry;
 import org.apache.logging.log4j.LogManager;
@@ -17,8 +18,9 @@ public class YouShallNotTick {
     }
 
     public static void initClient() {
-        ClientLifecycleEvent.CLIENT_STOPPING.register((minecraft) -> {
-            TickingTotemBlockEntityRenderer.cleanupOutlines();
-        });
+        ClientLifecycleEvent.CLIENT_STOPPING.register((minecraft) -> TickingTotemBlockEntityRenderer.cleanupOutlines());
+        ClientPlayerEvent.CLIENT_PLAYER_QUIT.register((minecraft) -> TickingTotemBlockEntityRenderer.cleanupOutlines());
+
+        ClientPlayerEvent.CLIENT_PLAYER_JOIN.register((minecraft) -> TickingTotemBlockEntityRenderer.createOutlines());
     }
 }

@@ -3,20 +3,49 @@ package net.youshallnottick.registry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.youshallnottick.render.TotemOutlineGenerator;
 
 public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<TickingTotemBlockEntity> {
 
-    private static final TotemOutlineGenerator activeOutline = new TotemOutlineGenerator(true);
-    private static final TotemOutlineGenerator inactiveOutline = new TotemOutlineGenerator(false);
+    private static TotemOutlineGenerator activeOutline;
+    private static TotemOutlineGenerator inactiveOutline;
+    private static boolean outlineGenerated = false;
 
-    public TickingTotemBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {}
+    public TickingTotemBlockEntityRenderer(BlockEntityRendererProvider.Context ignoredCtx) {}
 
     public static void cleanupOutlines() {
-        activeOutline.cleanup();
-        inactiveOutline.cleanup();
+        if (activeOutline != null) {
+            activeOutline.cleanup();
+            activeOutline = null;
+        }
+
+        if (inactiveOutline != null) {
+            inactiveOutline.cleanup();
+            inactiveOutline = null;
+        }
+        outlineGenerated = false;
+    }
+
+    // TODO: Fix server config not syncing to client correctly, we use the value too early
+    public static void createOutlines() {
+        TotemOutlineGenerator.preGenerateOutlineResources();
+        activeOutline = new TotemOutlineGenerator(true);
+        inactiveOutline = new TotemOutlineGenerator(false);
+        outlineGenerated = true;
+    }
+
+    // TODO: Fix offscreen culling on Forge, and optimise this so we don't always render
+    @Override
+    public boolean shouldRender(TickingTotemBlockEntity blockEntity, Vec3 vec3) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRenderOffScreen(TickingTotemBlockEntity blockEntity) {
+        return true;
     }
 
     @Override
@@ -27,6 +56,8 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
             MultiBufferSource vertexConsumers,
             int light,
             int overlay) {
+
+        if (!outlineGenerated) return;
 
         boolean outlined = totem.getBlockState().getValue(TickingTotemBlock.OUTLINED);
         boolean active = !totem.getBlockState().getValue(TickingTotemBlock.POWERED);

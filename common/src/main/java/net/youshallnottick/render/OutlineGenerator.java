@@ -26,11 +26,9 @@ public abstract class OutlineGenerator {
 
         buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 
-        generateOutline((position, colour) -> {
-            buffer.vertex(position.x, position.y, position.z)
-                    .color(colour.x, colour.y, colour.z, colour.w)
-                    .endVertex();
-        });
+        generateOutline((position, colour) -> buffer.vertex(position.x, position.y, position.z)
+                .color(colour.x, colour.y, colour.z, colour.w)
+                .endVertex());
 
         vertexBuffer.bind();
         vertexBuffer.upload(buffer.end());
