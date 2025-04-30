@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.youshallnottick.config.ServerConfig;
+import net.youshallnottick.registry.TickingTotemBlockEntity;
 import org.joml.Vector3d;
 import org.joml.Vector4f;
 
@@ -32,26 +34,26 @@ public class TotemOutlineGenerator extends OutlineGenerator {
     // Could be maybe fixed by flooring/rounding the result in the raw distance check
     @Override
     public void generateOutline(BiConsumer<Vector3d, Vector4f> vertexConsumer) {
-        // TODO: Use nicer colours
-        Vector4f colour = new Vector4f(1, 0, 0, 1);
+        Vector4f colour = new Vector4f(0.75f, 0, 0, 1);
         if (isTotemActive) {
-            colour = new Vector4f(0, 1, 0, 1);
+            colour = new Vector4f(0.76f, 0.68f, 0.14f, 1);
         }
 
         OutlineMeshBuilder.buildMesh(blockPositions, colour, (float) 1 / 16, vertexConsumer);
     }
 
     @Override
-    public void transformOutline(PoseStack pose) {
+    public void transformOutline(PoseStack pose, BlockEntity entity) {
         // Transform the outline to the correct location around the totem
         float offsetX = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get();
         float offsetY = (float) ServerConfig.totemMaxEntityTickVerticalDist.get();
         float offsetZ = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get() / 4;
 
-        // TODO: Animation for turning off and on outlining
-        double time = System.currentTimeMillis() / 1000.0;
-        float scale = 1.0f + 0.25f * (float) Math.sin(time * Math.PI);
-        // pose.scale(scale, scale, scale);
+        TickingTotemBlockEntity totem = (TickingTotemBlockEntity) entity;
+
+        float scale = totem.getRenderScale();
+        pose.translate(0.5f, 0.5f, 0.5f);
+        pose.scale(scale, scale, scale);
 
         pose.translate(-offsetX, -offsetY, -offsetZ);
     }

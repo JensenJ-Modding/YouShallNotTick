@@ -59,30 +59,42 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
 
         if (!outlineGenerated) return;
 
-        boolean outlined = totem.getBlockState().getValue(TickingTotemBlock.OUTLINED);
         boolean active = !totem.getBlockState().getValue(TickingTotemBlock.POWERED);
 
         TotemOutlineGenerator newGenerator = active ? activeOutline : inactiveOutline;
 
-        // If the outline status has changed
-        if (outlined != totem.getLastOutlined()) {
-            if (outlined) {
-                totem.getOutlineRenderer().setGenerator(newGenerator);
-            } else {
-                totem.getOutlineRenderer().setGenerator(null);
-            }
-        }
-
-        // If the active status has changed
-        if (active != totem.getLastActive() && outlined) {
+        if (totem.getOutlineRenderer().getGenerator() == null) {
             totem.getOutlineRenderer().setGenerator(newGenerator);
         }
 
-        totem.setLastActive(active);
-        totem.setLastOutlined(outlined);
+        totem.setRenderScale(outlineAnimation(totem, tickDelta));
 
-        if (outlined && totem.getOutlineRenderer() != null) {
-            totem.getOutlineRenderer().render(poseStack);
+        if (active != totem.getLastActive()) {
+            totem.getOutlineRenderer().setGenerator(newGenerator);
         }
+        totem.setLastActive(active);
+
+        if (totem.getRenderScale() >= 0.0f) {
+            totem.getOutlineRenderer().render(poseStack, totem);
+        }
+    }
+
+    public float outlineAnimation(TickingTotemBlockEntity totem, float tickDelta) {
+        boolean outlined = totem.getBlockState().getValue(TickingTotemBlock.OUTLINED);
+        float renderScale = totem.getRenderScale();
+        float animationSpeed = 0.015f * tickDelta;
+        float targetScale = outlined ? 1.0f : 0.0f;
+
+        float progress = renderScale;
+        float eased;
+        if (targetScale == 1.0f) {
+            eased = progress * progress * progress;
+        } else {
+            float inv = 1.0f - progress;
+            eased = 1.0f - (inv * inv * inv);
+        }
+
+        renderScale += (targetScale - eased) * animationSpeed;
+        return Math.max(0.0f, Math.min(1.0f, renderScale));
     }
 }

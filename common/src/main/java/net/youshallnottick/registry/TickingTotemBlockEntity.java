@@ -19,7 +19,7 @@ public class TickingTotemBlockEntity extends BlockEntity {
 
     // Client fields for rendering
     private final OutlineRenderer outlineRenderer;
-    private boolean lastOutlined = false;
+    private float renderScale;
     private boolean lastActive = false;
 
     public static final Map<ResourceLocation, Set<BlockPos>> ACTIVE_TICKING_TOTEMS = new HashMap<>();
@@ -27,6 +27,7 @@ public class TickingTotemBlockEntity extends BlockEntity {
     public TickingTotemBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(YouShallNotTickRegistry.TICKING_TOTEM_BLOCK_ENTITY.get(), blockPos, blockState);
         outlineRenderer = new OutlineRenderer();
+        renderScale = blockState.getValue(TickingTotemBlock.OUTLINED) ? 1 : 0;
     }
 
     public static void addActiveTickingTotem(ResourceLocation dim, BlockPos pos) {
@@ -84,11 +85,11 @@ public class TickingTotemBlockEntity extends BlockEntity {
         lastActive = active;
     }
 
-    public boolean getLastOutlined() {
-        return lastOutlined;
+    public float getRenderScale() {
+        return renderScale;
     }
 
-    public void setLastOutlined(boolean outlined) {
-        lastOutlined = outlined;
+    public void setRenderScale(float renderScale) {
+        this.renderScale = renderScale;
     }
 }

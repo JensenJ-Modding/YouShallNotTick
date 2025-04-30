@@ -2,6 +2,8 @@ package net.youshallnottick.render;
 
 import java.util.function.BiConsumer;
 
+import net.minecraft.world.level.block.entity.BlockEntity;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import org.joml.Vector3d;
@@ -13,7 +15,7 @@ public abstract class OutlineGenerator {
 
     abstract void generateOutline(BiConsumer<Vector3d, Vector4f> vertexConsumer);
 
-    abstract void transformOutline(PoseStack poseStack);
+    abstract void transformOutline(PoseStack poseStack, BlockEntity entity);
 
     protected OutlineGenerator() {
         vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
