@@ -37,7 +37,6 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
         outlineGenerated = true;
     }
 
-    // TODO: Fix offscreen culling on Forge, and optimise this so we don't always render
     @Override
     public boolean shouldRender(TickingTotemBlockEntity blockEntity, Vec3 vec3) {
         return true;

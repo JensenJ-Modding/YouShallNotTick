@@ -11,8 +11,10 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.phys.AABB;
 
 import net.youshallnottick.Utils;
+import net.youshallnottick.config.ServerConfig;
 import net.youshallnottick.render.OutlineRenderer;
 
 public class TickingTotemBlockEntity extends BlockEntity {
@@ -91,5 +93,15 @@ public class TickingTotemBlockEntity extends BlockEntity {
 
     public void setRenderScale(float renderScale) {
         this.renderScale = renderScale;
+    }
+
+    // Forge calls this, cant @Override due to a shared class file with fabric. This function gets moved in 1.21 Neo so
+    // we will come back to this
+    @Deprecated
+    @SuppressWarnings("unused")
+    public AABB getRenderBoundingBox() {
+        int inflation = Math.max(
+                ServerConfig.totemMaxEntityTickHorizontalDist.get(), ServerConfig.totemMaxEntityTickVerticalDist.get());
+        return new AABB(getBlockPos()).inflate(inflation);
     }
 }
