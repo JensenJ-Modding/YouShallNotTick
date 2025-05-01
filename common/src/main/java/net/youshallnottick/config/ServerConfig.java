@@ -104,12 +104,12 @@ public class ServerConfig {
                 .define("enableTotemOfTicking", true);
         totemMaxEntityTickHorizontalDist = BUILDER.comment(
                         "Maximum distance from a totem of ticking (horizontally) to allow"
-                                + " living entity ticking [Default: 24]")
-                .define("totemMaxEntityTickDistanceHorizontal", 24);
+                                + " living entity ticking [Default: 8]")
+                .define("totemMaxEntityTickDistanceHorizontal", 8);
         totemMaxEntityTickVerticalDist = BUILDER.comment(
                         "Maximum distance from a totem of ticking (vertically) to allow"
-                                + " living entity ticking [Default: 16]")
-                .define("totemMaxEntityTickDistanceVertical", 16);
+                                + " living entity ticking [Default: 4]")
+                .define("totemMaxEntityTickDistanceVertical", 4);
         BUILDER.pop();
 
         SERVER_CONFIG = BUILDER.build();

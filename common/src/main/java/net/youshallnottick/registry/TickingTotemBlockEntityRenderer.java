@@ -29,7 +29,6 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
         outlineGenerated = false;
     }
 
-    // TODO: Fix server config not syncing to client correctly, we use the value too early
     public static void createOutlines() {
         TotemOutlineGenerator.preGenerateOutlineResources();
         activeOutline = new TotemOutlineGenerator(true);
@@ -66,7 +65,7 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
             totem.getOutlineRenderer().setGenerator(newGenerator);
         }
 
-        totem.setRenderScale(outlineAnimation(totem, tickDelta));
+        totem.setRenderScale(outlineAnimation(totem));
 
         if (active != totem.getLastActive()) {
             totem.getOutlineRenderer().setGenerator(newGenerator);
@@ -78,10 +77,11 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
         }
     }
 
-    public float outlineAnimation(TickingTotemBlockEntity totem, float tickDelta) {
+    // This is currently framerate bound, it's not a big issue though
+    public float outlineAnimation(TickingTotemBlockEntity totem) {
         boolean outlined = totem.getBlockState().getValue(TickingTotemBlock.OUTLINED);
         float renderScale = totem.getRenderScale();
-        float animationSpeed = 0.015f * tickDelta;
+        float animationSpeed = 0.015f;
         float targetScale = outlined ? 1.0f : 0.0f;
 
         float progress = renderScale;

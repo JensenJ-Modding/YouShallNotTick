@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
 
-import net.createmod.catnip.data.Iterate;
 import org.joml.*;
 
 // NOTE: A lot of this code is copied, pasted and modified from the Catnip Library for Create / Ponder
@@ -121,19 +120,19 @@ public class OutlineMeshBuilder {
             pos = pos.subtract(anchor);
 
             // 12 EDGES
-            for (Direction.Axis axis : Iterate.axes) {
-                for (Direction.Axis axis2 : Iterate.axes) {
+            for (Direction.Axis axis : Direction.Axis.values()) {
+                for (Direction.Axis axis2 : Direction.Axis.values()) {
                     if (axis == axis2) continue;
-                    for (Direction.Axis axis3 : Iterate.axes) {
+                    for (Direction.Axis axis3 : Direction.Axis.values()) {
                         if (axis == axis3) continue;
                         if (axis2 == axis3) continue;
 
                         Direction direction = Direction.get(Direction.AxisDirection.POSITIVE, axis2);
                         Direction direction2 = Direction.get(Direction.AxisDirection.POSITIVE, axis3);
 
-                        for (int offset : Iterate.zeroAndOne) {
+                        for (int offset : new int[] {0, 1}) {
                             BlockPos entryPos = pos.relative(direction, offset);
-                            for (int offset2 : Iterate.zeroAndOne) {
+                            for (int offset2 : new int[] {0, 1}) {
                                 entryPos = entryPos.relative(direction2, offset2);
                                 MergeEntry entry = new MergeEntry(axis, entryPos);
                                 if (!visibleEdges.remove(entry)) visibleEdges.add(entry);

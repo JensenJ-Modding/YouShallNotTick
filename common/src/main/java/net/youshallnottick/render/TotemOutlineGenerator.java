@@ -1,7 +1,8 @@
 package net.youshallnottick.render;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 import net.minecraft.core.BlockPos;
@@ -41,22 +42,18 @@ public class TotemOutlineGenerator extends OutlineGenerator {
 
     @Override
     public void transformOutline(PoseStack pose, BlockEntity entity) {
-        // Transform the outline to the correct location around the totem
-        float offsetX = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get() - 1;
-        float offsetY = (float) ServerConfig.totemMaxEntityTickVerticalDist.get();
-        float offsetZ = (float) ServerConfig.totemMaxEntityTickHorizontalDist.get() / 4;
-
         TickingTotemBlockEntity totem = (TickingTotemBlockEntity) entity;
 
         float scale = totem.getRenderScale();
         pose.translate(0.5f, 0.5f, 0.5f);
         pose.scale(scale, scale, scale);
         pose.translate(-0.5f, -0.5f, -0.5f);
-        pose.translate(-offsetX, -offsetY, -offsetZ);
     }
 
     public static List<BlockPos> getPositionsInEllipsoid(int horizontalDist, int verticalDist) {
-        List<BlockPos> positions = new ArrayList<>();
+        Set<BlockPos> positions = new HashSet<>();
+        // We need to add 0, 0, 0 first to make the mesh centered on the origin of the world
+        positions.add(new BlockPos(0, 0, 0));
 
         for (int x = -horizontalDist; x <= horizontalDist; x++) {
             for (int y = -verticalDist; y <= verticalDist; y++) {
@@ -72,6 +69,6 @@ public class TotemOutlineGenerator extends OutlineGenerator {
             }
         }
 
-        return positions;
+        return positions.stream().toList();
     }
 }
