@@ -3,6 +3,7 @@ package net.youshallnottick.compat.ponder;
 import net.minecraft.resources.ResourceLocation;
 
 import net.createmod.ponder.api.registration.*;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.youshallnottick.YouShallNotTick;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,5 +21,9 @@ public class YouShallNotTickPonderPlugin implements PonderPlugin {
     @Override
     public void registerTags(@NotNull PonderTagRegistrationHelper<ResourceLocation> helper) {
         YouShallNotTickPonderTags.register(helper);
+    }
+
+    public static void registerPlugin() {
+        PonderIndex.addPlugin(new YouShallNotTickPonderPlugin());
     }
 }
