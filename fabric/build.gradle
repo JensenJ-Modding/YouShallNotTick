@@ -23,5 +23,5 @@ repositories {
 
 dependencies {
     modImplementation("curse.maven:jade-324717:${fabric_jade_id}")
-    //modImplementation(include("net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"))
+    modImplementation(include("net.createmod.ponder:Ponder-Fabric-${minecraft_version}:${ponder_version}"))
 }
