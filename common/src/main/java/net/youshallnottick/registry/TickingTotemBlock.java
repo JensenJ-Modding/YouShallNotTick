@@ -112,10 +112,10 @@ public class TickingTotemBlock extends BaseEntityBlock {
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.info")
                     .withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_h")
-                    .append(String.valueOf(ServerConfig.totemMaxEntityTickHorizontalDist.get()))
+                    .append(String.valueOf(ServerConfig.tickingTotemMaxEntityTickHorizontalDist.get()))
                     .withStyle(ChatFormatting.YELLOW));
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.tick_range_v")
-                    .append(String.valueOf(ServerConfig.totemMaxEntityTickVerticalDist.get()))
+                    .append(String.valueOf(ServerConfig.tickingTotemMaxEntityTickVerticalDist.get()))
                     .withStyle(ChatFormatting.YELLOW));
 
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.redstone")

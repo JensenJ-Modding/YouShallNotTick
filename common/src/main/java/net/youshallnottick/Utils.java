@@ -142,8 +142,8 @@ public class Utils {
     }
 
     private static boolean isNearTotemOfTicking(Level level, BlockPos entityPos) {
-        int horizontalDist = ServerConfig.totemMaxEntityTickHorizontalDist.get();
-        int verticalDist = ServerConfig.totemMaxEntityTickVerticalDist.get();
+        int horizontalDist = ServerConfig.tickingTotemMaxEntityTickHorizontalDist.get();
+        int verticalDist = ServerConfig.tickingTotemMaxEntityTickVerticalDist.get();
 
         Set<BlockPos> totemsForThisLevel = TickingTotemBlockEntity.ACTIVE_TICKING_TOTEMS.get(
                 level.dimension().location());

@@ -30,8 +30,8 @@ public class ServerConfig {
     public static final Set<String> entityWildcards = new HashSet<>();
 
     public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTotemOfTicking;
-    public static ForgeConfigSpec.ConfigValue<Integer> totemMaxEntityTickHorizontalDist;
-    public static ForgeConfigSpec.ConfigValue<Integer> totemMaxEntityTickVerticalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> tickingTotemMaxEntityTickHorizontalDist;
+    public static ForgeConfigSpec.ConfigValue<Integer> tickingTotemMaxEntityTickVerticalDist;
 
     public static void updateMobLists() {
         Utils.isIgnored.clear();
@@ -99,17 +99,17 @@ public class ServerConfig {
                 .define("entityIgnoreList", defaultIgnoreList);
         BUILDER.pop();
 
-        BUILDER.comment("Totem of Ticking Settings").push(CATEGORY_TOTEM);
+        BUILDER.comment("Totem Settings").push(CATEGORY_TOTEM);
         shouldEnableTotemOfTicking = BUILDER.comment("Whether the totem of ticking should be enabled [Default: true]")
                 .define("enableTotemOfTicking", true);
-        totemMaxEntityTickHorizontalDist = BUILDER.comment(
+        tickingTotemMaxEntityTickHorizontalDist = BUILDER.comment(
                         "Maximum distance from a totem of ticking (horizontally) to allow"
                                 + " living entity ticking [Default: 8]")
-                .define("totemMaxEntityTickDistanceHorizontal", 8);
-        totemMaxEntityTickVerticalDist = BUILDER.comment(
+                .define("tickingTotemMaxEntityTickDistanceHorizontal", 8);
+        tickingTotemMaxEntityTickVerticalDist = BUILDER.comment(
                         "Maximum distance from a totem of ticking (vertically) to allow"
                                 + " living entity ticking [Default: 4]")
-                .define("totemMaxEntityTickDistanceVertical", 4);
+                .define("tickingTotemMaxEntityTickDistanceVertical", 4);
         BUILDER.pop();
 
         SERVER_CONFIG = BUILDER.build();

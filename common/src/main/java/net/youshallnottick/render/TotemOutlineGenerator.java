@@ -27,7 +27,7 @@ public class TotemOutlineGenerator extends OutlineGenerator {
 
     public static void preGenerateOutlineResources() {
         blockPositions = getPositionsInEllipsoid(
-                ServerConfig.totemMaxEntityTickHorizontalDist.get(), ServerConfig.totemMaxEntityTickVerticalDist.get());
+                ServerConfig.tickingTotemMaxEntityTickHorizontalDist.get(), ServerConfig.tickingTotemMaxEntityTickVerticalDist.get());
     }
 
     @Override
