@@ -101,7 +101,8 @@ public class TickingTotemBlockEntity extends BlockEntity {
     @SuppressWarnings("unused")
     public AABB getRenderBoundingBox() {
         int inflation = Math.max(
-                ServerConfig.tickingTotemMaxEntityTickHorizontalDist.get(), ServerConfig.tickingTotemMaxEntityTickVerticalDist.get());
+                ServerConfig.tickingTotemMaxEntityTickHorizontalDist.get(),
+                ServerConfig.tickingTotemMaxEntityTickVerticalDist.get());
         return new AABB(getBlockPos()).inflate(inflation);
     }
 }
