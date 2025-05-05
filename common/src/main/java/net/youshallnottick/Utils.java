@@ -53,6 +53,10 @@ public class Utils {
             return true;
         }
 
+        if (entity.isDeadOrDying()) {
+            return true;
+        }
+
         if (Utils.isIgnoredEntity(entity)) {
             return true;
         }
@@ -61,20 +65,16 @@ public class Utils {
             return true;
         }
 
-        if (ServerConfig.shouldEnableTotemOfTicking.get()
-                && Utils.isNearTotemOfTicking(level, entity.blockPosition())) {
-            return true;
-        }
-
-        return entity.isDeadOrDying();
+        return ServerConfig.shouldEnableTotemOfTicking.get()
+                && Utils.isNearTotemOfTicking(level, entity.blockPosition());
     }
 
-    public static boolean isIgnoredEntity(Entity entity) {
+    public static boolean isIgnoredEntity(LivingEntity entity) {
         if (entity.level().isClientSide()) {
             return true;
         }
 
-        if (!(entity instanceof LivingEntity) || entity instanceof Player) {
+        if (entity instanceof Player) {
             return true;
         }
 

@@ -82,14 +82,12 @@ public class ServerConfig {
         defaultIgnoreList.add("railways:conductor");
         defaultIgnoreList.add("minecolonies:*");
         entityIgnoreList = BUILDER.comment(
-                        "List of living entities to ignore when checking if they are" + " allowed to tick",
-                        "Only living entities need to be added to this list, all other"
-                                + " entities are ignored by the mod",
-                        "Living entities which have an owner, e.g. wolves are also ignored" + " by the mod.",
-                        "This list is not taken into account with the spawning check.",
-                        "Tags can be used by using #minecraft:<tag_name> or" + " #modid:<tag_name>",
+                        "List of living entities to ignore when checking if they are allowed to tick",
+                        "Only living entities need to be added to this list, all other entities are ignored by the mod",
+                        "Living entities which have an owner, e.g. wolves are also ignored by the mod.",
+                        "Tags can be used by using #minecraft:<tag_name> or #modid:<tag_name>",
                         "You can also use a wildcard after modid (modid:*)",
-                        "For example, alexsmobs:* would allow all mobs from alex's mobs to" + " tick normally",
+                        "For example, alexsmobs:* would allow all mobs from alex's mobs to tick normally",
                         "[Default: [\"minecraft:wither\", \"minecraft:phantom\","
                                 + " \"minecraft:blaze\", \"minecraft:ghast\","
                                 + " \"minecraft:enderman\", \"minecraft:ender_dragon\","
