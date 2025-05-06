@@ -7,7 +7,7 @@ license = "MIT License"
 modId = "youshallnottick"
 version = "${version}"
 displayName = "You Shall Not Tick"
-authors = "JensenJ - Developer, NoahS - Artist"
+authors = "JensenJ - Developer, NoahS - Artist, Yame5 - Artist"
 description = '''
 Disables unnecessary ticking for living entities.
 '''
