@@ -43,6 +43,6 @@ public class YouShallNotTickRegistry {
     private static <T extends Block> void registerTotemBlockItem(RegistrySupplier<T> block) {
         ITEMS.register(
                 "ticking_totem",
-                () -> new BlockItem(block.get(), new Item.Properties().arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS)));
+                () -> new BlockItem(block.get(), new Item.Properties().arch$tab(CreativeModeTabs.REDSTONE_BLOCKS)));
     }
 }
