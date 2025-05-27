@@ -10,7 +10,7 @@ import net.youshallnottick.registry.YouShallNotTickRegistry;
 public class YouShallNotTickPonderTags {
 
     public static final ResourceLocation TICKING_COMPONENTS =
-            new ResourceLocation(YouShallNotTick.MOD_ID, "ticking_components");
+            ResourceLocation.fromNamespaceAndPath(YouShallNotTick.MOD_ID, "ticking_components");
 
     public static void register(PonderTagRegistrationHelper<ResourceLocation> helper) {
         PonderTagRegistrationHelper<RegistrySupplier<?>> HELPER = helper.withKeyFunction(RegistrySupplier::getId);

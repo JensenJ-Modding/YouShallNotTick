@@ -36,6 +36,7 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
         outlineGenerated = true;
     }
 
+    // FIXME: Culling of the outline happens on NeoForge 1.21.1
     @Override
     public boolean shouldRender(TickingTotemBlockEntity blockEntity, Vec3 vec3) {
         return true;

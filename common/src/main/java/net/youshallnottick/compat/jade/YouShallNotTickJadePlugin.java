@@ -15,8 +15,9 @@ import snownee.jade.api.WailaPlugin;
 public class YouShallNotTickJadePlugin implements IWailaPlugin {
 
     public static final ResourceLocation NON_TICKING_ENTITY =
-            new ResourceLocation(YouShallNotTick.MOD_ID, "nontickingentity");
-    public static final ResourceLocation TICKING_TOTEM = new ResourceLocation(YouShallNotTick.MOD_ID, "tickingtotem");
+            ResourceLocation.fromNamespaceAndPath(YouShallNotTick.MOD_ID, "nontickingentity");
+    public static final ResourceLocation TICKING_TOTEM =
+            ResourceLocation.fromNamespaceAndPath(YouShallNotTick.MOD_ID, "tickingtotem");
 
     @Override
     public void register(IWailaCommonRegistration registration) {

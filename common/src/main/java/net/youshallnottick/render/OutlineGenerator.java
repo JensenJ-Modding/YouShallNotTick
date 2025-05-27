@@ -24,16 +24,14 @@ public abstract class OutlineGenerator {
     public void populateVertexBuffer() {
         RenderSystem.assertOnRenderThread();
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-
-        generateOutline((position, colour) -> buffer.vertex(position.x, position.y, position.z)
-                .color(colour.x, colour.y, colour.z, colour.w)
-                .endVertex());
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        generateOutline(
+                (position, colour) -> buffer.addVertex((float) position.x, (float) position.y, (float) position.z)
+                        .setColor(colour.x, colour.y, colour.z, colour.w));
 
         vertexBuffer.bind();
-        vertexBuffer.upload(buffer.end());
+        vertexBuffer.upload(buffer.build());
         VertexBuffer.unbind();
     }
 

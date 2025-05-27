@@ -1,13 +1,13 @@
-package net.youshallnottick.forge;
+package net.youshallnottick.neoforge;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.youshallnottick.registry.TickingTotemBlockEntityRenderer;
 import net.youshallnottick.registry.YouShallNotTickRegistry;
 
-public class YouShallNotTickForgeLifecycleEvents {
+public class YouShallNotTickNeoForgeLifecycleEvents {
 
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent event) {

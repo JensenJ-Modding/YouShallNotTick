@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
+loaderVersion = "[4,)"
 issueTrackerURL = "https://github.com/JensenJ-Modding/YouShallNotTick/issues"
 license = "MIT License"
 
@@ -14,36 +14,42 @@ Disables unnecessary ticking for living entities.
 logoFile = "logo.png"
 
 [[dependencies.youshallnottick]]
-modId = "forge"
-mandatory = true
-versionRange = "[47,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.youshallnottick]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.1,)"
+type = "required"
+versionRange = "[1.21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.youshallnottick]]
 modId = "architectury"
-mandatory = true
-versionRange = "[9.2.14,)"
+type = "required"
+versionRange = "[13.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.youshallnottick]]
 modId = "jade"
-mandatory = false
-versionRange = "[11.12.3,)"
+type = "optional"
+versionRange = "[15.10.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.youshallnottick]]
 modId = "ponder"
-mandatory = false
-versionRange = "[1.0.64,)"
+type = "optional"
+versionRange = "[1.0.56,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[mixins]]
+config = "youshallnottick-neoforge.mixins.json"
+
+[[mixins]]
+config = "youshallnottick-common.mixins.json"

@@ -41,6 +41,7 @@ public class TotemOutlineGenerator extends OutlineGenerator {
         OutlineMeshBuilder.buildMesh(blockPositions, colour, (float) 1 / 16, vertexConsumer);
     }
 
+    // FIXME: transformation is wrong, we need to minus the camera's position in 1.21.1
     @Override
     public void transformOutline(PoseStack pose, BlockEntity entity) {
         TickingTotemBlockEntity totem = (TickingTotemBlockEntity) entity;

@@ -9,46 +9,46 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.common.ForgeConfigSpec;
 
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.youshallnottick.Utils;
 
 public class ServerConfig {
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_TICKING = "ticking";
     public static final String CATEGORY_TOTEM = "totem";
-    public static ForgeConfigSpec SERVER_CONFIG;
-    public static ForgeConfigSpec.ConfigValue<Integer> minPlayers;
-    public static ForgeConfigSpec.ConfigValue<Boolean> spectatorsAllowTicking;
+    public static ModConfigSpec SERVER_CONFIG;
+    public static ModConfigSpec.ConfigValue<Integer> minPlayers;
+    public static ModConfigSpec.ConfigValue<Boolean> spectatorsAllowTicking;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldRaidParticipantsTick;
-    public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickHorizontalDist;
-    public static ForgeConfigSpec.ConfigValue<Integer> playerMaxEntityTickVerticalDist;
-    public static ForgeConfigSpec.ConfigValue<List<String>> entityIgnoreList;
+    public static ModConfigSpec.ConfigValue<Boolean> shouldRaidParticipantsTick;
+    public static ModConfigSpec.ConfigValue<Integer> playerMaxEntityTickHorizontalDist;
+    public static ModConfigSpec.ConfigValue<Integer> playerMaxEntityTickVerticalDist;
+    public static ModConfigSpec.ConfigValue<List<String>> entityIgnoreList;
     public static final Set<ResourceLocation> entityResources = new HashSet<>();
     public static final Set<TagKey<EntityType<?>>> entityTagKeys = new HashSet<>();
     public static final Set<String> entityWildcards = new HashSet<>();
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> shouldEnableTotemOfTicking;
-    public static ForgeConfigSpec.ConfigValue<Integer> tickingTotemMaxEntityTickHorizontalDist;
-    public static ForgeConfigSpec.ConfigValue<Integer> tickingTotemMaxEntityTickVerticalDist;
+    public static ModConfigSpec.ConfigValue<Boolean> shouldEnableTotemOfTicking;
+    public static ModConfigSpec.ConfigValue<Integer> tickingTotemMaxEntityTickHorizontalDist;
+    public static ModConfigSpec.ConfigValue<Integer> tickingTotemMaxEntityTickVerticalDist;
 
     public static void updateMobLists() {
         Utils.isIgnored.clear();
 
         for (String key : entityIgnoreList.get()) {
             if (key.contains("#")) {
-                entityTagKeys.add(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(key.replace("#", ""))));
+                entityTagKeys.add(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse(key.replace("#", ""))));
             } else if (key.contains("*")) {
                 entityWildcards.add(key.split(":")[0]);
             } else {
-                entityResources.add(new ResourceLocation(key));
+                entityResources.add(ResourceLocation.parse(key));
             }
         }
     }
 
     static {
-        ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         minPlayers = BUILDER.comment("Minimum number of players before mod is enabled. [Default: 1]")

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.youshallnottick.config.ServerConfig;
@@ -32,15 +32,13 @@ public class Utils {
         return level.players().size() >= ServerConfig.minPlayers.get();
     }
 
-    @ExpectPlatform
-    @SuppressWarnings("unused")
     public static ResourceLocation getEntityRegistrationLocation(Entity entity) {
-        throw new AssertionError("Override not found for getEntityRegistrationLocation in mod loader.");
+        return BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
     }
 
     public static ResourceLocation resourceLocationForLevel(LevelAccessor levelAccessor) {
         if (levelAccessor.isClientSide()) return null;
-        return ((Level) levelAccessor).dimensionTypeId().location();
+        return ((Level) levelAccessor).dimension().location();
     }
 
     public static boolean shouldProcessEntityTick(LivingEntity entity) {
@@ -95,7 +93,6 @@ public class Utils {
         EntityType<?> entityType = entity.getType();
         return isIgnored.computeIfAbsent(entityType, (et) -> {
             ResourceLocation entityRegLoc = getEntityRegistrationLocation(entity);
-            if (entityRegLoc == null) return false;
 
             var ignored = false;
             if (!ServerConfig.entityResources.isEmpty()) ignored = ServerConfig.entityResources.contains(entityRegLoc);

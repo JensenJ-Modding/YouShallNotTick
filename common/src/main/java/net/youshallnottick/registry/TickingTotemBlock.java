@@ -9,9 +9,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -28,13 +28,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import com.mojang.serialization.MapCodec;
 import net.youshallnottick.Utils;
 import net.youshallnottick.config.ServerConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class TickingTotemBlock extends BaseEntityBlock {
+    public static final MapCodec<TickingTotemBlock> MAP_CODEC = simpleCodec(TickingTotemBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty OUTLINED = BooleanProperty.create("outlined");
@@ -49,18 +50,15 @@ public class TickingTotemBlock extends BaseEntityBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(
-            BlockState blockState,
-            Level level,
-            BlockPos blockPos,
-            Player player,
-            InteractionHand interactionHand,
-            BlockHitResult blockHitResult) {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return MAP_CODEC;
+    }
+
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(
+            BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
         if (level.isClientSide()) return InteractionResult.PASS;
-
         if (!player.isShiftKeyDown()) return InteractionResult.PASS;
-
-        if (interactionHand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
 
         BlockState newState = blockState.cycle(OUTLINED);
         level.setBlock(blockPos, newState, 2);
@@ -107,7 +105,7 @@ public class TickingTotemBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(
-            ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag flag) {
+            ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
         if (ServerConfig.shouldEnableTotemOfTicking.get()) {
             list.add(Component.translatable("tooltip.youshallnottick.ticking_totem.info")
                     .withStyle(ChatFormatting.GRAY));
