@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.youshallnottick.config.ServerConfig;
 import net.youshallnottick.registry.TickingTotemBlockEntity;
 import org.joml.Vector3d;
@@ -41,13 +45,25 @@ public class TotemOutlineGenerator extends OutlineGenerator {
         OutlineMeshBuilder.buildMesh(blockPositions, colour, (float) 1 / 16, vertexConsumer);
     }
 
-    // FIXME: transformation is wrong, we need to minus the camera's position in 1.21.1
     @Override
     public void transformOutline(PoseStack pose, BlockEntity entity) {
         TickingTotemBlockEntity totem = (TickingTotemBlockEntity) entity;
 
-        float scale = totem.getRenderScale();
+        Camera cam = Minecraft.getInstance().gameRenderer.getMainCamera();
+        Vec3 cameraPos = cam.getPosition();
+        BlockPos blockPos = entity.getBlockPos();
+
         pose.translate(0.5f, 0.5f, 0.5f);
+
+        double xDiff = cameraPos.x - blockPos.getCenter().x;
+        double yDiff = cameraPos.y - blockPos.getCenter().y;
+        double zDiff = cameraPos.z - blockPos.getCenter().z;
+        pose.translate(xDiff, yDiff, zDiff);
+        pose.mulPose(Axis.XP.rotation((float) Math.toRadians(cam.getXRot())));
+        pose.mulPose(Axis.YP.rotation((float) Math.toRadians(cam.getYRot())));
+        pose.translate(xDiff, -yDiff, zDiff);
+
+        float scale = totem.getRenderScale();
         pose.scale(scale, scale, scale);
         pose.translate(-0.5f, -0.5f, -0.5f);
     }

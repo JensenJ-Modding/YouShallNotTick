@@ -3,9 +3,11 @@ package net.youshallnottick.registry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.youshallnottick.config.ServerConfig;
 import net.youshallnottick.render.TotemOutlineGenerator;
 
 public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<TickingTotemBlockEntity> {
@@ -45,6 +47,15 @@ public class TickingTotemBlockEntityRenderer implements BlockEntityRenderer<Tick
     @Override
     public boolean shouldRenderOffScreen(TickingTotemBlockEntity blockEntity) {
         return true;
+    }
+
+    // NeoForge calls this, cant @Override due to a shared class file with fabric.
+    @SuppressWarnings("unused")
+    public AABB getRenderBoundingBox(TickingTotemBlockEntity blockEntity) {
+        int inflation = Math.max(
+                ServerConfig.tickingTotemMaxEntityTickHorizontalDist.get(),
+                ServerConfig.tickingTotemMaxEntityTickVerticalDist.get());
+        return new AABB(blockEntity.getBlockPos()).inflate(inflation);
     }
 
     @Override
