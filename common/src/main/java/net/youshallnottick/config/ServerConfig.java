@@ -80,6 +80,8 @@ public class ServerConfig {
         defaultIgnoreList.add("minecraft:warden");
         defaultIgnoreList.add("create:package");
         defaultIgnoreList.add("railways:conductor");
+        defaultIgnoreList.add("create_factory_logistics:composite_package");
+        defaultIgnoreList.add("create_factory_logistics:jar");
         defaultIgnoreList.add("minecolonies:*");
         entityIgnoreList = BUILDER.comment(
                         "List of living entities to ignore when checking if they are allowed to tick",
@@ -93,6 +95,7 @@ public class ServerConfig {
                                 + " \"minecraft:enderman\", \"minecraft:ender_dragon\","
                                 + " \"minecraft:elder_guardian\", \"minecraft:warden\","
                                 + " \"create:package\", \"railways:conductor\","
+                                + " \"create_factory_logistics:composite_package\", \"create_factory_logistics:jar\","
                                 + " \"minecolonies:*\"]]")
                 .define("entityIgnoreList", defaultIgnoreList);
         BUILDER.pop();
